@@ -1,0 +1,689 @@
+  <!-- APPLICATION CORE LOGIC JAVASCRIPT -->
+  <script>
+    const App = {
+      lang: 'both',
+      currentTab: 'home',
+      currentSub: 'islamic',
+      stars: 8,
+      voiceEnabled: true,
+      timerSeconds: 1200,
+      timerTotalSeconds: 1200,
+      timerInterval: null,
+      timerRunning: false,
+      currentStoryId: 1,
+      currentStoryPage: 1,
+      mathScore: 0,
+      sortedCount: 0
+    };
+
+    function skipSplash() {
+      const splash = document.getElementById('splash-screen');
+      if (splash) {
+        splash.style.opacity = '0';
+        setTimeout(() => splash.style.display = 'none', 700);
+      }
+    }
+    function replaySplash() {
+      const splash = document.getElementById('splash-screen');
+      if (splash) {
+        splash.style.display = 'flex';
+        splash.style.opacity = '1';
+        setTimeout(skipSplash, 3500);
+      }
+    }
+    setTimeout(skipSplash, 3200);
+
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playChime(freq = 523.25, type = 'sine') {
+      if (!App.voiceEnabled) return;
+      try {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = type;
+        osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.6);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.6);
+      } catch (e) { console.log(e); }
+    }
+
+    function speakText(enText, urText) {
+      if (!App.voiceEnabled) return;
+      playChime(659.25);
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance();
+        if (App.lang === 'ur' && urText) {
+          utterance.text = urText;
+          utterance.lang = 'ur-PK';
+        } else {
+          utterance.text = enText || urText;
+          utterance.lang = 'en-US';
+        }
+        utterance.rate = 0.9;
+        window.speechSynthesis.speak(utterance);
+      }
+    }
+
+    function speakArabic(arabic, translit, en, ur) {
+      playChime(587.33);
+      speakText(translit + '. ' + en, ur);
+    }
+
+    function speakWord(en, ur) {
+      speakText(en, ur);
+      earnStar('Word Learner');
+    }
+
+    function speakFriend(name, phrase) {
+      speakText(name + ' says: ' + phrase);
+      playChime(783.99);
+    }
+
+    function toggleVoice() {
+      App.voiceEnabled = !App.voiceEnabled;
+      const btn = document.getElementById('voice-toggle-btn');
+      if (App.voiceEnabled) {
+        btn.innerHTML = '<i class="fa-solid fa-volume-high text-pastel-green-dark"></i>';
+        playChime(600);
+      } else {
+        btn.innerHTML = '<i class="fa-solid fa-volume-xmark text-dark-light"></i>';
+        window.speechSynthesis && window.speechSynthesis.cancel();
+      }
+    }
+
+    function earnStar(reason) {
+      App.stars++;
+      updateStarDisplay();
+      playChime(880);
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 25,
+          spread: 60,
+          origin: { y: 0.8 },
+          colors: ['#7BC96F', '#FFD86B', '#FFB6C9', '#8ED1FC']
+        });
+      }
+    }
+
+    function updateStarDisplay() {
+      document.getElementById('nav-star-count').innerText = App.stars;
+      document.getElementById('garden-total-stars').innerText = App.stars;
+      const stageTitle = document.getElementById('garden-stage-title');
+      if (App.stars >= 25) {
+        stageTitle.innerText = 'Stage: Grand Blooming Flower! 🌸🌻';
+      } else if (App.stars >= 15) {
+        stageTitle.innerText = 'Stage: Glowing Rose Bud 🌹';
+      } else if (App.stars >= 5) {
+        stageTitle.innerText = 'Stage: Green Garden Sprout 🌱';
+      } else {
+        stageTitle.innerText = 'Stage: Seed in Soft Soil 🌰';
+      }
+    }
+
+    function launchCelebrationConfetti() {
+      playChime(659.25);
+      setTimeout(() => playChime(880), 200);
+      if (typeof confetti === 'function') {
+        confetti({
+          particleCount: 100,
+          spread: 120,
+          origin: { y: 0.5 },
+          colors: ['#7BC96F', '#FFD86B', '#8ED1FC', '#FFA765', '#B9A6F5']
+        });
+      }
+    }
+
+    function setLanguage(lang) {
+      App.lang = lang;
+      ['both', 'ur', 'en'].forEach(l => {
+        const btn = document.getElementById('lang-btn-' + l);
+        if (l === lang) {
+          btn.className = 'px-2.5 py-1.5 rounded-xl bg-pastel-green text-white transition-all shadow-sm';
+        } else {
+          btn.className = 'px-2.5 py-1.5 rounded-xl hover:bg-white/80 text-dark transition-all';
+        }
+      });
+      document.documentElement.dir = (lang === 'ur') ? 'rtl' : 'ltr';
+      playChime(500);
+    }
+
+    function switchTab(tab) {
+      ['home', 'little', 'junior', 'garden'].forEach(t => {
+        const el = document.getElementById('tab-' + t);
+        if (el) el.classList.toggle('hidden', t !== tab);
+      });
+      App.currentTab = tab;
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showLittleSub(sub) {
+      ['islamic', 'manners', 'fine-motor', 'poems', 'speaking', 'tracing', 'stories', 'weekly'].forEach(s => {
+        const el = document.getElementById('sub-' + s);
+        const pill = document.getElementById('pill-' + s);
+        if (el) el.classList.toggle('hidden', s !== sub);
+        if (pill) {
+          if (s === sub) {
+            pill.className = 'px-4 py-2 rounded-2xl bg-pastel-green text-white shadow-sm whitespace-nowrap';
+          } else {
+            pill.className = 'px-4 py-2 rounded-2xl bg-white/70 text-dark hover:bg-white whitespace-nowrap';
+          }
+        }
+      });
+      App.currentSub = sub;
+      if (sub === 'tracing') initTraceCanvas();
+    }
+
+    function scrollToAgeCards() {
+      const el = document.getElementById('age-cards');
+      if (el) el.scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function formatTime(s) {
+      const mins = Math.floor(s / 60);
+      const secs = s % 60;
+      return (mins < 10 ? '0' : '') + mins + ':' + (secs < 10 ? '0' : '') + secs;
+    }
+
+    function updateTimerUI() {
+      document.getElementById('timer-display').innerText = formatTime(App.timerSeconds);
+      const pct = (App.timerSeconds / App.timerTotalSeconds) * 100;
+      document.getElementById('timer-progress').style.width = pct + '%';
+    }
+
+    function toggleTimer() {
+      if (App.timerRunning) {
+        clearInterval(App.timerInterval);
+        App.timerRunning = false;
+        document.getElementById('timer-play-icon').className = 'fa-solid fa-play';
+      } else {
+        App.timerRunning = true;
+        document.getElementById('timer-play-icon').className = 'fa-solid fa-pause';
+        App.timerInterval = setInterval(() => {
+          if (App.timerSeconds > 0) {
+            App.timerSeconds--;
+            updateTimerUI();
+          } else {
+            clearInterval(App.timerInterval);
+            App.timerRunning = false;
+            document.getElementById('timer-play-icon').className = 'fa-solid fa-play';
+            onTimerComplete();
+          }
+        }, 1000);
+      }
+    }
+
+    function resetTimer() {
+      clearInterval(App.timerInterval);
+      App.timerRunning = false;
+      document.getElementById('timer-play-icon').className = 'fa-solid fa-play';
+      App.timerSeconds = App.timerTotalSeconds;
+      updateTimerUI();
+    }
+
+    function adjustTimer(mins) {
+      App.timerSeconds += mins * 60;
+      App.timerTotalSeconds += mins * 60;
+      updateTimerUI();
+      playChime(600);
+    }
+
+    function onTimerComplete() {
+      playChime(440);
+      setTimeout(() => playChime(330), 200);
+      document.getElementById('screen-free-modal').classList.remove('hidden');
+    }
+
+    function completeHomeActivity() {
+      document.getElementById('screen-free-modal').classList.add('hidden');
+      earnStar('Screen Free Hero');
+      earnStar('Screen Free Hero');
+      earnStar('Screen Free Hero');
+      earnStar('Screen Free Hero');
+      earnStar('Screen Free Hero');
+      resetTimer();
+    }
+
+    function requestExtraScreenTime() {
+      document.getElementById('screen-free-modal').classList.add('hidden');
+      openParentModal();
+    }
+
+    function checkMannerAnswer(isCorrectChoice) {
+      const fb = document.getElementById('manner-feedback');
+      fb.classList.remove('hidden');
+      if (isCorrectChoice) {
+        fb.innerText = 'Mashallah! Sharing toys brings love and makes Allah happy! (+1 ⭐)';
+        fb.className = 'text-xs font-bold text-pastel-green-dark';
+        earnStar('Kind Manners');
+      } else {
+        fb.innerText = 'Sharing is caring! Let us always share with love.';
+        fb.className = 'text-xs font-bold text-pastel-pink-dark';
+        playChime(350);
+      }
+    }
+
+    function sortItem(btn, isGreen) {
+      if (isGreen) {
+        App.sortedCount++;
+        document.getElementById('sorted-count').innerText = App.sortedCount;
+        btn.style.opacity = '0.3';
+        btn.disabled = true;
+        playChime(650);
+        if (App.sortedCount >= 3) {
+          earnStar('Sorting Master');
+          alert('Wonderful job! All green items sorted into the basket! (+1 ⭐)');
+        }
+      } else {
+        playChime(300);
+      }
+    }
+
+    let canvas, ctx, isDrawing = false;
+    function initTraceCanvas() {
+      canvas = document.getElementById('traceCanvas');
+      if (!canvas) return;
+      ctx = canvas.getContext('2d');
+      ctx.lineWidth = 14;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.strokeStyle = '#7BC96F';
+      drawTraceGuides('line');
+
+      function getPos(e) {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        return {
+          x: (clientX - rect.left) * (canvas.width / rect.width),
+          y: (clientY - rect.top) * (canvas.height / rect.height)
+        };
+      }
+
+      canvas.onmousedown = canvas.ontouchstart = (e) => {
+        isDrawing = true;
+        const p = getPos(e);
+        ctx.beginPath();
+        ctx.moveTo(p.x, p.y);
+      };
+      canvas.onmousemove = canvas.ontouchmove = (e) => {
+        if (!isDrawing) return;
+        const p = getPos(e);
+        ctx.lineTo(p.x, p.y);
+        ctx.stroke();
+      };
+      canvas.onmouseup = canvas.ontouchend = () => { isDrawing = false; };
+    }
+
+    function setTraceColor(c) {
+      if (ctx) ctx.strokeStyle = c;
+    }
+
+    function clearTraceCanvas() {
+      if (canvas && ctx) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawTraceGuides('line');
+      }
+    }
+
+    function setTracePattern(pattern) {
+      clearTraceCanvas();
+      drawTraceGuides(pattern);
+    }
+
+    function drawTraceGuides(pattern) {
+      if (!ctx) return;
+      ctx.save();
+      ctx.strokeStyle = '#D1D5DB';
+      ctx.setLineDash([8, 8]);
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      if (pattern === 'line') {
+        ctx.moveTo(80, 160);
+        ctx.lineTo(520, 160);
+      } else if (pattern === 'curve') {
+        ctx.moveTo(80, 160);
+        ctx.bezierCurveTo(200, 60, 380, 260, 520, 160);
+      } else if (pattern === 'alif') {
+        ctx.moveTo(300, 60);
+        ctx.lineTo(300, 240);
+      } else if (pattern === 'letterA') {
+        ctx.moveTo(300, 60);
+        ctx.lineTo(200, 240);
+        ctx.moveTo(300, 60);
+        ctx.lineTo(400, 240);
+        ctx.moveTo(240, 160);
+        ctx.lineTo(360, 160);
+      }
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    function completeTracing() {
+      earnStar('Tracing Star');
+      playChime(784);
+    }
+
+    const storiesData = [
+      {
+        id: 1,
+        titleEn: "Kali Shares Her Water Drop",
+        titleUr: "پانی کا قطرہ اور ننھی کلی",
+        category: "Manners (Sharing)",
+        pages: [
+          {
+            emoji: "☀️",
+            desc: "Kali bud in the dry garden under hot sun",
+            en: "It was a hot sunny day. Kali the little bud felt very thirsty.",
+            ur: "بہت گرم دھوپ تھی۔ ننھی کلی کو بہت پیاس لگی تھی۔"
+          },
+          {
+            emoji: "💧",
+            desc: "A pure cool water drop falls from cloud to Kali",
+            en: "A little water drop fell from a cloud. Kali drank it. Yum!",
+            ur: "بادل سے پانی کا ایک قطرہ گرا۔ کلی نے پی لیا۔ واہ!"
+          },
+          {
+            emoji: "🥀",
+            desc: "A tiny wilted plant nearby looking sad and thirsty",
+            en: "Next to Kali, a tiny plant was very thirsty too. It looked sad.",
+            ur: "کلی کے پاس ایک چھوٹا پودا بھی پیاسا تھا۔ وہ اداس تھا۔"
+          },
+          {
+            emoji: "🌱",
+            desc: "Kali tilts her leaf to gently pass water to the thirsty plant",
+            en: "Kali said, 'Come, my friend. Let's share.' She shared her water.",
+            ur: "کلی نے کہا، 'آؤ میرے دوست، مل کر پئیں۔' اس نے اپنا پانی بانٹ دیا۔"
+          },
+          {
+            emoji: "🌧️🌸",
+            desc: "Gentle rain falls on both plants, both growing tall and blooming",
+            en: "Then it rained a lot! Both plants grew tall and happy.",
+            ur: "پھر خوب بارش ہوئی! دونوں پودے خوش ہو کر بڑے ہو گئے۔"
+          }
+        ],
+        moralEn: "Sharing makes everyone happy.",
+        moralUr: "بانٹنے سے سب خوش ہوتے ہیں۔",
+        parentPrompt: "Bachay se poochein: 'Aaj aap ne kis ke saath kuch share kiya?'",
+        homeActivity: "Family biscuit sharing plate activity.",
+        quiz: [
+          { qEn: "Who did Kali share her water with?", qUr: "کلی نے کس کے ساتھ پانی شیئر کیا؟", options: ["A tiny plant / پودا", "A butterfly / تتلی", "A fish / مچھلی"], correct: 0 },
+          { qEn: "How did they feel after sharing?", qUr: "پانی بانٹنے کے بعد سب کیسے تھے؟", options: ["Sad / اداس", "Happy / خوش", "Angry / ناراض"], correct: 1 },
+          { qEn: "What happened at the end?", qUr: "کہانی کے آخر میں کیا ہوا؟", options: ["Rain fell / بارش ہوئی", "It got darker / اندھیرا ہوا"], correct: 0 }
+        ]
+      },
+      {
+        id: 2,
+        titleEn: "Meethi Titli Says Bismillah",
+        titleUr: "میٹھی تتلی اور بسم اللہ",
+        category: "Islamic Values (Gratitude)",
+        pages: [
+          {
+            emoji: "🦋",
+            desc: "Meethi Titli perched on a blossom, sweet fruit on table",
+            en: "Meethi Titli was very hungry. It was time to eat.",
+            ur: "میٹھی تتلی کو بہت بھوک لگی تھی۔ کھانے کا وقت ہو گیا تھا۔"
+          },
+          {
+            emoji: "✨",
+            desc: "Noori the firefly flashes lantern and signals to wait",
+            en: "She wanted to eat right away. Noori the firefly said, 'Wait a little!'",
+            ur: "وہ فوراً کھانے لگی۔ نوری جگنو نے کہا، 'ذرا رکو!'"
+          },
+          {
+            emoji: "🤲",
+            desc: "Noori shows the prayer pose with a gentle smile",
+            en: "'First, we say Bismillah. Then we eat.'",
+            ur: "'پہلے ہم بسم اللہ کہتے ہیں، پھر کھاتے ہیں۔'"
+          },
+          {
+            emoji: "😊",
+            desc: "Meethi Titli closes eyes with radiant smile saying Bismillah",
+            en: "Meethi Titli said, 'Bismillah!' with a big smile.",
+            ur: "میٹھی تتلی نے مسکرا کر کہا، 'بِسْمِ اللَّهِ!'"
+          },
+          {
+            emoji: "🍉❤️",
+            desc: "Yummy fruit tastes delicious, gratitude fills her heart",
+            en: "The food tasted so good! She said 'Thank you' for her yummy food.",
+            ur: "کھانا بہت مزیدار لگا! اس نے اچھے کھانے کا شکر ادا کیا۔"
+          }
+        ],
+        moralEn: "We say Bismillah before we eat, and we say thank you for our food.",
+        moralUr: "کھانے سے پہلے بسم اللہ کہتے ہیں اور شکر ادا کرتے ہیں۔",
+        parentPrompt: "Aaj agla khana shuru karne se pehle bachay ke saath Bismillah kahein.",
+        homeActivity: "Make a 'Bismillah Plate' together on a paper plate.",
+        quiz: [
+          { qEn: "What did Titli say before eating?", qUr: "کھانے سے پہلے تتلی نے کیا کہا؟", options: ["Bismillah / بسم اللہ", "Bye Bye", "Nothing"], correct: 0 },
+          { qEn: "Who reminded Titli to pause?", qUr: "تتلی کو کس نے یاد دلایا؟", options: ["Noori the Firefly / نوری", "Bulbul / بلبل"], correct: 0 },
+          { qEn: "How did the food taste?", qUr: "کھانا کیسا لگا؟", options: ["Yummy / مزیدار", "Bitter / کڑوا"], correct: 0 }
+        ]
+      },
+      {
+        id: 3,
+        titleEn: "Dadi Kachwa's Slow Walk",
+        titleUr: "دادی کچھوا کی پرسکون سیر",
+        category: "Bedtime / Patience",
+        pages: [
+          {
+            emoji: "🐢🧺",
+            desc: "Evening time with gentle moon, Dadi carrying woven basket",
+            en: "It was evening. Dadi Kachwa was going home with her little basket.",
+            ur: "شام کا وقت تھا۔ دادی کچھوا اپنی چھوٹی ٹوکری لے کر گھر جا رہی تھیں۔"
+          },
+          {
+            emoji: "🐇💨",
+            desc: "Chintu the rabbit dashes past at full speed",
+            en: "Chintu the rabbit ran past. 'Hurry, Dadi!' he said.",
+            ur: "چنٹو خرگوش دوڑتا ہوا گزرا۔ اس نے کہا، 'دادی، جلدی کریں!'"
+          },
+          {
+            emoji: "🌸✨",
+            desc: "Dadi gazes at butterflies and blooming twilight flowers",
+            en: "Dadi smiled. 'I walk slowly, so I can see the flowers, butterflies and stars.'",
+            ur: "دادی مسکرائیں۔ 'میں آہستہ چلتی ہوں، تاکہ پھول، تتلیاں اور تارے دیکھ سکوں۔'"
+          },
+          {
+            emoji: "🏡🛋️",
+            desc: "Chintu is exhausted, Dadi reaches home calmly with safe basket",
+            en: "Chintu got tired and stopped. But Dadi reached home happy, with nothing dropped.",
+            ur: "چنٹو تھک کر رک گیا۔ مگر دادی خوشی سے گھر پہنچ گئیں اور سب کچھ سلامت تھا۔"
+          },
+          {
+            emoji: "🌙🛌",
+            desc: "All animal friends tucked safely in warm beds under smiling moon",
+            en: "Soon everyone was in bed. 'Good night, little friends,' said the moon. 'Sleep well.'",
+            ur: "جلد ہی سب اپنے بستر میں تھے۔ چاند نے کہا، 'شب بخیر ننھے دوستو! اچھی نیند سونا۔'"
+          }
+        ],
+        moralEn: "Slow and steady is good. Take your time, and enjoy every little thing.",
+        moralUr: "آہستہ اور سکون سے کام کرنا اچھا ہے۔ ہر چیز کا مزہ لیں۔",
+        parentPrompt: "Sone se pehle bachay se poochein: 'Aaj aap ne kaun si pyari cheez dekhi?'",
+        homeActivity: "Listen to the peaceful sleeping dua together before bed.",
+        quiz: [
+          { qEn: "How did Dadi Kachwa walk?", qUr: "دادی کچھوا کیسے چلتی تھیں؟", options: ["Slowly / آہستہ", "Running fast / دوڑ کر"], correct: 0 },
+          { qEn: "What did Dadi see on her way?", qUr: "راستے میں دادی نے کیا دیکھا؟", options: ["Flowers & stars / پھول اور تارے", "Nothing"], correct: 0 },
+          { qEn: "What did the moon say at night?", qUr: "رات کو چاند نے کیا کہا؟", options: ["Good night! / شب بخیر", "Wake up!"], correct: 0 }
+        ]
+      }
+    ];
+
+    function openStory(id) {
+      App.currentStoryId = id;
+      App.currentStoryPage = 1;
+      document.getElementById('story-reader-modal').classList.remove('hidden');
+      renderStoryPage();
+    }
+
+    function closeStoryReader() {
+      document.getElementById('story-reader-modal').classList.add('hidden');
+      window.speechSynthesis && window.speechSynthesis.cancel();
+    }
+
+    function renderStoryPage() {
+      const s = storiesData.find(x => x.id === App.currentStoryId);
+      if (!s) return;
+      document.getElementById('story-modal-title').innerText = s.titleEn;
+      document.getElementById('story-modal-category').innerText = s.category;
+
+      const pageContainer = document.getElementById('story-reader-page');
+      const quizContainer = document.getElementById('story-reader-quiz');
+
+      if (App.currentStoryPage <= 5) {
+        pageContainer.classList.remove('hidden');
+        quizContainer.classList.add('hidden');
+        const p = s.pages[App.currentStoryPage - 1];
+        document.getElementById('story-illustration-emoji').innerText = p.emoji;
+        document.getElementById('story-illustration-desc').innerText = p.desc;
+        document.getElementById('story-text-en').innerText = p.en;
+        document.getElementById('story-text-ur').innerText = p.ur;
+        document.getElementById('story-page-indicator').innerText = 'Page ' + App.currentStoryPage + ' / 5';
+      } else {
+        pageContainer.classList.add('hidden');
+        quizContainer.classList.remove('hidden');
+        document.getElementById('story-page-indicator').innerText = 'Review & Moral';
+        let qHtml = '<div class="p-4 rounded-2xl bg-pastel-purple/10 border border-pastel-purple/30 space-y-1 mb-4">';
+        qHtml += '<p class="font-heading font-bold text-dark text-sm">Moral / سبق: ' + s.moralEn + '</p>';
+        qHtml += '<p class="font-urdu text-sm text-pastel-purple-dark" dir="rtl">' + s.moralUr + '</p>';
+        qHtml += '<p class="text-xs text-dark-light mt-2"><strong>Parent Prompt:</strong> ' + s.parentPrompt + '</p>';
+        qHtml += '</div>';
+
+        s.quiz.forEach((q, idx) => {
+          qHtml += '<div class="p-3.5 rounded-2xl bg-white border border-dark/10 space-y-2 text-left">';
+          qHtml += '<p class="font-heading font-semibold text-xs text-dark">' + (idx + 1) + '. ' + q.qEn + '</p>';
+          qHtml += '<p class="font-urdu text-xs text-pastel-purple-dark" dir="rtl">' + q.qUr + '</p>';
+          qHtml += '<div class="flex flex-wrap gap-2 pt-1">';
+          q.options.forEach((opt, optIdx) => {
+            qHtml += '<button onclick="answerStoryQuiz(' + (optIdx === q.correct) + ')" class="px-3 py-1.5 rounded-xl bg-cream hover:bg-pastel-purple hover:text-white text-xs font-semibold">' + opt + '</button>';
+          });
+          qHtml += '</div></div>';
+        });
+        document.getElementById('story-quiz-container').innerHTML = qHtml;
+      }
+    }
+
+    function playCurrentStoryPageAudio(slow) {
+      const s = storiesData.find(x => x.id === App.currentStoryId);
+      if (!s || App.currentStoryPage > 5) return;
+      const p = s.pages[App.currentStoryPage - 1];
+      speakText(p.en, p.ur);
+    }
+
+    function nextStoryPage() {
+      if (App.currentStoryPage < 6) {
+        App.currentStoryPage++;
+        renderStoryPage();
+        playChime(600);
+      } else {
+        closeStoryReader();
+        earnStar('Story Reader');
+      }
+    }
+
+    function prevStoryPage() {
+      if (App.currentStoryPage > 1) {
+        App.currentStoryPage--;
+        renderStoryPage();
+        playChime(400);
+      }
+    }
+
+    function answerStoryQuiz(correct) {
+      if (correct) {
+        earnStar('Story Quiz Master');
+        alert('Wonderful! Correct answer! (+1 ⭐)');
+      } else {
+        playChime(300);
+        alert('Good try! Let us look again!');
+      }
+    }
+
+    function openParentModal() {
+      document.getElementById('parent-modal').classList.remove('hidden');
+      document.getElementById('pin-section').classList.remove('hidden');
+      document.getElementById('parent-tools-section').classList.add('hidden');
+      document.getElementById('parent-pin-input').value = '';
+    }
+    function closeParentModal() {
+      document.getElementById('parent-modal').classList.add('hidden');
+    }
+    function verifyParentPin() {
+      const pin = document.getElementById('parent-pin-input').value;
+      if (pin === '1234') {
+        document.getElementById('pin-section').classList.add('hidden');
+        document.getElementById('parent-tools-section').classList.remove('hidden');
+        playChime(700);
+      } else {
+        alert('Incorrect PIN. Please enter 1234.');
+      }
+    }
+    function setTimerDuration(m) {
+      App.timerSeconds = m * 60;
+      App.timerTotalSeconds = m * 60;
+      updateTimerUI();
+      alert('Screen timer updated to ' + m + ' minutes!');
+      closeParentModal();
+    }
+
+    function askKaliHelper() {
+      const q = document.getElementById('rag-query').value.toLowerCase();
+      const ansBox = document.getElementById('rag-answer');
+      ansBox.classList.remove('hidden');
+      if (q.includes('pencil') || q.includes('grip') || q.includes('crayon') || q.includes('hold')) {
+        ansBox.innerHTML = '<strong>Kali Helper:</strong> For a child struggling with pencil grip, avoid forcing a full pencil. Start with broken chunky crayons or playdough pinch rolls. Visit our <em>Fine Motor Skills</em> section with Bheeni the Bee!';
+      } else if (q.includes('share') || q.includes('sharing') || q.includes('cry')) {
+        ansBox.innerHTML = '<strong>Kali Helper:</strong> Sharing at age 3 is developmental. Read our story <em>Kali Shares Her Water Drop</em> together and play the turn-taking biscuit game recommended in the story activity!';
+      } else {
+        ansBox.innerHTML = '<strong>Kali Helper:</strong> Remember: for young children, 20 minutes of playful learning followed by hands-on household play builds the strongest foundation. Explore our Daily Home Activities!';
+      }
+    }
+
+    function answerMath(ans) {
+      const fb = document.getElementById('math-feedback');
+      fb.classList.remove('hidden');
+      if (ans === 12) {
+        App.mathScore += 10;
+        document.getElementById('math-score').innerText = App.mathScore;
+        fb.innerText = 'Spot on! 5 + 7 = 12 (+1 ⭐)';
+        fb.className = 'text-xs font-bold text-pastel-green-dark';
+        earnStar('Junior Math Star');
+      } else {
+        fb.innerText = 'Try once more! Count on your fingers.';
+        fb.className = 'text-xs font-bold text-pastel-pink-dark';
+      }
+    }
+
+    function simulateMicrophone() {
+      const st = document.getElementById('mic-status');
+      st.innerText = 'Listening to your sweet voice... 🎙️';
+      playChime(600);
+      setTimeout(() => {
+        st.innerText = 'Mashallah! Wonderful pronunciation! (+1 ⭐)';
+        earnStar('Speaking Star');
+      }, 1800);
+    }
+
+    function simulatePhotoUpload() {
+      const fb = document.getElementById('upload-feedback');
+      fb.classList.remove('hidden');
+      fb.innerText = 'Photo uploaded successfully! Teacher feedback: "Mashallah, creative little scientist!" (+3 ⭐)';
+      earnStar('Home Project Master');
+      earnStar('Home Project Master');
+      earnStar('Home Project Master');
+    }
+
+    function openHomeActivityDetail() {
+      switchTab('little');
+      showLittleSub('weekly');
+    }
+
+    function playPoemAudio(poem) {
+      speakText('Machli jal ki rani hai, jeevan uska paani hai! Haath lagao toh darr jayegi, baahar nikaalo toh marr jayegi!');
+      earnStar('Poem Singer');
+    }
+  </script>
+</body>
+</html>

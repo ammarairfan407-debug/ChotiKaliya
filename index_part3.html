@@ -1,0 +1,465 @@
+    <!-- TAB: LITTLE LEARNERS (ALL 8 SECTIONS) -->
+    <div id="tab-little" class="space-y-8 hidden">
+      <div class="flex items-center justify-between pb-2 border-b border-dark/10">
+        <button onclick="switchTab('home')" class="px-4 py-2 rounded-2xl bg-white/70 hover:bg-white text-dark font-heading text-sm font-semibold flex items-center gap-2 border border-white shadow-sm">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Back to Home / واپس</span>
+        </button>
+        <div class="text-right">
+          <h2 class="text-2xl font-heading font-bold text-pastel-green-dark">Little Learners (2.5 – 6)</h2>
+          <p class="font-urdu text-dark-light text-sm" dir="rtl">چھوٹے سیکھنے والوں کا حصہ</p>
+        </div>
+      </div>
+
+      <!-- Section Navigation Pills -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none text-xs font-semibold">
+        <button onclick="showLittleSub('islamic')" id="pill-islamic" class="px-4 py-2 rounded-2xl bg-pastel-green text-white shadow-sm whitespace-nowrap">🌙 Islamic / اسلامی</button>
+        <button onclick="showLittleSub('manners')" id="pill-manners" class="px-4 py-2 rounded-2xl bg-white/70 text-dark hover:bg-white whitespace-nowrap">💖 Manners / آداب</button>
+        <button onclick="showLittleSub('fine-motor')" id="pill-fine-motor" class="px-4 py-2 rounded-2xl bg-white/70 text-dark hover:bg-white whitespace-nowrap">🎨 Fine Motor / مہارت</button>
+        <button onclick="showLittleSub('poems')" id="pill-poems" class="px-4 py-2 rounded-2xl bg-white/70 text-dark hover:bg-white whitespace-nowrap">🎶 Poems / نظمیں</button>
+        <button onclick="showLittleSub('speaking')" id="pill-speaking" class="px-4 py-2 rounded-2xl bg-white/70 text-dark hover:bg-white whitespace-nowrap">🗣️ Speaking / بولنا</button>
+        <button onclick="showLittleSub('tracing')" id="pill-tracing" class="px-4 py-2 rounded-2xl bg-white/70 text-dark hover:bg-white whitespace-nowrap">✍️ Tracing / ٹریسنگ</button>
+        <button onclick="showLittleSub('stories')" id="pill-stories" class="px-4 py-2 rounded-2xl bg-white/70 text-dark hover:bg-white whitespace-nowrap">📖 Stories / کہانیاں</button>
+        <button onclick="showLittleSub('weekly')" id="pill-weekly" class="px-4 py-2 rounded-2xl bg-white/70 text-dark hover:bg-white whitespace-nowrap">🏡 Home Activity / سرگرمی</button>
+      </div>
+
+      <!-- 1. ISLAMIC SECTION -->
+      <div id="sub-islamic" class="space-y-6">
+        <div class="glass-card rounded-3xl p-5 bg-gradient-to-r from-pastel-green/20 via-white/60 to-white/40 border-pastel-green/40 flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-pastel-green/30 flex items-center justify-center text-3xl shadow-sm flex-shrink-0 animate-bounce-gentle">
+            ✨
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-heading font-bold text-dark text-lg">Noori the Firefly / نوری جگنو</span>
+              <span class="px-2.5 py-0.5 rounded-full bg-pastel-green text-white text-[11px] font-bold">Verified Content</span>
+            </div>
+            <p class="text-xs text-dark-light">"Noori lights the garden with gentle duas and Bismillah before everything we do!"</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Dua 1: Bismillah -->
+          <div class="glass-card rounded-3xl p-5 bg-white/70 border-pastel-green/30 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-pastel-green-dark bg-pastel-green/20 px-3 py-1 rounded-full">Dua Before Eating / کھانے سے پہلے</span>
+              <button onclick="speakArabic('بِسْمِ اللَّهِ وَعَلَى بَرَكَةِ اللَّهِ', 'Bismillahi wa ala barakatillah', 'In the name of Allah and with the blessings of Allah', 'اللہ کے نام سے اور اللہ کی برکت پر شروع کرتا ہوں')" class="w-9 h-9 rounded-full bg-pastel-green/20 hover:bg-pastel-green text-dark hover:text-white flex items-center justify-center transition-all">
+                <i class="fa-solid fa-volume-high text-sm"></i>
+              </button>
+            </div>
+            <div class="text-center py-2">
+              <p class="font-urdu text-2xl font-bold text-pastel-green-dark tracking-wide" dir="rtl">
+                بِسْمِ اللَّهِ وَعَلَى بَرَكَةِ اللَّهِ
+              </p>
+              <p class="text-xs text-dark-light italic mt-1">Bismillahi wa 'ala barakatillah</p>
+            </div>
+            <div class="text-xs text-dark-light space-y-1 border-t border-dark/5 pt-2">
+              <p><strong>English:</strong> In the name of Allah and upon Allah's blessing.</p>
+              <p class="font-urdu" dir="rtl"><strong>اردو:</strong> اللہ کے نام کے ساتھ اور اللہ کی برکت پر۔</p>
+            </div>
+            <button onclick="earnStar('Dua Master')" class="w-full py-2 rounded-xl bg-pastel-green/20 hover:bg-pastel-green text-pastel-green-dark hover:text-white text-xs font-semibold transition-all">
+              Repeat After Me / دہرا لیا (+1 ⭐)
+            </button>
+          </div>
+
+          <!-- Dua 2: Alhamdullilah -->
+          <div class="glass-card rounded-3xl p-5 bg-white/70 border-pastel-green/30 space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-bold text-pastel-green-dark bg-pastel-green/20 px-3 py-1 rounded-full">After Eating / کھانے کے بعد</span>
+              <button onclick="speakArabic('الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا', 'Alhamdulillahil ladhi atamana wa saqana', 'All praise is for Allah who fed us and gave us drink', 'تمام تعریفیں اللہ کے لیے ہیں جس نے ہمیں کھلایا اور پلایا')" class="w-9 h-9 rounded-full bg-pastel-green/20 hover:bg-pastel-green text-dark hover:text-white flex items-center justify-center transition-all">
+                <i class="fa-solid fa-volume-high text-sm"></i>
+              </button>
+            </div>
+            <div class="text-center py-2">
+              <p class="font-urdu text-2xl font-bold text-pastel-green-dark tracking-wide" dir="rtl">
+                الْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنَا وَسَقَانَا
+              </p>
+              <p class="text-xs text-dark-light italic mt-1">Alhamdulillahil-ladhi at'amana wa saqana</p>
+            </div>
+            <div class="text-xs text-dark-light space-y-1 border-t border-dark/5 pt-2">
+              <p><strong>English:</strong> Praise be to Allah who fed us and gave us drink.</p>
+              <p class="font-urdu" dir="rtl"><strong>اردو:</strong> شکر ہے اللہ کا جس نے ہمیں کھلایا اور پلایا۔</p>
+            </div>
+            <button onclick="earnStar('Dua Gratitude')" class="w-full py-2 rounded-xl bg-pastel-green/20 hover:bg-pastel-green text-pastel-green-dark hover:text-white text-xs font-semibold transition-all">
+              Repeat After Me / دہرا لیا (+1 ⭐)
+            </button>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-5 space-y-4">
+          <div class="flex items-center justify-between">
+            <h4 class="font-heading font-bold text-dark text-base">Steps of Wudu / وضو کے آسان قدم</h4>
+            <span class="text-xs text-dark-light">4 Picture Steps for Little Hands</span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+            <div class="p-3 rounded-2xl bg-white/70 border border-pastel-green/20 space-y-1">
+              <div class="text-2xl">🤲</div>
+              <p class="text-xs font-bold text-dark">1. Wash Hands</p>
+              <p class="font-urdu text-xs text-dark-light" dir="rtl">ہاتھ دھونا</p>
+            </div>
+            <div class="p-3 rounded-2xl bg-white/70 border border-pastel-green/20 space-y-1">
+              <div class="text-2xl">💧</div>
+              <p class="text-xs font-bold text-dark">2. Rinse Mouth</p>
+              <p class="font-urdu text-xs text-dark-light" dir="rtl">کلی کرنا</p>
+            </div>
+            <div class="p-3 rounded-2xl bg-white/70 border border-pastel-green/20 space-y-1">
+              <div class="text-2xl">😊</div>
+              <p class="text-xs font-bold text-dark">3. Wash Face</p>
+              <p class="font-urdu text-xs text-dark-light" dir="rtl">چہرہ دھونا</p>
+            </div>
+            <div class="p-3 rounded-2xl bg-white/70 border border-pastel-green/20 space-y-1">
+              <div class="text-2xl">🦶</div>
+              <p class="text-xs font-bold text-dark">4. Wash Feet</p>
+              <p class="font-urdu text-xs text-dark-light" dir="rtl">پاؤں دھونا</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. MANNERS SECTION -->
+      <div id="sub-manners" class="space-y-6 hidden">
+        <div class="glass-card rounded-3xl p-5 bg-gradient-to-r from-pastel-pink/20 via-white/60 to-white/40 border-pastel-pink/40 flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-pastel-pink/30 flex items-center justify-center text-3xl shadow-sm flex-shrink-0 animate-bounce-gentle">
+            🦋
+          </div>
+          <div>
+            <h3 class="font-heading font-bold text-dark text-lg">Meethi Titli / میٹھی تتلی</h3>
+            <p class="text-xs text-dark-light">"Good manners make our words sweet like honey and hearts full of love!"</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+          <div class="glass-card rounded-2xl p-4 text-center bg-white/70 border-pastel-pink/30 space-y-1">
+            <div class="text-2xl">🤝</div>
+            <h4 class="font-heading font-bold text-sm text-dark">Salam</h4>
+            <p class="font-urdu text-xs text-pastel-pink-dark" dir="rtl">السلام علیکم</p>
+          </div>
+          <div class="glass-card rounded-2xl p-4 text-center bg-white/70 border-pastel-pink/30 space-y-1">
+            <div class="text-2xl">🌸</div>
+            <h4 class="font-heading font-bold text-sm text-dark">Thank You</h4>
+            <p class="font-urdu text-xs text-pastel-pink-dark" dir="rtl">شکریہ</p>
+          </div>
+          <div class="glass-card rounded-2xl p-4 text-center bg-white/70 border-pastel-pink/30 space-y-1">
+            <div class="text-2xl">🙏</div>
+            <h4 class="font-heading font-bold text-sm text-dark">Please</h4>
+            <p class="font-urdu text-xs text-pastel-pink-dark" dir="rtl">برائے مہربانی</p>
+          </div>
+          <div class="glass-card rounded-2xl p-4 text-center bg-white/70 border-pastel-pink/30 space-y-1">
+            <div class="text-2xl">❤️</div>
+            <h4 class="font-heading font-bold text-sm text-dark">Sorry</h4>
+            <p class="font-urdu text-xs text-pastel-pink-dark" dir="rtl">معاف کیجیے</p>
+          </div>
+        </div>
+
+        <!-- "Right or Wrong?" Interactive Game -->
+        <div class="glass-card rounded-3xl p-6 bg-white/80 border-pastel-pink/40 space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h4 class="font-heading font-bold text-dark text-lg">Right or Wrong Game? / صحیح یا غلط؟</h4>
+              <p class="text-xs text-dark-light">Look at the scenario and tap the happy star or gentle heart!</p>
+            </div>
+            <span class="text-xs bg-pastel-pink/30 text-pastel-pink-dark font-bold px-3 py-1 rounded-full">Interactive Game</span>
+          </div>
+
+          <div id="manner-game-box" class="p-6 rounded-2xl bg-cream-soft border border-pastel-pink/30 text-center space-y-4">
+            <div class="text-5xl">🧸</div>
+            <p id="manner-question-en" class="font-heading font-semibold text-dark text-lg">
+              "Amina shares her favorite toy car with her little brother."
+            </p>
+            <p id="manner-question-ur" class="font-urdu text-pastel-pink-dark text-base" dir="rtl">
+              "آمنہ اپنی پسندیدہ گاڑی چھوٹے بھائی کے ساتھ مل کر کھیلتی ہے۔"
+            </p>
+
+            <div class="flex justify-center gap-4 pt-2">
+              <button onclick="checkMannerAnswer(true)" class="btn-bounce px-6 py-2.5 rounded-2xl bg-pastel-green text-white font-heading font-bold text-sm flex items-center gap-2 shadow-sm">
+                <i class="fa-solid fa-circle-check"></i> Right / صحیح
+              </button>
+              <button onclick="checkMannerAnswer(false)" class="btn-bounce px-6 py-2.5 rounded-2xl bg-pastel-pink text-dark font-heading font-bold text-sm flex items-center gap-2 shadow-sm">
+                <i class="fa-solid fa-circle-xmark"></i> Wrong / غلط
+              </button>
+            </div>
+            <p id="manner-feedback" class="text-xs font-bold text-pastel-green-dark hidden"></p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. FINE MOTOR SKILLS -->
+      <div id="sub-fine-motor" class="space-y-6 hidden">
+        <div class="glass-card rounded-3xl p-5 bg-gradient-to-r from-pastel-orange/20 via-white/60 to-white/40 border-pastel-orange/40 flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-pastel-orange/30 flex items-center justify-center text-3xl shadow-sm flex-shrink-0 animate-bounce-gentle">
+            🐝
+          </div>
+          <div>
+            <h3 class="font-heading font-bold text-dark text-lg">Bheeni the Bee / بھینی شہد کی مکھی</h3>
+            <p class="text-xs text-dark-light">"Little fingers do big work! Tearing paper, rolling dough, and sorting colors."</p>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 bg-white/80 border-pastel-orange/40 space-y-4">
+          <div class="flex items-center justify-between">
+            <h4 class="font-heading font-bold text-dark text-base">Sort the Green Items into the Garden Basket!</h4>
+            <span class="text-xs bg-pastel-orange/20 text-pastel-orange-dark font-bold px-3 py-1 rounded-full">Interactive Sort</span>
+          </div>
+          <p class="text-xs text-dark-light">Tap the green items to drop them into the garden basket!</p>
+
+          <div class="flex flex-wrap items-center justify-center gap-4 py-4" id="sort-items-container">
+            <button onclick="sortItem(this, true)" class="w-16 h-16 rounded-2xl bg-white border-2 border-pastel-green shadow-sm flex flex-col items-center justify-center text-2xl hover:scale-110 transition-transform">
+              🍏
+              <span class="text-[10px] font-bold text-dark-light">Apple</span>
+            </button>
+            <button onclick="sortItem(this, false)" class="w-16 h-16 rounded-2xl bg-white border-2 border-pastel-pink shadow-sm flex flex-col items-center justify-center text-2xl hover:scale-110 transition-transform">
+              🍓
+              <span class="text-[10px] font-bold text-dark-light">Berry</span>
+            </button>
+            <button onclick="sortItem(this, true)" class="w-16 h-16 rounded-2xl bg-white border-2 border-pastel-green shadow-sm flex flex-col items-center justify-center text-2xl hover:scale-110 transition-transform">
+              🍐
+              <span class="text-[10px] font-bold text-dark-light">Pear</span>
+            </button>
+            <button onclick="sortItem(this, false)" class="w-16 h-16 rounded-2xl bg-white border-2 border-pastel-yellow shadow-sm flex flex-col items-center justify-center text-2xl hover:scale-110 transition-transform">
+              🍌
+              <span class="text-[10px] font-bold text-dark-light">Banana</span>
+            </button>
+            <button onclick="sortItem(this, true)" class="w-16 h-16 rounded-2xl bg-white border-2 border-pastel-green shadow-sm flex flex-col items-center justify-center text-2xl hover:scale-110 transition-transform">
+              🥑
+              <span class="text-[10px] font-bold text-dark-light">Avocado</span>
+            </button>
+          </div>
+
+          <div class="p-4 bg-pastel-green/20 rounded-2xl text-center border border-pastel-green/40">
+            <p class="text-xs font-bold text-pastel-green-dark">🧺 Green Garden Basket: <span id="sorted-count">0</span> / 3 Sorted</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. POEMS SECTION -->
+      <div id="sub-poems" class="space-y-6 hidden">
+        <div class="glass-card rounded-3xl p-5 bg-gradient-to-r from-pastel-yellow/20 via-white/60 to-white/40 border-pastel-yellow/40 flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-pastel-yellow/40 flex items-center justify-center text-3xl shadow-sm flex-shrink-0 animate-bounce-gentle">
+            🐦
+          </div>
+          <div>
+            <h3 class="font-heading font-bold text-dark text-lg">Bulbul the Songbird / بلبل نغمہ خواں</h3>
+            <p class="text-xs text-dark-light">"Sing, rhyme, and move your little wings with happy Urdu & English poems!"</p>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 bg-white/80 border-pastel-yellow/40 space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <span class="text-xs font-bold bg-pastel-yellow/30 text-amber-800 px-3 py-1 rounded-full">Urdu Action Poem</span>
+              <h4 class="font-heading font-bold text-dark text-lg mt-1">Machli Jal Ki Rani Hai (مچھلی جل کی رانی ہے)</h4>
+            </div>
+            <button onclick="playPoemAudio('machli')" class="px-4 py-2 rounded-2xl bg-pastel-yellow hover:bg-pastel-yellow-dark text-dark font-heading font-semibold text-xs flex items-center gap-1.5 shadow-sm">
+              <i class="fa-solid fa-play"></i>
+              <span>Sing Together / سنیں</span>
+            </button>
+          </div>
+
+          <div id="poem-lyrics-machli" class="p-4 rounded-2xl bg-cream-soft border border-pastel-yellow/30 text-center space-y-2">
+            <p class="font-urdu text-xl text-dark" dir="rtl">مچھلی جل کی رانی ہے، جیون اس کا پانی ہے</p>
+            <p class="font-urdu text-xl text-dark" dir="rtl">ہاتھ لگاؤ تو ڈر جائے گی، باہر نکالو تو مر جائے گی</p>
+            <p class="text-xs text-dark-light italic mt-2">"Fish is the queen of water, water is her life!"</p>
+          </div>
+
+          <div class="relative w-full aspect-video rounded-2xl bg-dark/5 flex flex-col items-center justify-center border-2 border-dashed border-pastel-yellow/60 p-4 text-center">
+            <i class="fa-brands fa-youtube text-4xl text-red-500 mb-2"></i>
+            <p class="font-heading font-semibold text-dark text-sm">Safe YouTube-nocookie Embed Slot</p>
+            <p class="text-xs text-dark-light">Admin verified child-friendly poem animation without ads or external recommendations.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. SPEAKING & WRITING -->
+      <div id="sub-speaking" class="space-y-6 hidden">
+        <div class="glass-card rounded-3xl p-5 bg-gradient-to-r from-pastel-blue/20 via-white/60 to-white/40 border-pastel-blue/40 flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-pastel-blue/30 flex items-center justify-center text-3xl shadow-sm flex-shrink-0 animate-bounce-gentle">
+            🦜
+          </div>
+          <div>
+            <h3 class="font-heading font-bold text-dark text-lg">Mitthu the Parrot / مٹھو طوطا</h3>
+            <p class="text-xs text-dark-light">"Listen to the sound, repeat with Mitthu, and say your first words!"</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+          <div onclick="speakWord('Apple', 'سیب')" class="glass-card rounded-3xl p-5 text-center bg-white/70 border-pastel-blue/30 cursor-pointer hover:scale-105 transition-all space-y-2">
+            <div class="text-4xl">🍎</div>
+            <h4 class="font-heading font-bold text-lg text-dark">Apple</h4>
+            <p class="font-urdu text-base text-pastel-blue-dark" dir="rtl">سیب</p>
+            <span class="text-[10px] text-pastel-blue-dark block font-semibold"><i class="fa-solid fa-volume-high"></i> Tap to Hear</span>
+          </div>
+
+          <div onclick="speakWord('Butterfly', 'تتلی')" class="glass-card rounded-3xl p-5 text-center bg-white/70 border-pastel-blue/30 cursor-pointer hover:scale-105 transition-all space-y-2">
+            <div class="text-4xl">🦋</div>
+            <h4 class="font-heading font-bold text-lg text-dark">Butterfly</h4>
+            <p class="font-urdu text-base text-pastel-blue-dark" dir="rtl">تتلی</p>
+            <span class="text-[10px] text-pastel-blue-dark block font-semibold"><i class="fa-solid fa-volume-high"></i> Tap to Hear</span>
+          </div>
+
+          <div onclick="speakWord('Flower', 'پھول')" class="glass-card rounded-3xl p-5 text-center bg-white/70 border-pastel-blue/30 cursor-pointer hover:scale-105 transition-all space-y-2">
+            <div class="text-4xl">🌸</div>
+            <h4 class="font-heading font-bold text-lg text-dark">Flower</h4>
+            <p class="font-urdu text-base text-pastel-blue-dark" dir="rtl">پھول</p>
+            <span class="text-[10px] text-pastel-blue-dark block font-semibold"><i class="fa-solid fa-volume-high"></i> Tap to Hear</span>
+          </div>
+
+          <div onclick="speakWord('Sun', 'سورج')" class="glass-card rounded-3xl p-5 text-center bg-white/70 border-pastel-blue/30 cursor-pointer hover:scale-105 transition-all space-y-2">
+            <div class="text-4xl">☀️</div>
+            <h4 class="font-heading font-bold text-lg text-dark">Sun</h4>
+            <p class="font-urdu text-base text-pastel-blue-dark" dir="rtl">سورج</p>
+            <span class="text-[10px] text-pastel-blue-dark block font-semibold"><i class="fa-solid fa-volume-high"></i> Tap to Hear</span>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 bg-white/80 border-pastel-blue/40 text-center space-y-3">
+          <h4 class="font-heading font-bold text-dark text-base">Your Turn to Speak! / اب آپ بولیں</h4>
+          <p class="text-xs text-dark-light">Say: "Alif se Anaar" (ا سے انار) into your parent's microphone!</p>
+          <button onclick="simulateMicrophone()" id="mic-btn" class="w-16 h-16 rounded-full bg-pastel-blue text-dark flex items-center justify-center text-2xl mx-auto shadow-md hover:scale-105 transition-all">
+            <i class="fa-solid fa-microphone"></i>
+          </button>
+          <p id="mic-status" class="text-xs text-pastel-blue-dark font-semibold">Tap to Record Voice</p>
+        </div>
+      </div>
+
+      <!-- 6. TRACING & SELF WRITING -->
+      <div id="sub-tracing" class="space-y-6 hidden">
+        <div class="glass-card rounded-3xl p-5 bg-gradient-to-r from-pastel-blue/20 via-white/60 to-white/40 border-pastel-blue/40 flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-pastel-blue/30 flex items-center justify-center text-3xl shadow-sm flex-shrink-0 animate-bounce-gentle">
+            🐛
+          </div>
+          <div>
+            <h3 class="font-heading font-bold text-dark text-lg">Lakeer the Caterpillar / لکیر سنڈی</h3>
+            <p class="text-xs text-dark-light">"Follow the gentle lines with your tiny finger. Straight lines, curves, letters and stars!"</p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="setTracePattern('line')" class="px-3.5 py-1.5 rounded-xl bg-pastel-blue text-dark text-xs font-semibold shadow-sm">Straight Line</button>
+            <button onclick="setTracePattern('curve')" class="px-3.5 py-1.5 rounded-xl bg-white/70 hover:bg-white text-dark text-xs font-semibold">Curved Wave</button>
+            <button onclick="setTracePattern('alif')" class="px-3.5 py-1.5 rounded-xl bg-white/70 hover:bg-white text-dark text-xs font-semibold font-urdu">ا (الف)</button>
+            <button onclick="setTracePattern('letterA')" class="px-3.5 py-1.5 rounded-xl bg-white/70 hover:bg-white text-dark text-xs font-semibold">Letter A</button>
+          </div>
+          <div class="flex items-center gap-2">
+            <button onclick="clearTraceCanvas()" class="px-3.5 py-1.5 rounded-xl bg-white/80 hover:bg-white text-dark text-xs font-semibold border border-dark/10">
+              <i class="fa-solid fa-trash-can mr-1"></i> Clear
+            </button>
+            <button onclick="completeTracing()" class="px-4 py-1.5 rounded-xl bg-pastel-green hover:bg-pastel-green-dark text-white text-xs font-bold shadow-sm">
+              <i class="fa-solid fa-check mr-1"></i> Done (+1 ⭐)
+            </button>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-4 bg-white shadow-inner border-2 border-pastel-blue/30 relative">
+          <canvas id="traceCanvas" width="600" height="320" class="w-full h-72 rounded-2xl bg-cream-soft touch-none cursor-crosshair border border-dashed border-pastel-blue/40"></canvas>
+          <div class="absolute bottom-6 right-6 flex items-center gap-2">
+            <span class="text-xs text-dark-light">Pen Color:</span>
+            <button onclick="setTraceColor('#7BC96F')" class="w-6 h-6 rounded-full bg-pastel-green border-2 border-white shadow-sm"></button>
+            <button onclick="setTraceColor('#FFB6C9')" class="w-6 h-6 rounded-full bg-pastel-pink border-2 border-white shadow-sm"></button>
+            <button onclick="setTraceColor('#8ED1FC')" class="w-6 h-6 rounded-full bg-pastel-blue border-2 border-white shadow-sm"></button>
+            <button onclick="setTraceColor('#FFA765')" class="w-6 h-6 rounded-full bg-pastel-orange border-2 border-white shadow-sm"></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. STORIES (3 FULL STORIES) -->
+      <div id="sub-stories" class="space-y-6 hidden">
+        <div class="glass-card rounded-3xl p-5 bg-gradient-to-r from-pastel-purple/20 via-white/60 to-white/40 border-pastel-purple/40 flex items-center justify-between">
+          <div class="flex items-center gap-4">
+            <div class="w-14 h-14 rounded-2xl bg-pastel-purple/30 flex items-center justify-center text-3xl shadow-sm flex-shrink-0 animate-bounce-gentle">
+              🐢
+            </div>
+            <div>
+              <h3 class="font-heading font-bold text-dark text-lg">Dadi Kachwa's Story Corner / دادی کچھوا کا کونا</h3>
+              <p class="text-xs text-dark-light">"Cozy illustrated picture books with gentle lessons, questions and parent activities."</p>
+            </div>
+          </div>
+          <span class="text-xs font-bold bg-pastel-purple/30 text-pastel-purple-dark px-3 py-1 rounded-full hidden sm:inline">3 Sample Stories Ready</span>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Story 1 -->
+          <div class="glass-card rounded-3xl p-5 bg-white/80 border-pastel-purple/30 flex flex-col justify-between hover:shadow-glass-lg hover:-translate-y-1 transition-all space-y-4">
+            <div class="space-y-2">
+              <div class="w-full h-40 rounded-2xl bg-gradient-to-tr from-pastel-blue/20 via-white to-pastel-green/20 flex flex-col items-center justify-center p-4 border border-pastel-blue/30 text-center relative overflow-hidden">
+                <span class="text-5xl animate-float">💧</span>
+                <span class="absolute bottom-2 right-2 text-xs bg-white/80 px-2 py-0.5 rounded-full font-bold text-pastel-green-dark">5 Pages</span>
+              </div>
+              <span class="text-[11px] font-bold text-pastel-pink-dark bg-pastel-pink/20 px-2.5 py-0.5 rounded-full">Manners (Sharing)</span>
+              <h4 class="font-heading font-bold text-dark text-base">Kali Shares Her Water Drop</h4>
+              <p class="font-urdu text-sm text-pastel-purple-dark" dir="rtl">پانی کا قطرہ اور ننھی کلی</p>
+              <p class="text-xs text-dark-light">Kali finds a sweet water drop on a sunny day and shares it with a thirsty wilted plant.</p>
+            </div>
+            <button onclick="openStory(1)" class="w-full py-2.5 rounded-2xl bg-pastel-purple hover:bg-pastel-purple-dark text-white font-heading font-bold text-xs shadow-sm flex items-center justify-center gap-1.5">
+              <span>Read Story / پڑھیں</span>
+              <i class="fa-solid fa-book-open"></i>
+            </button>
+          </div>
+
+          <!-- Story 2 -->
+          <div class="glass-card rounded-3xl p-5 bg-white/80 border-pastel-purple/30 flex flex-col justify-between hover:shadow-glass-lg hover:-translate-y-1 transition-all space-y-4">
+            <div class="space-y-2">
+              <div class="w-full h-40 rounded-2xl bg-gradient-to-tr from-pastel-pink/20 via-white to-pastel-yellow/20 flex flex-col items-center justify-center p-4 border border-pastel-pink/30 text-center relative overflow-hidden">
+                <span class="text-5xl animate-float">🦋</span>
+                <span class="absolute bottom-2 right-2 text-xs bg-white/80 px-2 py-0.5 rounded-full font-bold text-pastel-pink-dark">5 Pages</span>
+              </div>
+              <span class="text-[11px] font-bold text-pastel-green-dark bg-pastel-green/20 px-2.5 py-0.5 rounded-full">Islamic (Bismillah)</span>
+              <h4 class="font-heading font-bold text-dark text-base">Meethi Titli Says Bismillah</h4>
+              <p class="font-urdu text-sm text-pastel-purple-dark" dir="rtl">میٹھی تتلی اور بسم اللہ</p>
+              <p class="text-xs text-dark-light">Meethi Titli is very hungry, but Noori the firefly gently reminds her to say Bismillah first!</p>
+            </div>
+            <button onclick="openStory(2)" class="w-full py-2.5 rounded-2xl bg-pastel-purple hover:bg-pastel-purple-dark text-white font-heading font-bold text-xs shadow-sm flex items-center justify-center gap-1.5">
+              <span>Read Story / پڑھیں</span>
+              <i class="fa-solid fa-book-open"></i>
+            </button>
+          </div>
+
+          <!-- Story 3 -->
+          <div class="glass-card rounded-3xl p-5 bg-white/80 border-pastel-purple/30 flex flex-col justify-between hover:shadow-glass-lg hover:-translate-y-1 transition-all space-y-4">
+            <div class="space-y-2">
+              <div class="w-full h-40 rounded-2xl bg-gradient-to-tr from-pastel-purple/20 via-white to-pastel-blue/20 flex flex-col items-center justify-center p-4 border border-pastel-purple/30 text-center relative overflow-hidden">
+                <span class="text-5xl animate-float">🌙</span>
+                <span class="absolute bottom-2 right-2 text-xs bg-white/80 px-2 py-0.5 rounded-full font-bold text-pastel-purple-dark">5 Pages</span>
+              </div>
+              <span class="text-[11px] font-bold text-pastel-yellow-dark bg-pastel-yellow/20 px-2.5 py-0.5 rounded-full">Bedtime & Patience</span>
+              <h4 class="font-heading font-bold text-dark text-base">Dadi Kachwa's Slow Walk</h4>
+              <p class="font-urdu text-sm text-pastel-purple-dark" dir="rtl">دادی کچھوا کی پرسکون سیر</p>
+              <p class="text-xs text-dark-light">Chintu runs fast, but Dadi enjoys the flowers and reaches home peacefully under the soft moon.</p>
+            </div>
+            <button onclick="openStory(3)" class="w-full py-2.5 rounded-2xl bg-pastel-purple hover:bg-pastel-purple-dark text-white font-heading font-bold text-xs shadow-sm flex items-center justify-center gap-1.5">
+              <span>Read Story / پڑھیں</span>
+              <i class="fa-solid fa-book-open"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. WEEKLY HOME ACTIVITY -->
+      <div id="sub-weekly" class="space-y-6 hidden">
+        <div class="glass-card rounded-3xl p-5 bg-gradient-to-r from-pastel-green/20 via-white/60 to-white/40 border-pastel-green/40 flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-pastel-green/30 flex items-center justify-center text-3xl shadow-sm flex-shrink-0 animate-bounce-gentle">
+            🏡
+          </div>
+          <div>
+            <h3 class="font-heading font-bold text-dark text-lg">Weekly Home Activity / ہفتہ وار سرگرمی</h3>
+            <p class="text-xs text-dark-light">This week's theme: "Water: Blessing of Allah / پانی: اللہ کی نعمت"</p>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-6 bg-white/80 border-pastel-green/30 space-y-4">
+          <h4 class="font-heading font-bold text-dark text-base">Project: Make a Floating Paper Flower!</h4>
+          <p class="text-xs text-dark-light">Cut a paper flower with folded petals. Place it gently on a bowl of water and watch it bloom on its own!</p>
+          
+          <div class="p-4 rounded-2xl bg-pastel-green/10 border border-pastel-green/30 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <div class="text-xs text-dark-light space-y-1">
+              <p><strong>Parent Steps:</strong> Fold petal edges toward center, float on water bowl, observe capillary action.</p>
+              <p><strong>Learning Goal:</strong> Science of water, fine-motor scissor practice.</p>
+            </div>
+            <button onclick="simulatePhotoUpload()" class="btn-bounce px-5 py-2.5 rounded-2xl bg-pastel-green hover:bg-pastel-green-dark text-white text-xs font-bold whitespace-nowrap shadow-sm">
+              <i class="fa-solid fa-camera mr-1"></i> Upload Photo (+3 ⭐)
+            </button>
+          </div>
+          <p id="upload-feedback" class="text-xs font-bold text-pastel-green-dark text-center hidden"></p>
+        </div>
+      </div>
+    </div>

@@ -1,0 +1,289 @@
+    <!-- TAB: JUNIOR LEARNERS (AGES 7-10) -->
+    <div id="tab-junior" class="space-y-8 hidden">
+      <div class="flex items-center justify-between pb-2 border-b border-dark/10">
+        <button onclick="switchTab('home')" class="px-4 py-2 rounded-2xl bg-white/70 hover:bg-white text-dark font-heading text-sm font-semibold flex items-center gap-2 border border-white shadow-sm">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Back to Home / واپس</span>
+        </button>
+        <div class="text-right">
+          <h2 class="text-2xl font-heading font-bold text-pastel-blue-dark">Junior Learners (7 – 10)</h2>
+          <p class="font-urdu text-dark-light text-sm" dir="rtl">بڑے سیکھنے والوں کا حصہ</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Maths Game: Gintu the Squirrel -->
+        <div class="glass-card rounded-3xl p-6 bg-white/80 border-pastel-orange/40 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-pastel-orange/20 flex items-center justify-center text-2xl">🐿️</div>
+            <div>
+              <h4 class="font-heading font-bold text-dark text-base">Gintu's Rapid Maths / گنتو کے کھیل</h4>
+              <p class="text-xs text-dark-light">Quick Addition & Multiplication with score streak!</p>
+            </div>
+          </div>
+          <div class="p-6 rounded-2xl bg-cream-soft border border-pastel-orange/30 text-center space-y-3">
+            <div class="flex items-center justify-between text-xs font-bold text-dark-light">
+              <span>Time: <span id="math-timer">30s</span></span>
+              <span>Score: <span id="math-score">0</span></span>
+            </div>
+            <p id="math-problem" class="font-heading font-extrabold text-3xl text-dark">5 + 7 = ?</p>
+            <div class="grid grid-cols-3 gap-2 pt-2" id="math-options">
+              <button onclick="answerMath(10)" class="py-2.5 rounded-xl bg-white hover:bg-pastel-orange text-dark font-heading font-bold shadow-sm">10</button>
+              <button onclick="answerMath(12)" class="py-2.5 rounded-xl bg-white hover:bg-pastel-orange text-dark font-heading font-bold shadow-sm">12</button>
+              <button onclick="answerMath(15)" class="py-2.5 rounded-xl bg-white hover:bg-pastel-orange text-dark font-heading font-bold shadow-sm">15</button>
+            </div>
+            <p id="math-feedback" class="text-xs font-bold text-pastel-green-dark hidden"></p>
+          </div>
+        </div>
+
+        <!-- Science Experiments: Professor Ullu -->
+        <div class="glass-card rounded-3xl p-6 bg-white/80 border-pastel-blue/40 space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-pastel-blue/20 flex items-center justify-center text-2xl">🦉</div>
+            <div>
+              <h4 class="font-heading font-bold text-dark text-base">Professor Ullu's Safe Experiments</h4>
+              <p class="text-xs text-dark-light">Home science with safe kitchen items!</p>
+            </div>
+          </div>
+          <div class="p-4 rounded-2xl bg-cream-soft border border-pastel-blue/30 space-y-2 text-xs text-dark-light">
+            <h5 class="font-bold text-dark text-sm">🧪 Dancing Raisins in Fizzy Water</h5>
+            <p><strong>Observation:</strong> Bubbles of carbon dioxide attach to the wrinkled skin of raisins, carrying them to the surface. When bubbles pop, raisins sink back down!</p>
+            <span class="inline-block px-2.5 py-0.5 rounded-full bg-pastel-blue/20 text-pastel-blue-dark font-bold mt-1">Supervised Safe Home Project</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: MERA BAAGH (REWARDS GARDEN) -->
+    <div id="tab-garden" class="space-y-8 hidden">
+      <div class="flex items-center justify-between pb-2 border-b border-dark/10">
+        <button onclick="switchTab('home')" class="px-4 py-2 rounded-2xl bg-white/70 hover:bg-white text-dark font-heading text-sm font-semibold flex items-center gap-2 border border-white shadow-sm">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Back to Home / واپس</span>
+        </button>
+        <div class="text-right">
+          <h2 class="text-2xl font-heading font-bold text-pastel-green-dark">Mera Baagh / میرا باغ</h2>
+          <p class="text-xs text-dark-light">Your Learning Garden of Stars</p>
+        </div>
+      </div>
+
+      <div class="glass-card rounded-4xl p-8 text-center bg-gradient-to-b from-pastel-blue/15 via-pastel-yellow/20 to-pastel-green/30 border-pastel-green/40 relative overflow-hidden space-y-4">
+        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white/80 border border-pastel-yellow/60 font-heading font-bold text-amber-600 text-sm shadow-sm">
+          <i class="fa-solid fa-star text-amber-500"></i>
+          <span>Total Stars Earned: <span id="garden-total-stars">8</span></span>
+        </div>
+
+        <div class="py-8 flex flex-col items-center justify-center">
+          <div class="relative w-48 h-48 flex items-center justify-center">
+            <div class="absolute inset-0 bg-pastel-yellow/40 rounded-full blur-2xl animate-pulse"></div>
+            <img id="garden-stage-img" src="images/logo/kali-mascot.jpg" alt="Kali Mascot in Garden" class="relative z-10 w-40 h-40 object-contain drop-shadow-lg animate-sway">
+          </div>
+          <h3 id="garden-stage-title" class="font-heading font-extrabold text-2xl text-dark mt-2">Stage: Sprouting Little Bud 🌱</h3>
+          <p class="text-xs text-dark-light max-w-sm">Earn 7 more stars to watch Kali fully bloom into a grand flower surrounded by butterflies!</p>
+        </div>
+
+        <button onclick="launchCelebrationConfetti()" class="btn-bounce px-6 py-3 rounded-2xl bg-pastel-green hover:bg-pastel-green-dark text-white font-heading font-bold text-sm shadow-md flex items-center gap-2 mx-auto">
+          <i class="fa-solid fa-wand-magic-sparkles"></i>
+          <span>Celebrate Garden! / جشن منائیں</span>
+        </button>
+      </div>
+
+      <!-- Unlocked Characters Garden Friends -->
+      <div class="space-y-3">
+        <h4 class="font-heading font-bold text-dark text-lg">Garden Friends Unlocked / باغ کے دوست</h4>
+        <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3 text-center">
+          <div onclick="speakFriend('Kali', 'Welcome to my garden!')" class="glass-card rounded-2xl p-3 bg-white/70 border-pastel-green/40 cursor-pointer hover:scale-105 transition-all">
+            <div class="text-3xl">🌸</div>
+            <p class="font-heading font-bold text-xs text-dark mt-1">Kali</p>
+            <span class="text-[10px] text-pastel-green-dark font-bold">Main Bud</span>
+          </div>
+          <div onclick="speakFriend('Noori', 'Bismillah lights the way!')" class="glass-card rounded-2xl p-3 bg-white/70 border-pastel-green/40 cursor-pointer hover:scale-105 transition-all">
+            <div class="text-3xl">✨</div>
+            <p class="font-heading font-bold text-xs text-dark mt-1">Noori</p>
+            <span class="text-[10px] text-pastel-green-dark font-bold">Firefly</span>
+          </div>
+          <div onclick="speakFriend('Meethi Titli', 'Always say thank you!')" class="glass-card rounded-2xl p-3 bg-white/70 border-pastel-pink/40 cursor-pointer hover:scale-105 transition-all">
+            <div class="text-3xl">🦋</div>
+            <p class="font-heading font-bold text-xs text-dark mt-1">Meethi Titli</p>
+            <span class="text-[10px] text-pastel-pink-dark font-bold">Butterfly</span>
+          </div>
+          <div onclick="speakFriend('Bheeni', 'Busy bee making honey!')" class="glass-card rounded-2xl p-3 bg-white/70 border-pastel-orange/40 cursor-pointer hover:scale-105 transition-all">
+            <div class="text-3xl">🐝</div>
+            <p class="font-heading font-bold text-xs text-dark mt-1">Bheeni</p>
+            <span class="text-[10px] text-pastel-orange-dark font-bold">Bee</span>
+          </div>
+          <div onclick="speakFriend('Bulbul', 'Singing sweet songs!')" class="glass-card rounded-2xl p-3 bg-white/70 border-pastel-yellow/40 cursor-pointer hover:scale-105 transition-all">
+            <div class="text-3xl">🐦</div>
+            <p class="font-heading font-bold text-xs text-dark mt-1">Bulbul</p>
+            <span class="text-[10px] text-amber-600 font-bold">Songbird</span>
+          </div>
+          <div onclick="speakFriend('Dadi Kachwa', 'Slow and steady enjoys every flower!')" class="glass-card rounded-2xl p-3 bg-white/70 border-pastel-purple/40 cursor-pointer hover:scale-105 transition-all">
+            <div class="text-3xl">🐢</div>
+            <p class="font-heading font-bold text-xs text-dark mt-1">Dadi Kachwa</p>
+            <span class="text-[10px] text-pastel-purple-dark font-bold">Storyteller</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- STORY READER MODAL (FULL INTERACTIVE SWIPER) -->
+  <div id="story-reader-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-3 sm:p-6">
+    <div class="glass-card rounded-4xl bg-white max-w-2xl w-full p-6 sm:p-8 space-y-6 max-h-[92vh] overflow-y-auto relative shadow-2xl">
+      <div class="flex items-center justify-between border-b border-dark/10 pb-3">
+        <div>
+          <span id="story-modal-category" class="text-xs font-bold text-pastel-purple-dark bg-pastel-purple/20 px-3 py-0.5 rounded-full">Story</span>
+          <h3 id="story-modal-title" class="text-xl sm:text-2xl font-heading font-bold text-dark mt-1">Story Title</h3>
+        </div>
+        <button onclick="closeStoryReader()" class="w-9 h-9 rounded-full bg-cream hover:bg-dark/10 text-dark flex items-center justify-center text-sm">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div id="story-reader-page" class="space-y-4 text-center">
+        <div id="story-page-illustration" class="w-full h-52 sm:h-64 rounded-3xl bg-cream-soft border border-pastel-purple/30 flex flex-col items-center justify-center p-4 relative overflow-hidden">
+          <span id="story-illustration-emoji" class="text-7xl animate-float">📖</span>
+          <p id="story-illustration-desc" class="text-xs text-dark-light italic mt-3 max-w-md"></p>
+        </div>
+
+        <div class="space-y-2 py-2">
+          <p id="story-text-en" class="font-heading text-lg sm:text-xl font-bold text-dark">English sentence...</p>
+          <p id="story-text-ur" class="font-urdu text-xl sm:text-2xl text-pastel-purple-dark leading-relaxed font-bold" dir="rtl">اردو کا جملہ...</p>
+        </div>
+
+        <div class="flex items-center justify-center gap-3 pt-2">
+          <button onclick="playCurrentStoryPageAudio(false)" class="px-5 py-2.5 rounded-2xl bg-pastel-purple text-white font-heading font-bold text-xs flex items-center gap-2 shadow-sm">
+            <i class="fa-solid fa-volume-high"></i>
+            <span>Read to Me / مجھے سناؤ</span>
+          </button>
+          <button onclick="playCurrentStoryPageAudio(true)" title="Slow Turtle Speed" class="px-3.5 py-2.5 rounded-2xl bg-pastel-yellow/40 hover:bg-pastel-yellow text-dark text-xs font-bold flex items-center gap-1.5 border border-pastel-yellow">
+            <span>🐢 Slow / آہستہ</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quiz on Page 6 -->
+      <div id="story-reader-quiz" class="space-y-4 hidden">
+        <div class="text-center">
+          <span class="text-3xl">⭐</span>
+          <h4 class="font-heading font-bold text-xl text-dark mt-1">Think & Answer / سوچیں اور بتائیں</h4>
+          <p class="text-xs text-dark-light">3 Picture-based questions about what happened in the story!</p>
+        </div>
+        <div id="story-quiz-container" class="space-y-3"></div>
+      </div>
+
+      <div class="flex items-center justify-between border-t border-dark/10 pt-4">
+        <button id="story-prev-btn" onclick="prevStoryPage()" class="px-4 py-2 rounded-2xl bg-cream hover:bg-dark/10 text-dark text-xs font-semibold">
+          <i class="fa-solid fa-arrow-left mr-1"></i> Back / پیچھے
+        </button>
+        <span id="story-page-indicator" class="text-xs font-bold text-dark-light">Page 1 / 5</span>
+        <button id="story-next-btn" onclick="nextStoryPage()" class="px-5 py-2 rounded-2xl bg-pastel-green hover:bg-pastel-green-dark text-white text-xs font-bold shadow-sm">
+          Next / اگلا <i class="fa-solid fa-arrow-right ml-1"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN-FREE TIMER END LOCK MODAL -->
+  <div id="screen-free-modal" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-md hidden flex items-center justify-center p-4">
+    <div class="glass-card rounded-4xl bg-white max-w-lg w-full p-6 sm:p-8 space-y-6 text-center shadow-2xl">
+      <div class="w-20 h-20 rounded-full bg-pastel-yellow/30 border-2 border-pastel-yellow flex items-center justify-center text-4xl mx-auto animate-bounce-gentle">
+        🐢
+      </div>
+      <div>
+        <h3 class="text-2xl font-heading font-extrabold text-dark">Screen time is over!</h3>
+        <p class="font-urdu text-xl font-bold text-pastel-green-dark" dir="rtl">اسکرین کا وقت ختم، اب گھر کی ایکٹیویٹی کا وقت ہے!</p>
+      </div>
+
+      <div class="p-5 rounded-3xl bg-cream-soft border border-pastel-orange/40 text-left space-y-2">
+        <div class="flex items-center gap-2">
+          <span class="text-xs font-bold bg-pastel-orange text-white px-2.5 py-0.5 rounded-full">Daily Hands-on Mission</span>
+        </div>
+        <h4 class="font-heading font-bold text-dark text-base">Make a Mud / Playdough Flower Pot</h4>
+        <p class="text-xs text-dark-light">Roll playdough or garden soil into small balls. Put a real twig or leaf inside to create a blooming flower pot!</p>
+        <div class="text-[11px] text-dark-light pt-1 border-t border-dark/5">
+          <p><strong>Safety Note:</strong> Adult supervision for washing hands after play.</p>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-2 pt-2">
+        <button onclick="completeHomeActivity()" class="btn-bounce w-full py-3 rounded-2xl bg-pastel-green hover:bg-pastel-green-dark text-white font-heading font-bold text-sm shadow-md">
+          I Finished the Activity! / مکمل ہو گئی (+5 ⭐)
+        </button>
+        <button onclick="requestExtraScreenTime()" class="text-xs text-dark-light hover:underline">
+          Parents: Unlock Extra 10 Mins with PIN
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- PARENT PORTAL & PIN MODAL -->
+  <div id="parent-modal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="glass-card rounded-4xl bg-white max-w-md w-full p-6 sm:p-8 space-y-5 shadow-2xl">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <i class="fa-solid fa-lock text-pastel-pink-dark"></i>
+          <h3 class="font-heading font-bold text-dark text-lg">Parent Zone / والدین کا حصہ</h3>
+        </div>
+        <button onclick="closeParentModal()" class="w-8 h-8 rounded-full bg-cream hover:bg-dark/10 text-dark flex items-center justify-center text-xs">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <div id="pin-section" class="space-y-4 text-center">
+        <p class="text-xs text-dark-light">Enter 4-digit Parent PIN (Default: <strong>1234</strong>) to adjust timer limits and view guidance:</p>
+        <input type="password" id="parent-pin-input" maxlength="4" placeholder="••••" class="text-center font-heading font-bold text-2xl tracking-widest w-36 py-2 rounded-2xl border-2 border-pastel-pink focus:outline-none mx-auto block">
+        <button onclick="verifyParentPin()" class="btn-bounce px-6 py-2.5 rounded-2xl bg-pastel-pink hover:brightness-95 text-dark font-heading font-bold text-sm shadow-sm w-full">
+          Unlock Dashboard / کھولیں
+        </button>
+      </div>
+
+      <div id="parent-tools-section" class="space-y-4 hidden">
+        <div class="p-4 rounded-2xl bg-cream space-y-2 text-xs">
+          <h4 class="font-bold text-dark">Screen Time Limit:</h4>
+          <div class="flex items-center justify-between gap-2">
+            <button onclick="setTimerDuration(10)" class="flex-1 py-1.5 rounded-xl bg-white border border-dark/10 font-bold">10m</button>
+            <button onclick="setTimerDuration(15)" class="flex-1 py-1.5 rounded-xl bg-white border border-dark/10 font-bold">15m</button>
+            <button onclick="setTimerDuration(20)" class="flex-1 py-1.5 rounded-xl bg-pastel-green text-white font-bold">20m (Rec)</button>
+            <button onclick="setTimerDuration(30)" class="flex-1 py-1.5 rounded-xl bg-white border border-dark/10 font-bold">30m</button>
+          </div>
+        </div>
+
+        <!-- Kali Helper RAG Assistant for Parents -->
+        <div class="p-4 rounded-2xl bg-pastel-green/10 border border-pastel-green/30 space-y-2">
+          <h4 class="font-bold text-dark text-xs flex items-center gap-1.5">
+            <i class="fa-solid fa-robot text-pastel-green-dark"></i>
+            <span>Kali Helper (AI Parent Guide)</span>
+          </h4>
+          <p class="text-[11px] text-dark-light">Ask any question about child fine-motor skills, Islamic habits, or bedtime routines:</p>
+          <div class="flex gap-1.5">
+            <input type="text" id="rag-query" placeholder="e.g. 3-year-old pencil grip..." class="flex-1 px-3 py-1.5 rounded-xl border border-dark/10 text-xs focus:outline-none">
+            <button onclick="askKaliHelper()" class="px-3 py-1.5 rounded-xl bg-pastel-green text-white text-xs font-bold">Ask</button>
+          </div>
+          <div id="rag-answer" class="text-[11px] text-dark bg-white p-2.5 rounded-xl border border-pastel-green/30 hidden leading-relaxed"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="glass-nav mt-16 border-t border-dark/10 py-8 px-4">
+    <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+      <div class="flex items-center gap-3 justify-center">
+        <img src="images/logo/kali-mascot.jpg" alt="Nanhi Kaliyan Logo" class="w-10 h-10 object-contain rounded-full shadow-sm">
+        <div>
+          <p class="font-heading font-bold text-base text-dark">Nanhi Kaliyan (Little Buds)</p>
+          <p class="font-urdu text-xs text-pastel-green-dark" dir="rtl">گھر کی مٹی میں کھلتے ننھے پھول</p>
+        </div>
+      </div>
+      <p class="text-xs text-dark-light">
+        A bilingual home-learning sanctuary for little hearts and curious minds. Built for parents & children.
+      </p>
+      <div class="flex items-center gap-4 text-xs font-semibold text-dark-light justify-center">
+        <a href="#privacy" onclick="alert('Privacy Guarantee: Nanhi Kaliyan collects zero personal child data, zero third-party ads, zero tracking. 100% safe home learning.')" class="hover:underline">Privacy Policy</a>
+        <span>•</span>
+        <button onclick="replaySplash()" class="hover:underline text-pastel-green-dark">Replay Intro Splash</button>
+      </div>
+    </div>
+  </footer>

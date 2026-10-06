@@ -1,0 +1,472 @@
+/* ============================================================
+   Nanhi Kaliyan (Little Buds) — Design System v4
+   Authentic Glassmorphism · Cartoon Characters · Responsive
+   ============================================================ */
+
+/* ── Google Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;500;600;700;800&family=Noto+Nastaliq+Urdu:wght@400;500;600;700&family=Noto+Naskh+Arabic:wght@400;600;700&display=swap');
+
+/* ── Design Tokens ── */
+:root {
+  /* Brand palette — tulip bud, leaves, sun */
+  --bg:          #FBF8EC;
+  --green:       #6AAE6A;
+  --green-dark:  #4E9150;
+  --green-soft:  #EEF6E6;
+  --pink:        #FFB3C1;
+  --pink-soft:   #FFE3E8;
+  --pink-dark:   #EE8497;
+  --yellow:      #FFD36B;
+  --yellow-soft: #FFF4D6;
+  --text:        #4A3B35;
+  --text-light:  #7D6E65;
+
+  /* Section Colors */
+  --sec-islamic:   #6AAE6A;
+  --sec-manners:   #FFB3C1;
+  --sec-poems:     #FFD36B;
+  --sec-tracing:   #9CD3EA;
+  --sec-finemotor: #FFC9A3;
+  --sec-exercise:  #8ED1FC;
+  --sec-art:       #FFA765;
+  --sec-speaking:  #9CD3EA;
+
+  /* Font CSS Variables */
+  --font-heading-en: 'Fredoka', 'Nunito', sans-serif;
+  --font-body-en:    'Nunito', 'Poppins', sans-serif;
+  --font-heading-ur: 'Noto Nastaliq Urdu', 'Noto Naskh Arabic', 'Jameel Noori Nastaleeq', serif;
+  --font-body-ur:    'Noto Naskh Arabic', 'Noto Nastaliq Urdu', serif;
+
+  /* Glass Surfaces */
+  --glass-bg:     rgba(255, 255, 255, 0.58);
+  --glass-border: rgba(255, 255, 255, 0.85);
+  --glass-shadow: 0 10px 32px 0 rgba(74, 59, 53, 0.08);
+
+  /* Radii */
+  --radius-sm: 14px;
+  --radius-md: 18px;
+  --radius-lg: 22px;
+  --radius-xl: 26px;
+
+  /* Button sizing */
+  --btn-min-h: 48px;
+}
+
+/* ── Base ── */
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body-en);
+  font-size: 16px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+  margin: 0;
+  padding: 0;
+  position: relative;
+}
+
+/* ── Pastel Blobs Layer for Glassmorphism Depth ── */
+.bg-blobs-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.65;
+}
+
+.blob-green  { width: 380px; height: 380px; background: #D9F0CE; top: -60px; left: -80px; }
+.blob-pink   { width: 340px; height: 340px; background: #FFD4DD; bottom: 8%; right: -60px; }
+.blob-yellow { width: 390px; height: 390px; background: #FFE8A3; top: 38%; left: 8%; }
+.blob-blue   { width: 320px; height: 320px; background: #CEEBFE; top: 18%; right: 15%; }
+
+/* ── Typography ── */
+.font-heading {
+  font-family: var(--font-heading-en);
+}
+
+/* Urdu headings — Noto Nastaliq Urdu with extra padding so dots never get clipped */
+.font-urdu {
+  font-family: var(--font-heading-ur);
+  line-height: 2.0 !important;
+  padding-top: 3px;
+  padding-bottom: 5px;
+  letter-spacing: 0;
+  word-spacing: 2px;
+  font-size: 1.02em;
+  display: inline-block;
+  color: var(--green-dark);
+}
+
+/* Urdu body / small text — Noto Naskh Arabic (min 16px, line-height 1.9) */
+.font-arabic,
+.font-urdu-body {
+  font-family: var(--font-body-ur);
+  line-height: 1.9 !important;
+  font-size: max(1rem, 16px);
+  color: var(--text);
+}
+
+/* ── GLASSMORPHISM CARDS (Glossy Glass Look) ── */
+.glass-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1.5px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--glass-shadow);
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.glass-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40%;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+}
+
+.glass-nav {
+  background: rgba(251, 248, 236, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1.5px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 4px 16px rgba(74, 59, 53, 0.05);
+}
+
+/* Timer card in green-soft glass */
+.timer-card-theme {
+  background: rgba(238, 246, 230, 0.82) !important;
+  border-color: rgba(106, 174, 106, 0.4) !important;
+}
+
+/* ── Modal Opening Animation (Scale + Fade) ── */
+.modal-glass-container {
+  animation: modalGlassOpen 0.28s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes modalGlassOpen {
+  from { opacity: 0; transform: scale(0.92) translateY(16px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+.btn-close-modal {
+  min-width: 48px;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Buttons — Min 48px, warm rounding, glossy shine ── */
+button, .btn, [role="button"] {
+  min-height: var(--btn-min-h);
+  border-radius: var(--radius-md);
+  font-family: var(--font-body-en);
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.btn-primary {
+  background-color: var(--green) !important;
+  color: #FFFFFF !important;
+}
+
+.btn-primary:hover {
+  background-color: var(--green-dark) !important;
+  transform: translateY(-1px);
+}
+
+/* ── Glossy shine on click & hover ── */
+.glossy-click {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+}
+
+.glossy-click:hover {
+  box-shadow: 0 6px 20px rgba(74, 59, 53, 0.14);
+}
+
+.glossy-click:active {
+  transform: scale(0.96);
+}
+
+.glossy-click::after {
+  content: '';
+  position: absolute;
+  top: -60%;
+  left: -70%;
+  width: 50%;
+  height: 220%;
+  background: linear-gradient(
+    to right,
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 0.75) 50%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: rotate(25deg) translateX(-180%);
+  pointer-events: none;
+  opacity: 0;
+}
+
+.glossy-click.shine-trigger::after,
+.glossy-click:hover::after {
+  opacity: 1;
+  animation: glossySweep 0.6s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+@keyframes glossySweep {
+  0%   { transform: rotate(25deg) translateX(-180%); opacity: 1; }
+  100% { transform: rotate(25deg) translateX(420%);  opacity: 0; }
+}
+
+/* ── Progress bar — green to yellow gradient ── */
+.progress-bar-fill,
+#timer-progress,
+.level-progress-bar {
+  background: linear-gradient(90deg, var(--green) 0%, var(--yellow) 100%);
+  border-radius: 999px;
+  transition: width 0.4s ease;
+}
+
+/* ── Level Badges ── */
+.level-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 14px;
+  border-radius: 999px;
+  background-color: var(--yellow-soft);
+  color: var(--text);
+  border: 1.5px solid var(--yellow);
+  font-weight: 800;
+  font-size: 13px;
+}
+
+/* ── CARTOON CHARACTER ANIMATIONS & CLEAN BLENDING ── */
+.img-blend-multiply {
+  mix-blend-mode: multiply;
+}
+
+/* Cartoon 1: boy with pencil in tracing */
+.animate-cartoon-1 {
+  animation: pencilBoyFloat 3.2s ease-in-out infinite;
+  transform-origin: center bottom;
+}
+@keyframes pencilBoyFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-8px) rotate(1.5deg); }
+}
+
+.animate-bye-wave {
+  animation: byeWave 0.75s ease-in-out infinite alternate;
+}
+@keyframes byeWave {
+  from { transform: rotate(-6deg); }
+  to   { transform: rotate(18deg); }
+}
+
+/* Cartoon 2: walking pencil with books in home activity */
+.animate-cartoon-2 {
+  animation: pencilWalk 3s ease-in-out infinite;
+}
+@keyframes pencilWalk {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  25% { transform: translateX(-8px) rotate(-3deg); }
+  75% { transform: translateX(8px) rotate(3deg); }
+}
+
+/* Cartoon 3: boy with backpack waving in art */
+.animate-cartoon-3 {
+  animation: boyJumpWave 2.4s ease-in-out infinite;
+}
+@keyframes boyJumpWave {
+  0%, 100% { transform: translateY(0) scale(1); }
+  45% { transform: translateY(-12px) scale(1.04); }
+  65% { transform: translateY(-4px) scale(1.02); }
+}
+
+/* Cartoon 4: welcome screen drawing */
+.animate-cartoon-4 {
+  animation: welcomeFloat 3.8s ease-in-out infinite;
+}
+@keyframes welcomeFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Cartoon 5: girl reading book in stories */
+.animate-cartoon-5 {
+  animation: girlReadFloat 3.5s ease-in-out infinite;
+}
+@keyframes girlReadFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-7px) rotate(-1.5deg); }
+}
+
+/* Speech bubbles with pointer tail */
+.speech-bubble {
+  position: relative;
+  background: #FFFFFF;
+  border: 1.5px solid rgba(74, 59, 53, 0.12);
+  border-radius: 16px;
+  padding: 8px 14px;
+  box-shadow: 0 4px 14px rgba(74, 59, 53, 0.08);
+}
+.speech-bubble::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 26px;
+  border-width: 8px 8px 0;
+  border-style: solid;
+  border-color: #FFFFFF transparent;
+  display: block;
+  width: 0;
+}
+
+/* ── Parent / Admin Grouped Menu ── */
+.parent-menu-wrap {
+  position: relative;
+}
+
+.parent-menu-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  min-height: 40px;
+  border-radius: var(--radius-sm);
+  background: var(--pink-soft);
+  border: 1.5px solid var(--pink);
+  color: var(--pink-dark);
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.parent-menu-trigger:hover {
+  background: var(--pink);
+  color: #fff;
+}
+
+.parent-menu-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  min-width: 210px;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1.5px solid var(--glass-border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 36px rgba(74, 59, 53, 0.14);
+  padding: 8px;
+  z-index: 100;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.parent-menu-wrap.open .parent-menu-dropdown {
+  display: flex;
+  animation: modalGlassOpen 0.2s ease forwards;
+}
+
+.parent-menu-dropdown button,
+.parent-menu-dropdown a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  border: none;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: 700;
+  text-align: start;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  min-height: 42px;
+}
+
+.parent-menu-dropdown button:hover,
+.parent-menu-dropdown a:hover {
+  background: var(--green-soft);
+  color: var(--green-dark);
+}
+
+/* ── Moveable Logo & Cards ── */
+.moveable-hero-logo {
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.moveable-hero-logo:active,
+.moveable-hero-logo.dragging {
+  cursor: grabbing;
+  transition: none;
+}
+
+/* ── Speed Buttons ── */
+.speed-btn-active {
+  background-color: var(--green) !important;
+  color: #FFFFFF !important;
+}
+
+/* ── Video Embed ── */
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  height: 0;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+}
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+/* ── RTL Support ── */
+[dir="rtl"] {
+  text-align: right;
+}
+[dir="rtl"] .rtl-flip {
+  transform: scaleX(-1);
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

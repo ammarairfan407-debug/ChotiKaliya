@@ -1,0 +1,248 @@
+{
+  "appName": "Nanhi Kaliyan",
+  "appSubtitle": "Little Buds",
+  "tagline": "Little buds blooming at home",
+  "taglineSecondary": "Ghar ki mitti mein khilte nanhe phool",
+  "nav": {
+    "home": "Home",
+    "littleLearners": "Little Learners",
+    "juniorLearners": "Junior Learners",
+    "garden": "My Garden",
+    "parents": "Parents",
+    "admin": "Admin",
+    "langToggle": "Language",
+    "both": "Both",
+    "urdu": "اردو",
+    "english": "English",
+    "voiceOn": "Voice On",
+    "voiceOff": "Voice Off",
+    "stars": "Stars",
+    "languageTest": "Language Test"
+  },
+  "splash": {
+    "welcome": "Welcome to Nanhi Kaliyan",
+    "sub": "A gentle bilingual sanctuary for young learners and parents",
+    "skip": "Skip Intro"
+  },
+  "hero": {
+    "badge": "Home Learning with Parents",
+    "title": "Little buds blooming at home",
+    "desc": "Children aged 2.5 to 6 learn best at home with parents, hands-on, with very little screen time. Gentle 20-minute daily adventures followed by screen-free joyful activities.",
+    "startBtn": "Start Learning",
+    "parentsBtn": "Parent Guide",
+    "kaliGreeting": "Assalam-o-Alaikum friends! I am Kali. Let's learn and play together in our garden!",
+    "listenToKali": "Tap Kali to Listen",
+    "dragTip": "Tip: You can gently drag Kali around!"
+  },
+  "ageCards": {
+    "heading": "Choose Your Learning Journey",
+    "subheading": "Pick the best age group for your child",
+    "littleTitle": "Little Learners",
+    "littleAge": "Ages 2.5 – 6 Years",
+    "littleDesc": "Playful, hands-on discovery with parents. Daily Duas, gentle manners, fine-motor games, action poems, finger tracing, swipeable picture stories & weekly screen-free projects.",
+    "littleBtn": "Open Little Learners",
+    "juniorTitle": "Junior Learners",
+    "juniorAge": "Ages 7 – 10 Years",
+    "juniorDesc": "Curious minds explore mental maths challenges, English & Urdu grammar, safe home science experiments with Professor Ullu, and timed logic quizzes.",
+    "juniorBtn": "Open Junior Learners"
+  },
+  "timer": {
+    "title": "Today's Plan / 20-Minute Timer",
+    "desc": "Gentle screen time limit. When time is up, screen locks for hands-on home play!",
+    "play": "Start Timer",
+    "pause": "Pause Timer",
+    "reset": "Reset",
+    "add5": "+5 Mins",
+    "overTitle": "Screen time is over!",
+    "overSubtitle": "Time for a hands-on home activity with family!",
+    "dadiPrompt": "Dadi Kachwa says: Time to put the screen away and play with your hands!",
+    "finishBtn": "I Finished the Activity! (+5 Stars)",
+    "parentUnlock": "Parent PIN Unlock (+10 mins)"
+  },
+  "screenFree": {
+    "badge": "Daily Screen-Free Play",
+    "estTime": "15 – 20 mins • Household Items",
+    "title": "Color Mixing with Water & Ice Cups",
+    "desc": "Take 3 transparent cups, water, and food colors. Watch yellow and blue create green magic together!",
+    "materialsTitle": "Household Materials Needed:",
+    "stepsTitle": "Parent Steps:",
+    "safetyTitle": "Safety Note:",
+    "safetyDesc": "Adult supervision required when handling liquids and ice cubes.",
+    "audioGuide": "Listen to Audio Steps",
+    "viewSteps": "View Activity Guide"
+  },
+  "littleSections": {
+    "backHome": "Back to Home",
+    "title": "Little Learners (Ages 2.5 – 6)",
+    "tabs": {
+      "islamic": "Islamic Section",
+      "manners": "Manners",
+      "fineMotor": "Fine Motor",
+      "poems": "Poems",
+      "speaking": "Speaking & Writing",
+      "tracing": "Tracing & Writing",
+      "stories": "Stories",
+      "weekly": "Home Activity"
+    },
+    "islamic": {
+      "guide": "Noori the Firefly",
+      "quote": "Noori lights our garden with gentle Duas and Bismillah before everything we do!",
+      "verified": "Verified Content",
+      "repeatBtn": "Repeat After Me (+1 Star)",
+      "wuduTitle": "4 Steps of Wudu for Little Hands",
+      "namesTitle": "Beautiful Names of Allah",
+      "habitTitle": "Daily Good Deed Tracker",
+      "saidSalam": "Said Salam",
+      "saidBismillah": "Said Bismillah",
+      "smiled": "Smiled at Family",
+      "sharedToy": "Shared a Toy"
+    },
+    "manners": {
+      "guide": "Meethi Titli the Butterfly",
+      "quote": "Good manners make our words sweet like honey and hearts full of joy!",
+      "gameTitle": "Right or Wrong Picture Game?",
+      "gameDesc": "Look at the scenario and tap Right or Wrong!",
+      "right": "Right",
+      "wrong": "Wrong",
+      "weeklyChallenge": "Weekly Manners Challenge: Give 3 warm Salams with a big smile today!"
+    },
+    "fineMotor": {
+      "guide": "Bheeni the Bee",
+      "quote": "Little fingers do big work! Tearing paper, rolling dough, and sorting colors.",
+      "materialsTitle": "Parent's Kitchen Materials Checklist:",
+      "sortGameTitle": "Sort Green Items into the Garden Basket!",
+      "sortGameDesc": "Tap all the green items to drop them into the garden basket.",
+      "basketCount": "Green Garden Basket: "
+    },
+    "poems": {
+      "guide": "Bulbul the Songbird",
+      "quote": "Sing, rhyme, and move your little wings with happy Urdu and English poems!",
+      "singBtn": "Sing Together",
+      "safeEmbed": "Safe YouTube-nocookie Video Slot (No Ads, No Recommendations)"
+    },
+    "speaking": {
+      "guide": "Mitthu the Parrot",
+      "quote": "Listen to the sweet sound, repeat with Mitthu, and say your first words!",
+      "tapHear": "Tap to Hear",
+      "yourTurn": "Your Turn to Speak!",
+      "prompt": "Say: 'Alif se Anaar' or 'Apple' into your microphone!",
+      "recordBtn": "Tap to Record Voice",
+      "recording": "Listening to your sweet voice...",
+      "wellDone": "Mashallah! Wonderful pronunciation! (+1 Star)"
+    },
+    "tracing": {
+      "guide": "Lakeer the Caterpillar",
+      "quote": "Follow the gentle lines with your tiny finger. Straight lines, curves, letters and stars!",
+      "straight": "Straight Line",
+      "curve": "Curved Wave",
+      "alif": "ا (Alif)",
+      "letterA": "Letter A",
+      "number1": "Number 1",
+      "freeDraw": "Free Drawing",
+      "clear": "Clear Canvas",
+      "done": "Check My Tracing (+1 Star)",
+      "penColor": "Pen Color:"
+    },
+    "stories": {
+      "guide": "Dadi Kachwa's Story Corner",
+      "quote": "Cozy illustrated picture books with gentle lessons, questions and parent activities.",
+      "readStory": "Read Story",
+      "readToMe": "Read to Me",
+      "iWillRead": "I Will Read",
+      "slowSpeed": "Slow Turtle",
+      "page": "Page",
+      "next": "Next",
+      "back": "Back",
+      "moralTitle": "Moral of the Story:",
+      "parentPromptTitle": "Parent Discussion Prompt:",
+      "homeFollowupTitle": "Screen-free Home Followup:",
+      "quizTitle": "Think & Answer (3 Picture Questions)"
+    },
+    "weekly": {
+      "guide": "Dadi Kachwa's Weekly Mission",
+      "title": "Weekly Screen-Free Home Project",
+      "themeTitle": "This Week's Theme: Water, Allah's Blessing",
+      "projectTitle": "Make a Floating Paper Flower!",
+      "projectDesc": "Fold paper flower petals toward the center. Place it on a bowl of water and watch it bloom on its own!",
+      "uploadBtn": "Upload Parent Photo (+3 Stars)",
+      "uploadSuccess": "Photo uploaded successfully! Teacher feedback: 'Mashallah, creative little scientist!'"
+    }
+  },
+  "juniorSections": {
+    "title": "Junior Learners (Ages 7 – 10)",
+    "mathsTitle": "Gintu's Rapid Mental Maths",
+    "mathsDesc": "Solve quick arithmetic challenges before time runs out!",
+    "scienceTitle": "Professor Ullu's Safe Home Science",
+    "scienceDesc": "Discover the laws of nature with simple kitchen ingredients.",
+    "grammarTitle": "English Grammar & Action Verbs",
+    "grammarDesc": "Spot the action verb in the sentence to unlock the next level.",
+    "urduTitle": "Urdu Language & Vocabulary",
+    "urduDesc": "Letter joining, word puzzles, and sentence builders.",
+    "quizTitle": "Chintu's Nature & Logic Quiz",
+    "quizDesc": "Fast-paced questions with score tracking and levels.",
+    "creativeTitle": "Creative Corner & Story Lab",
+    "creativeDesc": "Write your own story and illustrate it on the drawing canvas."
+  },
+  "garden": {
+    "title": "Mera Baagh / My Garden",
+    "sub": "Your Personal Growth Garden of Stars & Badges",
+    "totalStars": "Total Stars Earned:",
+    "stageSeed": "Stage: Seed in Soft Soil",
+    "stageSprout": "Stage: Green Garden Sprout",
+    "stageBud": "Stage: Growing Flower Bud",
+    "stageFlower": "Stage: Blooming Radiant Flower!",
+    "celebrate": "Celebrate Garden! (Confetti)",
+    "friendsTitle": "Garden Friends Unlocked"
+  },
+  "parent": {
+    "title": "Parent Dashboard & Portal",
+    "enterPin": "Enter 4-digit Parent PIN (Default: 1234):",
+    "unlock": "Unlock Dashboard",
+    "timeLimit": "Daily Screen Time Limit:",
+    "ragTitle": "Kali Helper (AI Parent Guide)",
+    "ragDesc": "Ask any question about child development, fine-motor grip, tantrums, or bedtime routines:",
+    "askBtn": "Ask Kali",
+    "placeholder": "e.g., My 3-year-old struggles to hold a crayon...",
+    "wrongPin": "Incorrect PIN. Please enter 1234."
+  },
+  "admin": {
+    "title": "Teacher & Admin Portal",
+    "subtitle": "Content Editor, Verification & Weekly Planner",
+    "createLesson": "Create / Edit Bilingual Lesson",
+    "section": "Section",
+    "ageGroup": "Age Group",
+    "titleEn": "English Title",
+    "titleUr": "Urdu Title",
+    "verifiedCheck": "Mark as Verified (Islamic Content)",
+    "save": "Save Lesson",
+    "weeklyCards": "Weekly Plan Reorder (Drag & Drop)"
+  },
+  "languageTest": {
+    "title": "Urdu & English Bilingual Audit Test",
+    "subtitle": "Verification page for font loading, Nastaliq ligature rendering, and RTL layout",
+    "sampleNastaliq": "گھر کی مٹی میں کھلتے ننھے پھول، پھلواری میں مسکراتی ننھی کلیاں۔",
+    "sampleArabic": "بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ",
+    "sampleEnglish": "The quick brown fox jumps over the lazy dog.",
+    "fontCheck": "Active Font Stacks:",
+    "rtlCheck": "Directionality & Mirroring Test:"
+  },
+  "footer": {
+    "rights": "All rights reserved. Dedicated to nurturing childhood with love and minimal screen time.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "replaySplash": "Replay Startup Animation"
+  },
+  "characters": {
+    "kali": "Kali the Bud",
+    "noori": "Noori the Firefly",
+    "meethi": "Meethi Titli the Butterfly",
+    "bheeni": "Bheeni the Bee",
+    "bulbul": "Bulbul the Songbird",
+    "mitthu": "Mitthu the Parrot",
+    "lakeer": "Lakeer the Caterpillar",
+    "dadi": "Dadi Kachwa the Tortoise",
+    "gintu": "Gintu the Squirrel",
+    "ullu": "Professor Ullu the Owl",
+    "chintu": "Chintu the Rabbit"
+  }
+}

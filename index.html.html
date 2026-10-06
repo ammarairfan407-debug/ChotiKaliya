@@ -1,0 +1,1279 @@
+<!DOCTYPE html>
+<html lang="ur" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Nanhi Kaliyan | Little Buds - Little Buds Blooming at Home</title>
+  <link rel="icon" type="image/jpeg" href="images/logo/kali-mascot.jpg">
+  <link rel="apple-touch-icon" href="images/logo/kali-mascot.jpg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="src/styles/app.css">
+</head>
+<body class="min-h-screen flex flex-col selection:bg-pink-200">
+
+  <!-- PASTEL DEPTH BLOBS FOR GLASSMORPHISM -->
+  <div class="bg-blobs-layer">
+    <div class="blob blob-green"></div>
+    <div class="blob blob-pink"></div>
+    <div class="blob blob-yellow"></div>
+    <div class="blob blob-blue"></div>
+  </div>
+
+  <!-- 1. STARTUP SPLASH SCREEN (ANIMATED SVG BUD OPEN / CLOSE / BLOOM CYCLE) -->
+  <div id="splash-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#FBF8EC] transition-opacity duration-700">
+    <button id="splash-skip-btn" class="glossy-click absolute top-6 right-6 px-4 py-2 text-xs font-bold rounded-full bg-white/80 hover:bg-white text-dark shadow-sm border border-white">
+      <span data-i18n="splash.skip">Skip Intro / چھوڑیں</span> <i class="fa-solid fa-forward ml-1"></i>
+    </button>
+    <div class="relative flex flex-col items-center text-center p-6 max-w-lg z-10">
+      <div id="splash-flower-container" class="relative w-44 h-44 mb-3 flex items-center justify-center">
+        <!-- SVG flower bud animated -->
+        <svg class="w-36 h-36 animate-bud-cycle" viewBox="0 0 160 160">
+          <circle cx="80" cy="80" r="55" fill="#FFE3E8" stroke="#FFB3C1" stroke-width="3"/>
+          <path class="animate-petal-left" d="M80 40 C60 50, 45 80, 75 120 C70 95, 75 60, 80 40 Z" fill="#6AAE6A"/>
+          <path class="animate-petal-right" d="M80 40 C100 50, 115 80, 85 120 C90 95, 85 60, 80 40 Z" fill="#4E9150"/>
+          <circle cx="80" cy="80" r="28" fill="#FFD36B"/>
+          <circle cx="73" cy="76" r="3.5" fill="#4A3B35"/>
+          <circle cx="87" cy="76" r="3.5" fill="#4A3B35"/>
+          <path d="M74 85 Q80 92 86 85" stroke="#4A3B35" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        </svg>
+      </div>
+      
+      <h1 class="text-4xl sm:text-5xl font-heading font-extrabold text-[#4A3B35] tracking-tight">
+        Nanhi Kaliyan
+      </h1>
+      <h2 class="text-3xl sm:text-4xl font-urdu font-bold mt-1 mb-2" dir="rtl">
+        ننھی کلیاں
+      </h2>
+      <p class="text-sm sm:text-base text-[#7D6E65] font-medium italic mb-1">
+        "Little buds blooming at home"
+      </p>
+      <p class="text-base sm:text-lg font-urdu" dir="rtl">
+        "گھر کی مٹی میں کھلتے ننھے پھول"
+      </p>
+    </div>
+  </div>
+
+  <!-- WELCOME MODAL WITH CARTOON_4.JPG (BOY & GIRL DRAWING) -->
+  <div id="welcome-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-md hidden">
+    <div class="glass-card modal-glass-container rounded-4xl p-6 sm:p-8 max-w-lg w-full text-center relative border border-white shadow-2xl">
+      <!-- Cartoon 4 Image -->
+      <div class="relative w-full max-w-xs mx-auto mb-4 overflow-hidden rounded-3xl animate-cartoon-4">
+        <img src="images/cartoon_4.jpg" alt="Children Drawing" class="w-full h-44 object-contain rounded-3xl img-blend-multiply mx-auto">
+      </div>
+
+      <div class="speech-bubble max-w-xs mx-auto mb-4 text-center">
+        <p class="text-xs font-bold text-dark">"Welcome little buds! / خوش آمدید ننھے پھول!"</p>
+      </div>
+
+      <h3 class="text-2xl font-heading font-extrabold text-dark" data-i18n="welcomeModal.title">Welcome to Our Garden!</h3>
+      <p class="font-urdu text-lg font-bold text-[#4E9150] my-1" dir="rtl">السلام علیکم پیارے دوست! ہمارے باغ میں خوش آمدید!</p>
+      <p class="text-xs sm:text-sm text-dark-light max-w-md mx-auto mb-5" data-i18n="welcomeModal.greeting">
+        Assalam-o-Alaikum! We are excited to learn, trace, and play together today!
+      </p>
+
+      <button onclick="window.closeWelcomeModal()" class="btn-primary glossy-click w-full py-3.5 rounded-2xl font-heading font-bold text-base shadow-lg flex items-center justify-center gap-2">
+        <span>Start / شروع کریں</span>
+        <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- REUSABLE STEP-BY-STEP ACTIVITY MODAL (FEATURE D) -->
+  <div id="step-by-step-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-md hidden">
+    <div class="glass-card modal-glass-container rounded-4xl p-6 sm:p-8 max-w-lg w-full relative border border-white shadow-2xl space-y-5">
+      <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+        <h3 id="step-modal-title" class="font-heading font-bold text-dark text-base sm:text-lg">Activity Guide</h3>
+        <button onclick="window.NK_STEP_BY_STEP.close()" class="btn-close-modal rounded-full bg-gray-100 hover:bg-gray-200 text-dark">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div class="flex flex-col items-center text-center space-y-3 py-2">
+        <div id="step-modal-icon" class="w-20 h-20 rounded-3xl bg-green-100 flex items-center justify-center text-4xl shadow-sm animate-character-bob">
+          🌟
+        </div>
+        <p id="step-modal-desc-en" class="font-heading font-bold text-dark text-base sm:text-lg max-w-md leading-relaxed"></p>
+        <p id="step-modal-desc-ur" class="font-urdu text-base sm:text-lg font-bold text-[#4E9150] leading-loose max-w-md" dir="rtl"></p>
+      </div>
+
+      <!-- Step Navigation Dots -->
+      <div id="step-modal-dots" class="flex justify-center items-center gap-2 pt-1"></div>
+
+      <!-- Action Buttons -->
+      <div class="flex items-center justify-between gap-3 pt-2">
+        <button id="step-modal-btn-prev" onclick="window.NK_STEP_BY_STEP.prev()" class="glossy-click px-5 py-3 rounded-2xl bg-white border border-gray-200 text-xs font-bold text-dark">
+          <i class="fa-solid fa-arrow-left mr-1"></i> Back / پچھلا
+        </button>
+        <button id="step-modal-btn-next" onclick="window.NK_STEP_BY_STEP.next()" class="btn-primary glossy-click px-6 py-3 rounded-2xl font-heading font-bold text-xs sm:text-sm shadow-md flex items-center gap-1.5">
+          <span>Next / اگلا</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5-PAGE INTERACTIVE STORY READER MODAL -->
+  <div id="story-reader-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-md hidden">
+    <div class="glass-card modal-glass-container rounded-4xl p-6 sm:p-8 max-w-lg w-full relative border border-white shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+        <div class="flex items-center gap-2">
+          <span class="text-2xl">📖</span>
+          <div>
+            <h3 id="story-reader-title" class="font-heading font-bold text-dark text-sm sm:text-base">Story Reader</h3>
+            <span id="story-reader-page-num" class="text-[11px] text-purple-700 font-bold block">Page 1 of 5</span>
+          </div>
+        </div>
+        <div class="flex items-center gap-1.5">
+          <button onclick="window.NK_STORY_READER.speakCurrentPage()" title="Read aloud" class="w-10 h-10 rounded-full bg-purple-50 text-purple-700 hover:bg-purple-100 flex items-center justify-center border border-purple-200">
+            <i class="fa-solid fa-volume-high"></i>
+          </button>
+          <button onclick="window.NK_STORY_READER.close()" class="btn-close-modal rounded-full bg-gray-100 hover:bg-gray-200 text-dark">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="flex flex-col items-center text-center space-y-3 py-3">
+        <div id="story-reader-icon" class="w-24 h-24 rounded-3xl bg-purple-100 flex items-center justify-center text-5xl shadow-sm animate-character-bob">
+          🌱
+        </div>
+        <p id="story-reader-text-en" class="font-heading font-bold text-dark text-base sm:text-lg max-w-md leading-relaxed"></p>
+        <p id="story-reader-text-ur" class="font-urdu text-base sm:text-lg font-bold text-[#4E9150] leading-loose max-w-md" dir="rtl"></p>
+      </div>
+
+      <!-- Quiz Box for Final Page -->
+      <div id="story-reader-quiz-box" class="hidden"></div>
+
+      <!-- Navigation Dots (5 pages) -->
+      <div id="story-reader-dots" class="flex justify-center items-center gap-2 pt-1"></div>
+
+      <!-- Footer Buttons -->
+      <div class="flex items-center justify-between gap-3 pt-2">
+        <button id="story-reader-btn-prev" onclick="window.NK_STORY_READER.prev()" class="glossy-click px-5 py-3 rounded-2xl bg-white border border-gray-200 text-xs font-bold text-dark">
+          <i class="fa-solid fa-arrow-left mr-1"></i> Back / پچھلا
+        </button>
+        <button id="story-reader-btn-next" onclick="window.NK_STORY_READER.next()" class="btn-primary glossy-click px-6 py-3 rounded-2xl font-heading font-bold text-xs sm:text-sm shadow-md flex items-center gap-1.5">
+          <span>Next / اگلا</span> <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- JUNIOR SCIENCE 10-QUESTION QUIZ ASSIGNMENT MODAL -->
+  <div id="science-quiz-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-md hidden">
+    <div class="glass-card modal-glass-container rounded-4xl p-6 sm:p-8 max-w-xl w-full relative border border-white shadow-2xl space-y-4">
+      <div class="flex items-center justify-between border-b border-gray-100 pb-3">
+        <div>
+          <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Junior Science Assignment</span>
+          <h3 class="font-heading font-bold text-dark text-base sm:text-lg">Ibn al-Haytham & Optics Quiz</h3>
+        </div>
+        <button onclick="window.NK_SCIENCE_QUIZ.close()" class="btn-close-modal rounded-full bg-gray-100 hover:bg-gray-200 text-dark">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Progress bar & Score Counter -->
+      <div class="space-y-1.5">
+        <div class="flex justify-between items-center text-xs font-bold">
+          <span id="science-quiz-counter" class="text-dark">Question 1 of 10</span>
+          <span id="science-quiz-score" class="text-blue-600">Score: 0/10</span>
+        </div>
+        <div class="w-full bg-gray-200 h-2.5 rounded-full overflow-hidden">
+          <div id="science-quiz-progress" class="bg-blue-600 h-full rounded-full transition-all duration-300" style="width: 10%;"></div>
+        </div>
+      </div>
+
+      <!-- Question Card -->
+      <div class="bg-blue-50/70 p-4 rounded-3xl border border-blue-100 space-y-2 text-center">
+        <p id="science-quiz-q-en" class="font-heading font-bold text-dark text-base sm:text-lg leading-snug"></p>
+        <p id="science-quiz-q-ur" class="font-urdu text-base sm:text-lg font-bold text-[#4E9150] leading-relaxed" dir="rtl"></p>
+      </div>
+
+      <!-- Options -->
+      <div id="science-quiz-options" class="space-y-2.5"></div>
+
+      <!-- Feedback / Explanation -->
+      <div id="science-quiz-explanation" class="hidden"></div>
+    </div>
+  </div>
+
+  <!-- 2. STICKY GLASS HEADER -->
+  <header class="sticky top-0 z-40 glass-nav transition-all">
+    <div class="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-between relative z-10">
+      <!-- Logo & Title -->
+      <a href="#home" onclick="window.switchTab('home')" class="glossy-click flex items-center gap-2.5 rounded-2xl p-1 hover:bg-white/40">
+        <div class="w-10 h-10 flex items-center justify-center">
+          <img src="images/logo/kali-mascot.jpg" alt="Kali Logo" class="w-10 h-10 object-contain rounded-full shadow-sm img-blend-multiply">
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-heading font-bold text-xl text-dark leading-tight">Nanhi Kaliyan</span>
+            <span class="font-urdu text-lg font-bold leading-none" dir="rtl">ننھی کلیاں</span>
+          </div>
+          <p class="text-[11px] text-dark-light hidden sm:block font-urdu" dir="rtl">گھر کی مٹی میں کھلتے ننھے پھول</p>
+        </div>
+      </a>
+
+      <!-- Right Action Controls (Child-friendly: only lang toggle, stars, voice visible) -->
+      <div class="flex items-center gap-2 sm:gap-2.5">
+        <!-- 3-State Language Toggle -->
+        <div class="flex items-center rounded-2xl p-1 text-xs font-semibold" style="background:var(--green-soft); border:1.5px solid rgba(106,174,106,0.25);">
+          <button id="lang-btn-both" onclick="window.NK_APP.setLanguage('both')" class="glossy-click px-2.5 py-1 rounded-xl font-bold transition-all" style="background:var(--green); color:#fff;">Both / دونوں</button>
+          <button id="lang-btn-ur" onclick="window.NK_APP.setLanguage('ur')" class="glossy-click px-2.5 py-1 rounded-xl font-urdu font-bold transition-all hover:bg-white/60" style="color:var(--text);">اردو</button>
+          <button id="lang-btn-en" onclick="window.NK_APP.setLanguage('en')" class="glossy-click px-2.5 py-1 rounded-xl transition-all hover:bg-white/60" style="color:var(--text);">EN</button>
+        </div>
+
+        <!-- Voice Toggle Button (Speaker) -->
+        <button id="voice-toggle-btn" onclick="window.toggleVoice()" title="Toggle Voice" class="glossy-click flex items-center justify-center" style="width:40px;height:40px;border-radius:var(--radius-sm);background:var(--green-soft);border:1.5px solid rgba(106,174,106,0.25);color:var(--green-dark);font-size:15px;">
+          <i class="fa-solid fa-volume-high"></i>
+        </button>
+
+        <!-- Star Garden (child-visible) -->
+        <button onclick="window.switchTab('garden')" class="glossy-click flex items-center gap-1.5 px-3 font-semibold" style="height:40px;border-radius:var(--radius-sm);background:var(--yellow-soft);border:1.5px solid rgba(255,211,107,0.5);color:var(--text);font-size:13px;">
+          <i class="fa-solid fa-star" style="color:#E5A800;"></i>
+          <span id="nav-star-count">14</span>
+          <span class="font-urdu" style="font-size:12px;" dir="rtl">باغ</span>
+        </button>
+
+        <!-- Parent / Admin grouped into 1 small menu -->
+        <div class="parent-menu-wrap" id="parent-menu-wrap">
+          <button class="parent-menu-trigger" onclick="document.getElementById('parent-menu-wrap').classList.toggle('open')" title="Parents / Admin" aria-label="Open parent and admin menu">
+            <i class="fa-solid fa-lock"></i>
+          </button>
+          <div class="parent-menu-dropdown">
+            <button onclick="window.openParentModal(); document.getElementById('parent-menu-wrap').classList.remove('open');">
+              <i class="fa-solid fa-hands-holding-child" style="color:var(--pink-dark);"></i>
+              <span>Parents <span class="font-urdu" style="font-size:13px;" dir="rtl">والدین</span></span>
+            </button>
+            <button onclick="window.switchTab('language-test'); document.getElementById('parent-menu-wrap').classList.remove('open');">
+              <i class="fa-solid fa-language" style="color:var(--green);"></i>
+              <span>Audit Fonts</span>
+            </button>
+            <button onclick="window.switchTab('admin'); document.getElementById('parent-menu-wrap').classList.remove('open');">
+              <i class="fa-solid fa-gear" style="color:var(--text-light);"></i>
+              <span>Admin Portal</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN APPLICATION CONTAINER -->
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 py-5 relative z-10">
+
+    <!-- 20-MINUTE TIMER BAR (PERSISTENT ON TOP) -->
+    <div class="glass-card timer-card-theme rounded-3xl p-4 sm:p-5 mb-6 border shadow-sm relative overflow-hidden">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
+        <div class="flex items-center gap-3.5 w-full md:w-auto">
+          <div class="relative w-12 h-12 flex-shrink-0 flex items-center justify-center bg-white/80 rounded-2xl shadow-sm border border-green-200">
+            <i id="timer-sun-icon" class="fa-solid fa-sun text-2xl text-amber-500 animate-sun-spin"></i>
+            <span class="absolute -bottom-1 -right-1 text-xs">🌱</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-heading font-bold text-dark text-base" data-i18n="timer.title">Aaj Ka Plan / 20-Min Timer</span>
+            </div>
+            <p class="text-xs text-dark-light" data-i18n="timer.desc">Healthy learning time limit. Screen locks for hands-on activity!</p>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between md:justify-end gap-3 w-full md:w-auto">
+          <div class="bg-white px-4 py-1.5 rounded-2xl shadow-sm border border-green-200 flex items-center gap-2">
+            <i class="fa-regular fa-clock text-amber-600"></i>
+            <span id="timer-display" class="font-heading font-bold text-2xl tracking-wider text-dark">20:00</span>
+          </div>
+
+          <div class="flex items-center gap-1.5">
+            <button id="timer-play-btn" onclick="window.toggleTimer()" class="btn-primary glossy-click w-10 h-10 rounded-2xl flex items-center justify-center shadow-md">
+              <i id="timer-play-icon" class="fa-solid fa-play"></i>
+            </button>
+            <button onclick="window.resetTimer()" title="Reset Timer" class="glossy-click w-10 h-10 rounded-2xl bg-white hover:bg-gray-50 text-dark-light flex items-center justify-center border border-gray-200 shadow-sm">
+              <i class="fa-solid fa-rotate-left"></i>
+            </button>
+            <button onclick="window.adjustTimer(5)" title="+5 mins (Parent)" class="glossy-click px-2.5 h-10 rounded-2xl bg-white hover:bg-gray-50 text-xs font-bold text-dark border border-gray-200 shadow-sm">
+              +5m
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full bg-white/70 h-2.5 rounded-full mt-3 overflow-hidden border border-white">
+        <div id="timer-progress" class="progress-bar-fill h-full rounded-full transition-all duration-1000" style="width: 100%"></div>
+      </div>
+    </div>
+
+    <!-- TAB: HOME VIEW -->
+    <div id="tab-home" class="space-y-8">
+
+      <!-- HERO SECTION WITH MOVEABLE KALI MASCOT & OVERALL LEVEL -->
+      <section class="glass-card rounded-4xl p-6 sm:p-10 relative overflow-hidden bg-white/70 border border-white shadow-sm">
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center relative z-10">
+          <div class="md:col-span-7 space-y-4 text-center md:text-start">
+            <div class="flex flex-wrap items-center justify-center md:justify-start gap-2">
+              <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-green-100 text-[#4E9150] border border-green-200 text-xs font-bold uppercase tracking-wider">
+                <i class="fa-solid fa-heart text-[#EE8497]"></i> <span data-i18n="hero.badge">Home Learning with Parents</span>
+              </div>
+              <div class="level-badge">
+                <i class="fa-solid fa-award text-amber-500"></i>
+                <span>Overall Level <strong id="overall-level-display">2</strong></span>
+              </div>
+            </div>
+
+            <h1 class="text-3xl sm:text-5xl font-heading font-extrabold text-dark leading-tight" data-i18n="hero.title">
+              Little buds blooming at home
+            </h1>
+
+            <p class="text-dark-light text-sm sm:text-base max-w-lg leading-relaxed" data-i18n="hero.desc">
+              Children aged 2.5 to 6 learn best at home with parents, hands-on, with very little screen time. Gentle 20-minute daily adventures followed by screen-free joyful activities.
+            </p>
+
+            <div class="flex flex-wrap items-center justify-center md:justify-start gap-3.5 pt-2">
+              <button onclick="window.switchTab('little')" class="btn-primary glossy-click px-7 py-3.5 rounded-2xl font-heading font-bold text-lg shadow-md hover:shadow-lg flex items-center gap-2">
+                <span data-i18n="hero.startBtn">Shuru Karein / شروع کریں</span>
+                <i class="fa-solid fa-arrow-right text-sm"></i>
+              </button>
+              <button onclick="window.openParentModal()" class="glossy-click px-6 py-3.5 rounded-2xl bg-white hover:bg-gray-50 text-dark font-heading font-semibold text-base border border-pink-200 shadow-sm flex items-center gap-2">
+                <i class="fa-solid fa-hands-holding-child text-[#EE8497]"></i>
+                <span data-i18n="hero.parentsBtn">Walidain / والدین</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- MOVEABLE KALI MASCOT -->
+          <div class="md:col-span-5 flex flex-col items-center justify-center">
+            <div class="relative flex flex-col items-center">
+              <div class="w-56 h-56 sm:w-64 sm:h-64 flex items-center justify-center relative">
+                <div class="absolute inset-0 bg-yellow-100/60 rounded-full blur-2xl pointer-events-none"></div>
+                <div id="hero-moveable-kali" class="moveable-hero-logo relative z-10 w-full h-full flex items-center justify-center">
+                  <img src="images/logo/kali-mascot.jpg" alt="Kali Mascot" class="w-48 h-48 object-contain rounded-full shadow-lg border-4 border-white img-blend-multiply">
+                </div>
+              </div>
+
+              <!-- Speech Bubble -->
+              <div class="mt-2 speech-bubble max-w-xs text-center cursor-pointer" onclick="window.NK_APP.speakText('Assalam-o-Alaikum! I am Kali. Let us learn together in our garden!', 'السلام علیکم! میں ہوں کلی۔ آئیے ہمارے باغ میں مل کر سیکھیں!')">
+                <p class="text-sm font-bold font-urdu" dir="rtl">"السلام علیکم! آئیے مل کر نیا سیکھیں!"</p>
+                <p class="text-[11px] text-dark-light font-medium" data-i18n="hero.dragTip">Tip: You can gently drag Kali around!</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TODAY'S HOMEWORK CARD (FEATURE 4) -->
+      <section class="glass-card rounded-4xl p-6 sm:p-8 bg-white/70 border border-white shadow-sm space-y-4">
+        <div class="flex items-center justify-between pb-2 border-b border-gray-100">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-amber-100 text-amber-700 flex items-center justify-center text-2xl font-bold">
+              📝
+            </div>
+            <div>
+              <h3 class="text-xl sm:text-2xl font-heading font-bold text-dark" data-i18n="homework.title">Today's Homework</h3>
+              <p class="text-xs sm:text-sm text-dark-light" data-i18n="homework.subtitle">Hands-on tasks assigned by your parents</p>
+            </div>
+          </div>
+          <span class="px-3 py-1 rounded-full bg-yellow-100 text-amber-800 text-xs font-bold" data-i18n="homework.weeklyTitle">Mon – Sun Plan</span>
+        </div>
+
+        <div id="homework-task-list" class="space-y-3">
+          <!-- Dynamically populated from NK_STORE -->
+        </div>
+      </section>
+
+      <!-- TWO LARGE GLASS AGE SELECTION CARDS -->
+      <section id="age-cards" class="space-y-4">
+        <div class="text-center space-y-1">
+          <h2 class="text-2xl sm:text-3xl font-heading font-bold text-dark" data-i18n="ageCards.heading">Choose Your Learning Journey</h2>
+          <p class="font-urdu text-xl font-bold" dir="rtl" data-i18n="ageCards.subheading">عمر کے مطابق حصہ منتخب کریں</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Card 1: Little Learners (2.5 - 6) -->
+          <div onclick="window.switchTab('little')" class="glossy-click glass-card rounded-4xl p-6 sm:p-8 cursor-pointer hover:shadow-lg hover:-translate-y-1 transition-all bg-white/75 border-2 border-green-200 relative group">
+            <div class="flex items-start justify-between mb-4">
+              <span class="px-3.5 py-1 rounded-full bg-[#6AAE6A] text-white text-xs font-bold uppercase tracking-wider" data-i18n="ageCards.littleAge">Ages 2.5 – 6</span>
+              <span class="text-3xl group-hover:rotate-12 transition-transform">🌸</span>
+            </div>
+
+            <h3 class="text-2xl sm:text-3xl font-heading font-bold text-dark group-hover:text-[#4E9150] transition-colors" data-i18n="ageCards.littleTitle">
+              Little Learners
+            </h3>
+
+            <p class="text-sm text-dark-light mb-5 leading-relaxed" data-i18n="ageCards.littleDesc">
+              Playful discovery with parents. Daily Duas, manners, motor skills, poems, finger tracing, swipeable stories, paper art & exercises.
+            </p>
+
+            <div class="flex flex-wrap gap-1.5 mb-6">
+              <span class="px-2.5 py-1 bg-green-50/80 rounded-xl text-xs font-semibold text-dark border border-green-100">🌙 اسلامی دعائیں</span>
+              <span class="px-2.5 py-1 bg-pink-50/80 rounded-xl text-xs font-semibold text-dark border border-pink-100">💖 آداب و اخلاق</span>
+              <span class="px-2.5 py-1 bg-orange-50/80 rounded-xl text-xs font-semibold text-dark border border-orange-100">🎨 ہاتھوں کی مہارت</span>
+              <span class="px-2.5 py-1 bg-yellow-50/80 rounded-xl text-xs font-semibold text-dark border border-yellow-100">🎶 نظمیں</span>
+              <span class="px-2.5 py-1 bg-blue-50/80 rounded-xl text-xs font-semibold text-dark border border-blue-100">✍️ ٹریسنگ کینوس</span>
+              <span class="px-2.5 py-1 bg-purple-50/80 rounded-xl text-xs font-semibold text-dark border border-purple-100">🏃 صبح کی ورزش</span>
+            </div>
+
+            <button class="btn-primary glossy-click w-full py-3 rounded-2xl font-heading font-bold flex items-center justify-center gap-2 shadow-sm">
+              <span data-i18n="ageCards.littleBtn">Open Little Learners / شروع کریں</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+          </div>
+
+          <!-- Card 2: Junior Learners (7 - 10) -->
+          <div onclick="window.switchTab('junior')" class="glossy-click glass-card rounded-4xl p-6 sm:p-8 cursor-pointer hover:shadow-lg hover:-translate-y-1 transition-all bg-white/75 border-2 border-blue-200 relative group">
+            <div class="flex items-start justify-between mb-4">
+              <span class="px-3.5 py-1 rounded-full bg-[#8ED1FC] text-[#4A3B35] text-xs font-bold uppercase tracking-wider" data-i18n="ageCards.juniorAge">Ages 7 – 10</span>
+              <span class="text-3xl group-hover:rotate-12 transition-transform">🚀</span>
+            </div>
+
+            <h3 class="text-2xl sm:text-3xl font-heading font-bold text-dark group-hover:text-blue-600 transition-colors" data-i18n="ageCards.juniorTitle">
+              Junior Learners
+            </h3>
+
+            <p class="text-sm text-dark-light mb-5 leading-relaxed" data-i18n="ageCards.juniorDesc">
+              Curious minds explore mental maths challenges, English & Urdu grammar, safe home science experiments with Professor Ullu, and timed logic quizzes.
+            </p>
+
+            <div class="flex flex-wrap gap-1.5 mb-6">
+              <span class="px-2.5 py-1 bg-blue-50/80 rounded-xl text-xs font-semibold text-dark border border-blue-100">🔢 ریاضی کے کھیل</span>
+              <span class="px-2.5 py-1 bg-purple-50/80 rounded-xl text-xs font-semibold text-dark border border-purple-100">📝 انگلش گرامر</span>
+              <span class="px-2.5 py-1 bg-yellow-50/80 rounded-xl text-xs font-semibold text-dark border border-yellow-100">🔬 سائنسدان ابن الہیثم</span>
+              <span class="px-2.5 py-1 bg-green-50/80 rounded-xl text-xs font-semibold text-dark border border-green-100">🧩 ۱۰ سوالات کا کوئز</span>
+            </div>
+
+            <button class="glossy-click w-full py-3 rounded-2xl bg-[#8ED1FC] hover:brightness-105 text-[#4A3B35] font-heading font-bold flex items-center justify-center gap-2 shadow-sm">
+              <span data-i18n="ageCards.juniorBtn">Open Junior Learners / شروع کریں</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- TAB: LITTLE LEARNERS (ALL 10 SECTIONS WITH CARTOON GUIDES) -->
+    <div id="tab-little" class="space-y-7 hidden">
+      <div class="flex items-center justify-between pb-2 border-b border-gray-200">
+        <button onclick="window.switchTab('home')" class="glass-card glossy-click px-4 py-2 rounded-2xl bg-white/70 hover:bg-white text-dark font-heading text-sm font-semibold flex items-center gap-2 border border-white shadow-sm">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span data-i18n="littleSections.backHome">Back to Home</span>
+        </button>
+        <div class="text-end">
+          <h2 class="text-2xl font-heading font-bold text-[#4E9150]" data-i18n="littleSections.title">Little Learners (Ages 2.5 – 6)</h2>
+        </div>
+      </div>
+
+      <!-- Section Navigation Pills (10 sections) -->
+      <div class="flex items-center gap-2 overflow-x-auto pb-2 scrollbar-none text-xs font-semibold">
+        <button onclick="window.switchSubTab('islamic')" id="sub-tab-btn-islamic" class="glossy-click px-4 py-2.5 rounded-2xl bg-[#6AAE6A] text-white shadow-sm whitespace-nowrap">🌙 Islamic / اسلامی</button>
+        <button onclick="window.switchSubTab('manners')" id="sub-tab-btn-manners" class="glass-card glossy-click px-4 py-2.5 rounded-2xl bg-white/70 text-dark hover:bg-white whitespace-nowrap border border-white">💖 Manners / آداب</button>
+        <button onclick="window.switchSubTab('tracing')" id="sub-tab-btn-tracing" class="glass-card glossy-click px-4 py-2.5 rounded-2xl bg-white/70 text-dark hover:bg-white whitespace-nowrap border border-white">✍️ Tracing / ٹریسنگ</button>
+        <button onclick="window.switchSubTab('speaking')" id="sub-tab-btn-speaking" class="glass-card glossy-click px-4 py-2.5 rounded-2xl bg-white/70 text-dark hover:bg-white whitespace-nowrap border border-white">🗣️ Speaking / بولنا</button>
+        <button onclick="window.switchSubTab('exercise')" id="sub-tab-btn-exercise" class="glass-card glossy-click px-4 py-2.5 rounded-2xl bg-white/70 text-dark hover:bg-white whitespace-nowrap border border-white">🏃 Exercise / ورزش</button>
+        <button onclick="window.switchSubTab('art')" id="sub-tab-btn-art" class="glass-card glossy-click px-4 py-2.5 rounded-2xl bg-white/70 text-dark hover:bg-white whitespace-nowrap border border-white">🎨 Paper Art / آرٹ</button>
+        <button onclick="window.switchSubTab('fine-motor')" id="sub-tab-btn-fine-motor" class="glass-card glossy-click px-4 py-2.5 rounded-2xl bg-white/70 text-dark hover:bg-white whitespace-nowrap border border-white">🐝 Motor Skills</button>
+        <button onclick="window.switchSubTab('poems')" id="sub-tab-btn-poems" class="glass-card glossy-click px-4 py-2.5 rounded-2xl bg-white/70 text-dark hover:bg-white whitespace-nowrap border border-white">🎶 Poems / نظمیں</button>
+        <button onclick="window.switchSubTab('stories')" id="sub-tab-btn-stories" class="glass-card glossy-click px-4 py-2.5 rounded-2xl bg-white/70 text-dark hover:bg-white whitespace-nowrap border border-white">📖 Stories / کہانیاں</button>
+        <button onclick="window.switchSubTab('weekly')" id="sub-tab-btn-weekly" class="glass-card glossy-click px-4 py-2.5 rounded-2xl bg-white/70 text-dark hover:bg-white whitespace-nowrap border border-white">🏡 Home Play</button>
+      </div>
+
+      <!-- 1. ISLAMIC SECTION WITH AUDIO SPEED CONTROL -->
+      <div id="sub-islamic" class="space-y-6">
+        <div class="glass-card rounded-3xl p-5 bg-white/80 border border-green-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <div class="w-14 h-14 rounded-2xl bg-green-100 flex items-center justify-center text-3xl shadow-sm flex-shrink-0 animate-wiggle">
+              ✨
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <span class="font-heading font-bold text-dark text-lg" data-i18n="littleSections.islamic.guide">Noori the Firefly</span>
+                <span class="px-2.5 py-0.5 rounded-full bg-green-100 text-[#4E9150] text-xs font-bold" data-i18n="littleSections.islamic.verified">Verified Content</span>
+              </div>
+              <p class="text-xs text-dark-light" data-i18n="littleSections.islamic.quote">Noori lights our garden with gentle Duas and Bismillah!</p>
+            </div>
+          </div>
+
+          <!-- Speed Controls -->
+          <div class="flex items-center gap-2 bg-gray-100/80 p-1.5 rounded-2xl self-end sm:self-center">
+            <span class="text-xs font-bold text-dark-light px-2" data-i18n="speedControl.label">Audio Speed:</span>
+            <button id="speed-btn-normal" class="speed-btn-active px-3 py-1 rounded-xl text-xs font-bold transition-all">1.0x Normal</button>
+            <button id="speed-btn-slow" class="px-3 py-1 rounded-xl text-xs font-bold bg-white text-dark border border-gray-200 transition-all">0.75x Slow</button>
+          </div>
+        </div>
+
+        <!-- Section Progress Indicator -->
+        <div class="glass-card bg-white/80 p-4 rounded-2xl border border-white shadow-sm space-y-1.5">
+          <div class="flex justify-between text-xs font-bold text-dark">
+            <span id="level-badge-islamic" class="text-[#4E9150]">Level 1</span>
+            <span id="level-text-islamic">Level 1: 3 of 6 activities done</span>
+          </div>
+          <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
+            <div id="level-bar-islamic" class="level-progress-bar h-full" style="width: 50%;"></div>
+          </div>
+        </div>
+
+        <!-- Cards: Tauz, Tasmiya, Kalma, Duas -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Tauz -->
+          <div class="glass-card rounded-3xl p-5 bg-white/80 border border-white shadow-sm space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold text-dark-light uppercase">Ta'awwuz / تعوّذ</span>
+              <button onclick="window.speakArabic('أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ', 'A\'udhu billahi minash-shaytanir-rajeem', 'I seek refuge in Allah from Satan, the accursed.', 'میں اللہ کی پناہ مانگتا ہوں شیطان مردود سے۔'); window.NK_STORE && window.NK_STORE.recordActivity({ section: 'islamic', activityId: 'tauz', stars: 1, minutes: 2 });" class="glossy-click w-10 h-10 rounded-2xl bg-green-100 text-[#4E9150] flex items-center justify-center">
+                <i class="fa-solid fa-play"></i>
+              </button>
+            </div>
+            <p class="font-arabic text-xl font-bold text-end leading-loose" dir="rtl">أَعُوذُ بِاللَّهِ مِنَ الشَّيْطَانِ الرَّجِيمِ</p>
+            <p class="text-xs text-dark-light italic">"A'udhu billahi minash-shaytanir-rajeem"</p>
+            <p class="font-urdu text-sm text-[#4E9150] font-semibold" dir="rtl">میں اللہ کی پناہ مانگتا ہوں شیطان مردود سے۔</p>
+          </div>
+
+          <!-- Tasmiya -->
+          <div class="glass-card rounded-3xl p-5 bg-white/80 border border-white shadow-sm space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold text-dark-light uppercase">Tasmiyah / تسمیہ</span>
+              <button onclick="window.speakArabic('بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ', 'Bismillahir-Rahmanir-Raheem', 'In the name of Allah, the Most Gracious, the Most Merciful.', 'اللہ کے نام سے شروع جو نہایت مہربان ہمیشہ رحم فرمانے والا ہے۔'); window.NK_STORE && window.NK_STORE.recordActivity({ section: 'islamic', activityId: 'tasmiya', stars: 1, minutes: 2 });" class="glossy-click w-10 h-10 rounded-2xl bg-green-100 text-[#4E9150] flex items-center justify-center">
+                <i class="fa-solid fa-play"></i>
+              </button>
+            </div>
+            <p class="font-arabic text-xl font-bold text-end leading-loose" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+            <p class="text-xs text-dark-light italic">"Bismillahir-Rahmanir-Raheem"</p>
+            <p class="font-urdu text-sm text-[#4E9150] font-semibold" dir="rtl">اللہ کے نام سے شروع جو نہایت مہربان ہمیشہ رحم فرمانے والا ہے۔</p>
+          </div>
+
+          <!-- Kalma 1 -->
+          <div class="glass-card rounded-3xl p-5 bg-white/80 border border-white shadow-sm space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold text-dark-light uppercase">First Kalima / پہلا کلمہ طیّب</span>
+              <button onclick="window.speakArabic('لَا إِلٰهَ إِلَّا اللهُ مُحَمَّدٌ رَسُولُ اللهِ', 'La ilaha illallah Muhammadur-Rasulullah', 'There is no God worthy of worship except Allah, and Muhammad is His Messenger.', 'اللہ کے سوا کوئی عبادت کے لائق نہیں، اور محمد صلی اللہ علیہ وسلم اللہ کے رسول ہیں۔'); window.NK_STORE && window.NK_STORE.recordActivity({ section: 'islamic', activityId: 'kalma1', stars: 1, minutes: 3 });" class="glossy-click w-10 h-10 rounded-2xl bg-green-100 text-[#4E9150] flex items-center justify-center">
+                <i class="fa-solid fa-play"></i>
+              </button>
+            </div>
+            <p class="font-arabic text-xl font-bold text-end leading-loose" dir="rtl">لَا إِلٰهَ إِلَّا اللهُ مُحَمَّدٌ رَسُولُ اللهِ</p>
+            <p class="text-xs text-dark-light italic">"La ilaha illallahu Muhammadur-Rasulullah"</p>
+            <p class="font-urdu text-sm text-[#4E9150] font-semibold" dir="rtl">اللہ کے سوا کوئی عبادت کے لائق نہیں، اور محمد صلی اللہ علیہ وسلم اللہ کے رسول ہیں۔</p>
+          </div>
+
+          <!-- Dua Before Sleep -->
+          <div class="glass-card rounded-3xl p-5 bg-white/80 border border-white shadow-sm space-y-3">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold text-dark-light uppercase">Dua Before Sleep / سوتے وقت کی دعا</span>
+              <button onclick="window.speakArabic('اللَّهُمَّ بِاسْمِكَ أَمُوتُ وَأَحْيَا', 'Allahumma bismika amutu wa ahya', 'O Allah, in Your name I die and I live.', 'اے اللہ! میں تیرے نام کے ساتھ ہی سوتا ہوں اور جاگتا ہوں۔'); window.NK_STORE && window.NK_STORE.recordActivity({ section: 'islamic', activityId: 'dua-sleep', stars: 1, minutes: 2 });" class="glossy-click w-10 h-10 rounded-2xl bg-green-100 text-[#4E9150] flex items-center justify-center">
+                <i class="fa-solid fa-play"></i>
+              </button>
+            </div>
+            <p class="font-arabic text-xl font-bold text-end leading-loose" dir="rtl">اللَّهُمَّ بِاسْمِكَ أَمُوتُ وَأَحْيَا</p>
+            <p class="text-xs text-dark-light italic">"Allahumma bismika amutu wa ahya"</p>
+            <p class="font-urdu text-sm text-[#4E9150] font-semibold" dir="rtl">اے اللہ! میں تیرے نام کے ساتھ ہی سوتا ہوں اور جاگتا ہوں۔</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. MANNERS SECTION -->
+      <div id="sub-manners" class="space-y-6 hidden">
+        <div class="glass-card rounded-3xl p-5 bg-white/80 border border-pink-200 flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-pink-100 flex items-center justify-center text-3xl shadow-sm flex-shrink-0 animate-wiggle">
+            🦋
+          </div>
+          <div>
+            <span class="font-heading font-bold text-dark text-lg" data-i18n="littleSections.manners.guide">Meethi Titli the Butterfly</span>
+            <p class="text-xs text-dark-light" data-i18n="littleSections.manners.quote">Good manners make our words sweet like honey and hearts full of joy!</p>
+          </div>
+        </div>
+
+        <!-- 3 Step-by-Step Interactive Scenarios -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          <div class="glass-card rounded-3xl p-5 bg-white/80 border border-pink-100 space-y-3 shadow-sm">
+            <div class="w-12 h-12 rounded-2xl bg-pink-100 text-2xl flex items-center justify-center">🤝</div>
+            <h4 class="font-heading font-bold text-dark">How to Say Salam</h4>
+            <p class="font-urdu text-xs font-bold text-[#EE8497]" dir="rtl">سلام کرنے کا پیارا طریقہ</p>
+            <button onclick="window.NK_STEP_BY_STEP.open({ titleEn: 'How to Say Salam', titleUr: 'سلام کرنے کا طریقہ', section: 'manners', steps: [ { icon: '😊', titleEn: 'Smile Gently', titleUr: 'چہرے پر مسکراہٹ لائیں', descEn: 'When you see family or friends, look with love and smile.', descUr: 'جب بھی کسی کو دیکھیں تو چہرے پر پیاری مسکراہٹ لائیں۔' }, { icon: '🗣️', titleEn: 'Say it clearly', titleUr: 'بلند آواز میں کہیں', descEn: 'Say: Assalam-o-Alaikum wa Rahmatullah!', descUr: 'صاف اور محبت بھری آواز میں السلام علیکم کہیں۔' }, { icon: '🕊️', titleEn: 'Wish Peace', titleUr: 'سلامتی کی دعا دیں', descEn: 'Salam brings Allah barakah and happiness to your home.', descUr: 'سلام سے گھر میں برکت اور دلوں میں محبت پیدا ہوتی ہے۔' } ] })" class="btn-primary glossy-click w-full py-2.5 rounded-xl text-xs font-bold">
+              Start Step-by-Step / شروع کریں
+            </button>
+          </div>
+
+          <div class="glass-card rounded-3xl p-5 bg-white/80 border border-pink-100 space-y-3 shadow-sm">
+            <div class="w-12 h-12 rounded-2xl bg-pink-100 text-2xl flex items-center justify-center">🌸</div>
+            <h4 class="font-heading font-bold text-dark">Please & Thank You</h4>
+            <p class="font-urdu text-xs font-bold text-[#EE8497]" dir="rtl">پلیز اور شکریہ کے جادوئی الفاظ</p>
+            <button onclick="window.NK_STEP_BY_STEP.open({ titleEn: 'Please & Thank You', titleUr: 'پلیز اور شکریہ کے الفاظ', section: 'manners', steps: [ { icon: '🤲', titleEn: 'Ask Politely', titleUr: 'کوئی چیز مانگتے وقت پلیز کہیں', descEn: 'Never snatch or shout. Say: Please may I have this?', descUr: 'کبھی چھینیں نہیں بلکہ کہیں: پلیز کیا مجھے یہ مل سکتا ہے؟' }, { icon: '💖', titleEn: 'Say Thank You', titleUr: 'ملنے پر شکریہ کہیں', descEn: 'When someone helps, say: JazakAllah Khair or Thank You!', descUr: 'چیز ملنے پر خوش ہو کر جزاک اللہ یا شکریہ کہیں۔' } ] })" class="btn-primary glossy-click w-full py-2.5 rounded-xl text-xs font-bold">
+              Start Step-by-Step / شروع کریں
+            </button>
+          </div>
+
+          <div class="glass-card rounded-3xl p-5 bg-white/80 border border-pink-100 space-y-3 shadow-sm">
+            <div class="w-12 h-12 rounded-2xl bg-pink-100 text-2xl flex items-center justify-center">🎁</div>
+            <h4 class="font-heading font-bold text-dark">Sharing with Love</h4>
+            <p class="font-urdu text-xs font-bold text-[#EE8497]" dir="rtl">کھلونے اور چیزیں بانٹنا</p>
+            <button onclick="window.NK_STEP_BY_STEP.open({ titleEn: 'Sharing with Love', titleUr: 'کھلونے بانٹنے کا طریقہ', section: 'manners', steps: [ { icon: '⏳', titleEn: 'Wait for Turn', titleUr: 'اپنی باری کا انتظار کریں', descEn: 'Take turns with toys patiently and joyfully.', descUr: 'کھلونوں کے ساتھ اپنی باری کا صبر اور خوشی سے انتظار کریں۔' }, { icon: '🍰', titleEn: 'Offer Treats First', titleUr: 'پہلے دوسروں کو پیش کریں', descEn: 'Sharing biscuits or toys makes our heart bigger and happier!', descUr: 'کھانے کی چیزیں یا کھلونے بانٹنے سے دل بڑا اور خوش ہوتا ہے۔' } ] })" class="btn-primary glossy-click w-full py-2.5 rounded-xl text-xs font-bold">
+              Start Step-by-Step / شروع کریں
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. TRACING AND WRITING SECTION (GUIDED BY CARTOON_1.WEBP) -->
+      <div id="sub-tracing" class="space-y-6 hidden">
+        <div class="glass-card rounded-3xl p-5 bg-white/80 border border-blue-200 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <!-- Cartoon 1 Character Guide -->
+          <div class="flex items-center gap-4">
+            <div class="w-16 h-20 relative flex-shrink-0 animate-cartoon-1 cursor-pointer" onclick="window.NK_APP.speakText('Let\'s write together!', 'آؤ مل کر لکھتے ہیں!')">
+              <img src="images/cartoon_1.webp" alt="Boy with Pencil" class="w-full h-full object-contain img-blend-multiply">
+            </div>
+            <div>
+              <div class="speech-bubble mb-1 inline-block">
+                <p id="cartoon-1-speech" class="text-xs font-bold text-dark">"Let's write! / آؤ لکھتے ہیں"</p>
+              </div>
+              <p class="text-xs text-dark-light" data-i18n="littleSections.tracing.quote">Follow dotted lines with your tiny finger. Start with stroke guides, then free write!</p>
+            </div>
+          </div>
+
+          <!-- Mode Toggle -->
+          <div class="flex items-center gap-2 bg-gray-100/80 p-1.5 rounded-2xl">
+            <button id="btn-mode-trace" onclick="window.toggleTracingMode(true)" class="btn-primary px-3 py-1.5 rounded-xl text-xs font-bold transition-all" data-i18n="littleSections.tracing.modeTrace">Tracing Mode</button>
+            <button id="btn-mode-free" onclick="window.toggleTracingMode(false)" class="px-3 py-1.5 rounded-xl text-xs font-bold bg-white text-dark border border-gray-200 transition-all" data-i18n="littleSections.tracing.modeFree">Free Mode</button>
+          </div>
+        </div>
+
+        <!-- Category & Letter Selector Bar -->
+        <div class="flex flex-wrap items-center gap-2 glass-card bg-white/80 p-3 rounded-2xl border border-white shadow-sm">
+          <span class="text-xs font-bold text-dark-light mr-1">Choose:</span>
+          <button onclick="window.selectTracingLetter('en-letter', 0)" class="px-3 py-1 rounded-xl text-xs font-bold bg-green-100 text-[#4E9150]">English A-Z</button>
+          <button onclick="window.selectTracingLetter('ur-letter', 0)" class="px-3 py-1 rounded-xl text-xs font-bold bg-pink-100 text-[#EE8497]">اردو حروف ا-ے</button>
+          <button onclick="window.selectTracingLetter('number', 0)" class="px-3 py-1 rounded-xl text-xs font-bold bg-yellow-100 text-amber-800">Numbers 1-50</button>
+        </div>
+
+        <!-- Tracing Canvas Box -->
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-start">
+          <div class="md:col-span-8 space-y-3">
+            <div class="glass-card bg-white/90 p-4 rounded-3xl border-2 border-green-200 shadow-sm flex flex-col items-center">
+              <canvas id="traceCanvas" width="560" height="340" class="drawing-canvas w-full max-w-lg border border-gray-200"></canvas>
+
+              <div class="flex flex-wrap items-center justify-between w-full max-w-lg mt-3 gap-2">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold text-dark-light" data-i18n="littleSections.tracing.penColor">Color:</span>
+                  <button onclick="window.setTracingColor('#6AAE6A')" class="w-6 h-6 rounded-full bg-[#6AAE6A] border-2 border-white shadow-sm"></button>
+                  <button onclick="window.setTracingColor('#FFB3C1')" class="w-6 h-6 rounded-full bg-[#FFB3C1] border-2 border-white shadow-sm"></button>
+                  <button onclick="window.setTracingColor('#FFD36B')" class="w-6 h-6 rounded-full bg-[#FFD36B] border-2 border-white shadow-sm"></button>
+                  <button onclick="window.setTracingColor('#9CD3EA')" class="w-6 h-6 rounded-full bg-[#9CD3EA] border-2 border-white shadow-sm"></button>
+                  <button onclick="window.setTracingColor('#4A3B35')" class="w-6 h-6 rounded-full bg-[#4A3B35] border-2 border-white shadow-sm"></button>
+                </div>
+
+                <div class="flex items-center gap-2">
+                  <button onclick="window.clearTracing()" class="px-3 py-1.5 rounded-xl bg-gray-100 text-xs font-bold text-dark hover:bg-gray-200" data-i18n="littleSections.tracing.clear">Clear Board</button>
+                  <button onclick="window.submitTracing()" class="btn-primary px-4 py-1.5 rounded-xl text-xs font-bold shadow-md" data-i18n="littleSections.tracing.done">Done (+1 Star)</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stroke Guide & Parent Practice Upload -->
+          <div class="md:col-span-4 space-y-4">
+            <div class="glass-card rounded-3xl p-5 bg-white/80 border border-white shadow-sm space-y-3">
+              <h4 class="font-heading font-bold text-dark text-sm" data-i18n="littleSections.tracing.strokeGuide">Step-by-Step Stroke Guide:</h4>
+              <div id="stroke-word-display" class="text-lg font-heading font-bold text-[#4E9150]">
+                🍎 Apple / سیب
+              </div>
+              <p id="stroke-guide-text" class="text-xs text-dark-light leading-relaxed bg-yellow-50/80 p-3 rounded-2xl border border-yellow-200">
+                1. Slant down left, 2. Slant down right, 3. Cross in middle.
+              </p>
+            </div>
+
+            <!-- Parent Worksheet Upload -->
+            <div class="glass-card rounded-3xl p-5 bg-white/80 border border-white shadow-sm space-y-2.5">
+              <h4 class="font-heading font-bold text-dark text-xs uppercase" data-i18n="littleSections.tracing.uploadWorksheet">Upload Practice Worksheet</h4>
+              <input type="file" accept="image/*,application/pdf" class="text-xs text-dark-light file:mr-2 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-semibold file:bg-green-100 file:text-[#4E9150]">
+              <p class="text-[10px] text-dark-light">Parents can snap a photo of daily physical handwriting practice on notebook.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. SPEAKING AND WRITING SECTION (FEATURE 5) -->
+      <div id="sub-speaking" class="space-y-6 hidden">
+        <div class="glass-card rounded-3xl p-5 bg-white/80 border border-blue-200 flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center text-3xl shadow-sm flex-shrink-0 animate-wiggle">
+            🦜
+          </div>
+          <div>
+            <span class="font-heading font-bold text-dark text-lg" data-i18n="littleSections.speaking.guide">Mitthu the Parrot</span>
+            <p class="text-xs text-dark-light" data-i18n="littleSections.speaking.quote">Listen to the sweet sound, repeat with Mitthu, and say your first words!</p>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button onclick="window.selectWordCategory('wildAnimals')" class="px-4 py-2 rounded-2xl bg-[#6AAE6A] text-white text-xs font-bold shadow-sm">🦁 Wild Animals / جنگلی جانور</button>
+          <button onclick="window.selectWordCategory('pets')" class="glass-card px-4 py-2 rounded-2xl bg-white/70 text-dark text-xs font-bold hover:bg-white border border-white">🐱 Pets / پالتو جانور</button>
+          <button onclick="window.selectWordCategory('fruits')" class="glass-card px-4 py-2 rounded-2xl bg-white/70 text-dark text-xs font-bold hover:bg-white border border-white">🍎 Fruits / پھل</button>
+          <button onclick="window.selectWordCategory('daysOfWeek')" class="glass-card px-4 py-2 rounded-2xl bg-white/70 text-dark text-xs font-bold hover:bg-white border border-white">📅 Days / دن</button>
+          <button onclick="window.selectWordCategory('vegetables')" class="glass-card px-4 py-2 rounded-2xl bg-white/70 text-dark text-xs font-bold hover:bg-white border border-white">🥕 Vegetables / سبزیاں</button>
+        </div>
+
+        <div id="speaking-current-prompt" class="text-xs font-semibold text-dark-light">
+          Tap any picture card to listen to the clear pronunciation!
+        </div>
+
+        <div id="speaking-words-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4"></div>
+      </div>
+
+      <!-- 5. EXERCISE AND WARM-UP SECTION (FEATURE 9 + YOUTUBE LINKS) -->
+      <div id="sub-exercise" class="space-y-6 hidden">
+        <div class="glass-card rounded-3xl p-5 bg-white/80 border border-blue-200 flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-blue-100 flex items-center justify-center text-3xl shadow-sm flex-shrink-0 animate-wiggle">
+            🏃
+          </div>
+          <div>
+            <h3 class="font-heading font-bold text-dark text-lg" data-i18n="exercise.title">Exercise & Morning Warm-Up</h3>
+            <p class="text-xs text-dark-light" data-i18n="exercise.subtitle">Gentle physical movement to stay active and healthy</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4">
+          <div class="glass-card rounded-3xl p-5 bg-white/80 border border-blue-100 text-center space-y-2 shadow-sm cursor-pointer" onclick="window.NK_APP.speakText('Reach high to the sun on your tiptoes!', 'سورج کی طرح ہاتھ اوپر اٹھائیں!')">
+            <span class="text-4xl block">🙆</span>
+            <h4 class="font-heading font-bold text-dark text-sm">1. Reach to Sun</h4>
+            <p class="font-urdu text-xs font-bold text-[#4E9150]" dir="rtl">سورج کی طرح ہاتھ اوپر اٹھائیں</p>
+            <p class="text-[11px] text-dark-light">Stretch up on your tiptoes for 5 seconds.</p>
+          </div>
+
+          <div class="glass-card rounded-3xl p-5 bg-white/80 border border-blue-100 text-center space-y-2 shadow-sm cursor-pointer" onclick="window.NK_APP.speakText('Flap butterfly wings softly ten times!', 'تتلی کے پروں کی طرح بازو دس بار ہلائیں!')">
+            <span class="text-4xl block">🦋</span>
+            <h4 class="font-heading font-bold text-dark text-sm">2. Butterfly Wings</h4>
+            <p class="font-urdu text-xs font-bold text-[#4E9150]" dir="rtl">تتلی کے پروں کی طرح بازو ہلائیں</p>
+            <p class="text-[11px] text-dark-light">Flap your arms softly 10 times.</p>
+          </div>
+
+          <div class="glass-card rounded-3xl p-5 bg-white/80 border border-blue-100 text-center space-y-2 shadow-sm cursor-pointer" onclick="window.NK_APP.speakText('Do three gentle frog hops on the floor!', 'مینڈک کی طرح تین چھوٹی چھلانگیں لگائیں!')">
+            <span class="text-4xl block">🐸</span>
+            <h4 class="font-heading font-bold text-dark text-sm">3. Gentle Frog Hops</h4>
+            <p class="font-urdu text-xs font-bold text-[#4E9150]" dir="rtl">مینڈک جیسی ۳ چھوٹی چھلانگیں</p>
+            <p class="text-[11px] text-dark-light">Do 3 gentle little hops on the floor mat.</p>
+          </div>
+
+          <div class="glass-card rounded-3xl p-5 bg-white/80 border border-blue-100 text-center space-y-2 shadow-sm cursor-pointer" onclick="window.NK_APP.speakText('Breathe in deeply like smelling a flower, then gently blow out!', 'پھول سونگھنے جیسا گہرا سانس لیں اور موم بتی کی طرح پھونک ماریں!')">
+            <span class="text-4xl block">🌸</span>
+            <h4 class="font-heading font-bold text-dark text-sm">4. Deep Breathing</h4>
+            <p class="font-urdu text-xs font-bold text-[#4E9150]" dir="rtl">پھول سونگھنے جیسا گہرا سانس</p>
+            <p class="text-[11px] text-dark-light">Breathe in deeply, then blow out like a gentle candle.</p>
+          </div>
+        </div>
+
+        <!-- 3 YouTube Video Embeds for Exercise Section -->
+        <div class="space-y-4 pt-2">
+          <h4 class="font-heading font-bold text-dark text-base" data-i18n="exercise.videosTitle">Warm-Up Activity Videos</h4>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+            <div class="glass-card rounded-3xl p-3 bg-white/80 border border-white shadow-sm space-y-2">
+              <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/i120L87IdCE" title="Exercise Video 1" allowfullscreen></iframe>
+              </div>
+              <p class="text-xs font-bold text-dark text-center">Morning Exercise 1 / صبح کی ہلکی ورزش</p>
+            </div>
+
+            <div class="glass-card rounded-3xl p-3 bg-white/80 border border-white shadow-sm space-y-2">
+              <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/1gUbdNbu6ak" title="Exercise Video 2" allowfullscreen></iframe>
+              </div>
+              <p class="text-xs font-bold text-dark text-center">Movement & Stretches 2 / حرکت اور اسٹریچ</p>
+            </div>
+
+            <div class="glass-card rounded-3xl p-3 bg-white/80 border border-white shadow-sm space-y-2">
+              <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/B5VYj9fDX3E" title="Exercise Video 3" allowfullscreen></iframe>
+              </div>
+              <p class="text-xs font-bold text-dark text-center">Daily Movement 3 / روزانہ ورزش و کھیل</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. DAILY PAPER ART SECTION (GUIDED BY CARTOON_3.PNG) -->
+      <div id="sub-art" class="space-y-6 hidden">
+        <div class="glass-card rounded-3xl p-5 bg-white/80 border border-orange-200 flex items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <!-- Cartoon 3 Character Guide -->
+            <div class="w-16 h-20 relative flex-shrink-0 animate-cartoon-3 cursor-pointer" onclick="window.NK_APP.speakText('Hello kids! Time to color on paper!', 'ہیلو بچو! کاپی پر رنگ بھریں!')">
+              <img src="images/cartoon_3.png" alt="Boy with Backpack Waving" class="w-full h-full object-contain img-blend-multiply">
+            </div>
+            <div>
+              <div class="speech-bubble mb-1 inline-block">
+                <p class="text-xs font-bold text-dark">"Hello kids! / ہیلو بچو!"</p>
+              </div>
+              <h3 class="font-heading font-bold text-dark text-lg" data-i18n="art.title">Daily Paper Art Activity</h3>
+              <p class="text-xs text-dark-light" data-i18n="art.subtitle">Done on real paper/notebook with crayons — 100% Screen-Free!</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-4xl p-6 sm:p-8 bg-white/80 border-2 border-orange-200 shadow-sm space-y-4">
+          <div class="flex items-center gap-3">
+            <span class="text-4xl">☀️</span>
+            <div>
+              <h4 class="text-xl font-heading font-bold text-dark">Today's Task: Bright Yellow Smiling Sun</h4>
+              <p class="font-urdu text-base font-bold text-[#E5792B]" dir="rtl">کاپی پر مسکراتا پیلا سورج بنائیں اور رنگ بھریں</p>
+            </div>
+          </div>
+
+          <div class="space-y-2 bg-yellow-50/80 p-4 rounded-3xl border border-yellow-200 text-xs sm:text-sm text-dark leading-relaxed">
+            <p><strong><span data-i18n="art.materials">Materials Needed:</span></strong> Plain paper copy, round cup, yellow and orange wax crayons.</p>
+            <p class="font-urdu text-xs font-semibold" dir="rtl">ضروری سامان: سادہ کاپی، گول پیالی، پیلا اور نارنجی کریون رنگ۔</p>
+            <p><strong><span data-i18n="art.parentGuide">Guide for Parents:</span></strong> Place the cup on the page. Guide your child's hand to draw around the cup to form a perfect circle. Encourage them to fill the circle with cheerful yellow strokes, then draw sun rays!</p>
+            <p class="font-urdu text-xs font-semibold" dir="rtl">والدین کے لیے رہنمائی: پیالی کو کاپی پر رکھ کر بچے سے دائرہ بنوائیں۔ پھر اندر پیلا رنگ بھرنے میں اس کی رہنمائی کریں۔</p>
+          </div>
+
+          <button onclick="window.completePaperArt()" class="btn-primary glossy-click px-6 py-3 rounded-2xl font-heading font-bold text-sm shadow-md flex items-center gap-2">
+            <span data-i18n="art.markDone">Mark Paper Task Done (+3 Stars)</span>
+            <i class="fa-solid fa-star text-yellow-300"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- 7. FINE MOTOR SECTION (WITH USER'S YOUTUBE LINK) -->
+      <div id="sub-fine-motor" class="space-y-6 hidden">
+        <div class="glass-card rounded-3xl p-5 bg-white/80 border border-orange-200 flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-orange-100 flex items-center justify-center text-3xl shadow-sm flex-shrink-0 animate-wiggle">
+            🐝
+          </div>
+          <div>
+            <span class="font-heading font-bold text-dark text-lg" data-i18n="littleSections.fineMotor.guide">Bheeni the Bee</span>
+            <p class="text-xs text-dark-light" data-i18n="littleSections.fineMotor.quote">Little fingers do big work! Tearing paper, rolling dough, and sorting colors.</p>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-4 bg-white/80 border border-white shadow-sm space-y-2">
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/MD86MGSBd8w" title="Fine Motor Skills Activity" allowfullscreen></iframe>
+          </div>
+          <p class="text-xs font-bold text-dark text-center">Motor Skills Hands-on Video Guide / ہاتھوں کی مہارت کی ویڈیو</p>
+        </div>
+      </div>
+
+      <!-- 8. POEMS SECTION (WITH USER'S YOUTUBE LINK) -->
+      <div id="sub-poems" class="space-y-6 hidden">
+        <div class="glass-card rounded-3xl p-5 bg-white/80 border border-yellow-200 flex items-center gap-4">
+          <div class="w-14 h-14 rounded-2xl bg-yellow-100 flex items-center justify-center text-3xl shadow-sm flex-shrink-0 animate-wiggle">
+            🐦
+          </div>
+          <div>
+            <span class="font-heading font-bold text-dark text-lg" data-i18n="littleSections.poems.guide">Bulbul the Songbird</span>
+            <p class="text-xs text-dark-light" data-i18n="littleSections.poems.quote">Sing, rhyme, and move your little wings with happy Urdu and English poems!</p>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-4 bg-white/80 border border-white shadow-sm space-y-2">
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/4KJqpjKHVsM" title="Kids Rhyme and Poem" allowfullscreen></iframe>
+          </div>
+          <p class="text-xs font-bold text-dark text-center">Featured Poem: Melodious Rhymes / پیاری اور میٹھی نظمیں</p>
+        </div>
+      </div>
+
+      <!-- 9. STORIES SECTION (GUIDED BY CARTOON_5.JPG) -->
+      <div id="sub-stories" class="space-y-6 hidden">
+        <div class="glass-card rounded-3xl p-5 bg-white/80 border border-purple-200 flex items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <!-- Cartoon 5 Character Guide -->
+            <div class="w-16 h-20 relative flex-shrink-0 animate-cartoon-5 cursor-pointer" onclick="window.NK_APP.speakText('Story time! Let us read a wonderful story!', 'کہانی کا وقت! آؤ پیاری کہانی پڑھیں!')">
+              <img src="images/cartoon_5.jpg" alt="Girl Reading Book" class="w-full h-full object-contain img-blend-multiply">
+            </div>
+            <div>
+              <div class="speech-bubble mb-1 inline-block">
+                <p class="text-xs font-bold text-dark">"Story time! / کہانی کا وقت!"</p>
+              </div>
+              <span class="font-heading font-bold text-dark text-lg block" data-i18n="littleSections.stories.guide">Story Guide</span>
+              <p class="text-xs text-dark-light" data-i18n="littleSections.stories.quote">Moral picture books with gentle voice, questions, and offline activities.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 5-Page Interactive Reader Launch Card -->
+        <div class="glass-card rounded-4xl p-6 bg-gradient-to-r from-purple-50/90 to-pink-50/90 border-2 border-purple-200 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <span class="text-4xl animate-bounce">📖</span>
+            <div>
+              <h4 class="text-lg font-heading font-bold text-dark">5-Page Reader: The Little Sprout & The Golden Sun</h4>
+              <p class="font-urdu text-sm font-bold text-purple-700" dir="rtl">پانچ صفحات کی تصویری کہانی: ننھا پودا اور سنہرا سورج</p>
+              <p class="text-xs text-dark-light mt-1">Flip pages, listen in English & Urdu, answer the moral question, earn +3 Stars!</p>
+            </div>
+          </div>
+          <button onclick="window.NK_STORY_READER.open('story-sprout-and-sun')" class="btn-primary glossy-click px-6 py-3.5 rounded-2xl font-heading font-bold text-sm shadow-md whitespace-nowrap flex items-center gap-2">
+            <span>Read 5-Page Story / کہانی پڑھیں</span>
+            <i class="fa-solid fa-book-open"></i>
+          </button>
+        </div>
+
+        <div class="glass-card rounded-3xl p-4 bg-white/80 border border-white shadow-sm space-y-2">
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/7vVBxKESZwk" title="Moral Story Video" allowfullscreen></iframe>
+          </div>
+          <p class="text-xs font-bold text-dark text-center">Featured Animated Moral Story / تصویری کہانی</p>
+        </div>
+      </div>
+
+      <!-- 10. WEEKLY HOME ACTIVITY (GUIDED BY CARTOON_2.PNG) -->
+      <div id="sub-weekly" class="space-y-6 hidden">
+        <div class="glass-card rounded-3xl p-5 bg-white/80 border border-green-200 flex items-center justify-between gap-4">
+          <div class="flex items-center gap-4">
+            <!-- Cartoon 2 Character Guide -->
+            <div class="w-16 h-20 relative flex-shrink-0 animate-cartoon-2 cursor-pointer" onclick="window.NK_APP.speakText('Hi kids! Let us explore at home!', 'ہیلو بچو! آؤ گھر پر مزے کریں!')">
+              <img src="images/cartoon_2.png" alt="Walking Pencil with Books" class="w-full h-full object-contain img-blend-multiply">
+            </div>
+            <div>
+              <div class="speech-bubble mb-1 inline-block">
+                <p class="text-xs font-bold text-dark">"Hi kids! / ہیلو بچو!"</p>
+              </div>
+              <span class="font-heading font-bold text-dark text-lg block" data-i18n="littleSections.weekly.guide">Home Activity Guide</span>
+              <p class="text-xs text-dark-light" data-i18n="littleSections.weekly.title">Weekly Screen-Free Home Activity</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card rounded-3xl p-4 bg-white/80 border border-white shadow-sm space-y-2">
+          <div class="video-container">
+            <iframe src="https://www.youtube.com/embed/rSpHmNQc1nA" title="Home Activity Video" allowfullscreen></iframe>
+          </div>
+          <p class="text-xs font-bold text-dark text-center">Hands-On Home Activity Video Guide / گھریلو سرگرمی کی ویڈیو</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- TAB: JUNIOR LEARNERS (AGES 7 TO 10 - FEATURE 12) -->
+    <div id="tab-junior" class="space-y-7 hidden">
+      <div class="flex items-center justify-between pb-2 border-b border-gray-200">
+        <button onclick="window.switchTab('home')" class="glass-card glossy-click px-4 py-2 rounded-2xl bg-white/70 hover:bg-white text-dark font-heading text-sm font-semibold flex items-center gap-2 border border-white shadow-sm">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Back to Home</span>
+        </button>
+        <div class="text-end">
+          <h2 class="text-2xl font-heading font-bold text-blue-600" data-i18n="juniorSections.title">Junior Learners (Ages 7 – 10)</h2>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Daily Mental Maths -->
+        <div class="glass-card rounded-3xl p-6 bg-white/80 border border-blue-200 space-y-4 shadow-sm">
+          <div class="flex items-center gap-3">
+            <span class="text-3xl">🔢</span>
+            <div>
+              <h3 class="font-heading font-bold text-dark text-lg" data-i18n="juniorSections.mathsTitle">Gintu's Speed Maths</h3>
+              <p class="text-xs text-dark-light" data-i18n="juniorSections.mathsDesc">Solve tables, addition, subtraction, multiplication!</p>
+            </div>
+          </div>
+          <div class="bg-blue-50/80 p-4 rounded-2xl text-center space-y-2">
+            <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Multiplication Challenge</span>
+            <h4 id="junior-maths-problem" class="text-3xl font-heading font-extrabold text-dark">7 × 8 = ?</h4>
+            <div id="junior-maths-options" class="grid grid-cols-2 gap-2 max-w-xs mx-auto pt-2">
+              <button onclick="window.handleJuniorMathsAnswer(54, 56)" class="py-2.5 rounded-xl bg-white text-dark font-bold text-sm border hover:bg-gray-50 transition-all">54</button>
+              <button onclick="window.handleJuniorMathsAnswer(56, 56)" class="btn-primary py-2.5 rounded-xl font-bold text-sm shadow-sm">56</button>
+              <button onclick="window.handleJuniorMathsAnswer(58, 56)" class="py-2.5 rounded-xl bg-white text-dark font-bold text-sm border hover:bg-gray-50 transition-all">58</button>
+              <button onclick="window.handleJuniorMathsAnswer(64, 56)" class="py-2.5 rounded-xl bg-white text-dark font-bold text-sm border hover:bg-gray-50 transition-all">64</button>
+            </div>
+            <button onclick="window.generateNewMathsProblem()" class="text-xs font-bold text-blue-600 hover:underline pt-1 inline-flex items-center gap-1">
+              <i class="fa-solid fa-arrows-rotate"></i> New Maths Challenge / نیا سوال
+            </button>
+          </div>
+        </div>
+
+        <!-- English Grammar -->
+        <div class="glass-card rounded-3xl p-6 bg-white/80 border border-purple-200 space-y-4 shadow-sm">
+          <div class="flex items-center gap-3">
+            <span class="text-3xl">📝</span>
+            <div>
+              <h3 class="font-heading font-bold text-dark text-lg" data-i18n="juniorSections.grammarTitle">English Grammar & Verbs</h3>
+              <p class="text-xs text-dark-light" data-i18n="juniorSections.grammarDesc">Identify action verbs, nouns, and adjectives in daily sentences.</p>
+            </div>
+          </div>
+          <div class="bg-purple-50/80 p-4 rounded-2xl space-y-2">
+            <p class="text-sm font-semibold text-dark text-center italic">"The cheerful bird <strong class="underline">sings</strong> a melodious tune."</p>
+            <p class="text-xs font-bold text-center text-dark-light">Which word is the ACTION VERB?</p>
+            <div class="grid grid-cols-2 gap-2 max-w-xs mx-auto pt-1">
+              <button onclick="window.handleJuniorGrammarAnswer('cheerful', 'sings')" class="py-2.5 rounded-xl bg-white text-dark text-xs font-bold border hover:bg-gray-50">cheerful</button>
+              <button onclick="window.handleJuniorGrammarAnswer('sings', 'sings')" class="btn-primary py-2.5 rounded-xl text-xs font-bold shadow-sm">sings</button>
+              <button onclick="window.handleJuniorGrammarAnswer('tune', 'sings')" class="py-2.5 rounded-xl bg-white text-dark text-xs font-bold border hover:bg-gray-50">tune</button>
+              <button onclick="window.handleJuniorGrammarAnswer('bird', 'sings')" class="py-2.5 rounded-xl bg-white text-dark text-xs font-bold border hover:bg-gray-50">bird</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Scientist of the Day: Ibn al-Haytham -->
+        <div class="glass-card rounded-3xl p-6 bg-white/80 border border-yellow-200 space-y-4 shadow-sm md:col-span-2">
+          <div class="flex items-center gap-3">
+            <span class="text-3xl">🔬</span>
+            <div>
+              <h3 class="font-heading font-bold text-dark text-lg" data-i18n="juniorSections.scienceTitle">Scientist of the Day: Ibn al-Haytham</h3>
+              <p class="font-urdu text-sm font-bold text-[#4E9150]" dir="rtl">ابن الہیثم (علمِ بصریات اور کیمرے کے بانی)</p>
+            </div>
+          </div>
+          <div class="bg-yellow-50/70 p-4 rounded-2xl text-xs sm:text-sm text-dark leading-relaxed space-y-2">
+            <p><strong>Father of Modern Optics:</strong> In Cairo (around 1000 CE), Ibn al-Haytham proved that light enters our eyes from objects outside. He pioneered the scientific method and invented the Camera Obscura (pinhole camera)!</p>
+            <p class="font-urdu text-xs font-semibold" dir="rtl">انہوں نے ثابت کیا کہ روشنی ہماری آنکھوں سے نہیں نکلتی بلکہ چیزوں سے ٹکرا کر ہماری آنکھ میں آتی ہے۔ انہوں نے پہلا پن ہول کیمرہ ایجاد کیا!</p>
+          </div>
+          <button onclick="window.NK_SCIENCE_QUIZ.open()" class="btn-primary glossy-click px-6 py-3.5 rounded-2xl font-bold text-sm shadow-md flex items-center gap-2">
+            <i class="fa-solid fa-flask-vial"></i>
+            <span>Take 10-Question Science Quiz Assignment (+3 Stars)</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: MY GARDEN (MERA BAAGH) -->
+    <div id="tab-garden" class="space-y-7 hidden">
+      <div class="flex items-center justify-between pb-2 border-b border-gray-200">
+        <button onclick="window.switchTab('home')" class="glass-card glossy-click px-4 py-2 rounded-2xl bg-white/70 hover:bg-white text-dark font-heading text-sm font-semibold flex items-center gap-2 border border-white shadow-sm">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Back to Home</span>
+        </button>
+        <h2 class="text-2xl font-heading font-bold text-[#4E9150]" data-i18n="garden.title">My Garden (Mera Baagh)</h2>
+      </div>
+
+      <div class="glass-card rounded-4xl p-8 bg-white/80 border border-green-200 text-center space-y-4 shadow-sm">
+        <div class="w-28 h-28 rounded-full bg-yellow-100 border-4 border-yellow-300 flex items-center justify-center text-6xl mx-auto shadow-inner animate-character-bob">
+          🌻
+        </div>
+        <h3 id="garden-stage-title" class="text-2xl font-heading font-bold text-dark" data-i18n="garden.stageBud">Stage: Blooming Flower Bud 🌹</h3>
+        <p class="text-sm text-dark-light max-w-md mx-auto" data-i18n="garden.sub">A blossoming sanctuary of your earned stars and milestone buds.</p>
+        <div class="inline-flex items-center gap-2 px-6 py-2 rounded-2xl bg-yellow-100 text-dark font-heading font-bold text-lg border border-yellow-300">
+          <i class="fa-solid fa-star text-amber-500"></i>
+          <span data-i18n="garden.totalStars">Total Stars:</span>
+          <span id="garden-total-stars">14</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: PARENT DASHBOARD & ANALYTICS (FEATURE F - RESPONSIVE TO CHILD PROGRESS) -->
+    <div id="tab-parent" class="space-y-7 hidden">
+      <div class="flex items-center justify-between pb-2 border-b border-gray-200">
+        <button onclick="window.switchTab('home')" class="glass-card glossy-click px-4 py-2 rounded-2xl bg-white/70 hover:bg-white text-dark font-heading text-sm font-semibold flex items-center gap-2 border border-white shadow-sm">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Back to Home</span>
+        </button>
+        <h2 class="text-2xl font-heading font-bold text-[#EE8497]" data-i18n="parent.title">Parents Dashboard & Analytics</h2>
+      </div>
+
+      <!-- Quick Metrics Header (Live connected) -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div class="glass-card p-4 rounded-3xl bg-white/80 border border-white text-center shadow-sm">
+          <span class="text-xs text-dark-light font-bold">Overall Level</span>
+          <h4 id="dash-overall-level" class="text-3xl font-heading font-extrabold text-[#4E9150]">2</h4>
+        </div>
+        <div class="glass-card p-4 rounded-3xl bg-white/80 border border-white text-center shadow-sm">
+          <span class="text-xs text-dark-light font-bold">Total Stars</span>
+          <h4 id="dash-total-stars" class="text-3xl font-heading font-extrabold text-amber-500">14</h4>
+        </div>
+        <div class="glass-card p-4 rounded-3xl bg-white/80 border border-white text-center shadow-sm">
+          <span class="text-xs text-dark-light font-bold">Time Spent</span>
+          <h4 id="dash-minutes-spent" class="text-3xl font-heading font-extrabold text-blue-600">52m</h4>
+        </div>
+        <div class="glass-card p-4 rounded-3xl bg-white/80 border border-white text-center shadow-sm">
+          <span class="text-xs text-dark-light font-bold">Daily Streak</span>
+          <h4 id="dash-daily-streak" class="text-3xl font-heading font-extrabold text-[#EE8497]">4 Days</h4>
+        </div>
+      </div>
+
+      <!-- Suggestions Box for Parents (Dynamic from store) -->
+      <div class="glass-card rounded-3xl p-6 bg-white/80 border-2 border-green-200 space-y-3 shadow-sm">
+        <div class="flex items-center gap-2.5 text-[#4E9150]">
+          <i class="fa-solid fa-lightbulb text-xl text-amber-500"></i>
+          <h3 class="font-heading font-bold text-base sm:text-lg text-dark" data-i18n="parent.suggestionsTitle">Parent Recommendations (What to do next):</h3>
+        </div>
+        <ul id="dash-suggestions-box" class="space-y-2 list-disc list-inside"></ul>
+      </div>
+
+      <!-- Next Topics & Unlocked Features (Dynamic from store) -->
+      <div class="glass-card rounded-3xl p-6 bg-white/80 border border-white space-y-3 shadow-sm">
+        <div class="flex items-center gap-2.5 text-blue-600">
+          <i class="fa-solid fa-unlock-keyhole text-xl"></i>
+          <h3 class="font-heading font-bold text-base sm:text-lg text-dark" data-i18n="parent.nextTopicsTitle">Upcoming Topics & Unlocked Features:</h3>
+        </div>
+        <ul id="dash-next-topics-box" class="space-y-2 list-disc list-inside"></ul>
+      </div>
+
+      <!-- Section-wise Progress Bars -->
+      <div class="glass-card rounded-3xl p-6 bg-white/80 border border-white space-y-4 shadow-sm">
+        <h3 class="font-heading font-bold text-dark text-base" data-i18n="parent.overallProgress">Section-wise Learning Progress</h3>
+        <div class="space-y-3">
+          <div>
+            <div class="flex justify-between text-xs font-bold text-dark mb-1">
+              <span>Islamic Values / اسلامی اقدار</span>
+              <span id="dash-text-islamic" class="text-[#4E9150]">Level 1: 3 of 6 done</span>
+            </div>
+            <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
+              <div id="dash-bar-islamic" class="progress-bar-fill h-full" style="width: 50%;"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-bold text-dark mb-1">
+              <span>Tracing & Writing / ٹریسنگ و لکھائی</span>
+              <span id="dash-text-tracing" class="text-[#4E9150]">Level 2: 5 of 26 done</span>
+            </div>
+            <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
+              <div id="dash-bar-tracing" class="progress-bar-fill h-full" style="width: 20%;"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-bold text-dark mb-1">
+              <span>Good Manners / آداب و اخلاق</span>
+              <span id="dash-text-manners" class="text-[#4E9150]">Level 1: 2 of 3 done</span>
+            </div>
+            <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
+              <div id="dash-bar-manners" class="progress-bar-fill h-full" style="width: 66%;"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-bold text-dark mb-1">
+              <span>Speaking & Words / بولنا اور الفاظ</span>
+              <span id="dash-text-speaking" class="text-[#4E9150]">Level 1: 3 of 6 done</span>
+            </div>
+            <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
+              <div id="dash-bar-speaking" class="progress-bar-fill h-full" style="width: 50%;"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-bold text-dark mb-1">
+              <span>Morning Exercise / صبح کی ورزش</span>
+              <span id="dash-text-exercise" class="text-[#4E9150]">Level 1: 2 of 4 done</span>
+            </div>
+            <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
+              <div id="dash-bar-exercise" class="progress-bar-fill h-full" style="width: 50%;"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-bold text-dark mb-1">
+              <span>Paper Art / کاغذ کا آرٹ</span>
+              <span id="dash-text-art" class="text-[#4E9150]">Level 1: 1 of 2 done</span>
+            </div>
+            <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
+              <div id="dash-bar-art" class="progress-bar-fill h-full" style="width: 50%;"></div>
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-bold text-dark mb-1">
+              <span>Junior Mental Maths / ریاضی چیلنج</span>
+              <span id="dash-text-juniorMaths" class="text-[#4E9150]">Level 1: 4 of 10 done</span>
+            </div>
+            <div class="w-full bg-gray-100 h-2.5 rounded-full overflow-hidden">
+              <div id="dash-bar-juniorMaths" class="progress-bar-fill h-full" style="width: 40%;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Recent Weekly Activity Log -->
+      <div class="glass-card rounded-3xl p-6 bg-white/80 border border-white space-y-3 shadow-sm">
+        <h3 class="font-heading font-bold text-dark text-base">Weekly Activity Log (Completed Events)</h3>
+        <div id="dash-activity-log" class="space-y-2"></div>
+      </div>
+    </div>
+
+    <!-- TAB: ADMIN PORTAL -->
+    <div id="tab-admin" class="space-y-7 hidden">
+      <div class="flex items-center justify-between pb-2 border-b border-gray-200">
+        <button onclick="window.switchTab('home')" class="glass-card glossy-click px-4 py-2 rounded-2xl bg-white/70 hover:bg-white text-dark font-heading text-sm font-semibold flex items-center gap-2 border border-white shadow-sm">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Back to Home</span>
+        </button>
+        <h2 class="text-2xl font-heading font-bold text-purple-600" data-i18n="admin.title">Teacher & Admin Portal</h2>
+      </div>
+
+      <div class="glass-card rounded-3xl p-6 bg-white/80 border border-white space-y-4 shadow-sm max-w-xl mx-auto">
+        <h3 class="font-heading font-bold text-dark text-lg" data-i18n="admin.createLesson">Create / Edit Bilingual Lesson</h3>
+        <input type="text" placeholder="Lesson Title (English)" class="w-full p-3 rounded-xl border text-sm">
+        <input type="text" placeholder="عنوان (اردو)" dir="rtl" class="w-full p-3 rounded-xl border text-sm font-urdu">
+        <button onclick="alert('Lesson saved successfully!');" class="btn-primary glossy-click w-full py-3 rounded-xl font-bold text-sm shadow-md" data-i18n="admin.save">Save Lesson</button>
+      </div>
+    </div>
+
+    <!-- TAB: LANGUAGE TEST & AUDIT -->
+    <div id="tab-language-test" class="space-y-7 hidden">
+      <div class="flex items-center justify-between pb-2 border-b border-gray-200">
+        <button onclick="window.switchTab('home')" class="glass-card glossy-click px-4 py-2 rounded-2xl bg-white/70 hover:bg-white text-dark font-heading text-sm font-semibold flex items-center gap-2 border border-white shadow-sm">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span>Back to Home</span>
+        </button>
+        <h2 class="text-2xl font-heading font-bold text-blue-600" data-i18n="languageTest.title">Urdu & English Bilingual Audit</h2>
+      </div>
+
+      <div class="glass-card rounded-3xl p-6 bg-white/80 border border-white space-y-4 shadow-sm">
+        <p class="text-sm text-dark-light" data-i18n="languageTest.subtitle">Full verification of typography, Nastaliq padding, RTL alignment, and diacritics.</p>
+        <div class="p-4 bg-green-50/80 rounded-2xl border border-green-200 space-y-2">
+          <span class="text-xs font-bold text-[#4E9150]">Noto Nastaliq Urdu (with extra padding):</span>
+          <p class="font-urdu text-2xl font-bold leading-loose text-end" dir="rtl" data-i18n="languageTest.sampleNastaliq">گھر کی مٹی میں کھلتے ننھے پھول، پھلواری میں مسکراتی ننھی کلیاں۔</p>
+        </div>
+        <div class="p-4 bg-yellow-50/80 rounded-2xl border border-yellow-200 space-y-2">
+          <span class="text-xs font-bold text-amber-700">Noto Naskh Arabic (with diacritics):</span>
+          <p class="font-arabic text-2xl font-bold text-end leading-loose" dir="rtl" data-i18n="languageTest.sampleArabic">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</p>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- PARENT PIN MODAL -->
+  <div id="parent-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/40 backdrop-blur-md hidden">
+    <div class="glass-card modal-glass-container rounded-4xl p-6 sm:p-8 max-w-sm w-full text-center relative border border-white shadow-2xl">
+      <div class="w-16 h-16 rounded-full bg-pink-100 text-[#EE8497] flex items-center justify-center text-3xl mx-auto mb-3">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+      <h3 class="text-xl font-heading font-bold text-dark mb-1" data-i18n="parent.title">Parent Area</h3>
+      <p class="text-xs text-dark-light mb-4" data-i18n="parent.enterPin">Enter 4-Digit Parent PIN (Default: 1234):</p>
+      
+      <input id="parent-pin-input" type="password" maxlength="4" placeholder="••••" class="w-32 mx-auto text-center font-heading font-extrabold text-2xl tracking-widest p-2 rounded-2xl border border-pink-200 bg-white shadow-inner mb-3">
+      <p id="parent-pin-err" class="text-xs font-bold text-red-500 mb-3 hidden" data-i18n="parent.wrongPin">Incorrect PIN! Try 1234.</p>
+      
+      <div class="flex items-center gap-2">
+        <button onclick="document.getElementById('parent-modal').classList.add('hidden')" class="w-1/2 py-2.5 rounded-xl bg-gray-100 text-xs font-bold text-dark">Cancel</button>
+        <button onclick="window.checkParentPin()" class="btn-primary w-1/2 py-2.5 rounded-xl font-bold text-xs shadow-md" data-i18n="parent.unlock">Unlock</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCREEN-FREE HOME PLAY MODAL (ON 20-MIN TIMER EXPIRY) -->
+  <div id="screen-free-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-md hidden">
+    <div class="glass-card modal-glass-container rounded-4xl p-6 sm:p-8 max-w-lg w-full text-center relative border-2 border-yellow-300 shadow-2xl space-y-4">
+      <div class="w-20 h-20 rounded-full bg-yellow-100 flex items-center justify-center text-4xl mx-auto">
+        🌱
+      </div>
+      <h3 class="text-2xl font-heading font-extrabold text-dark" data-i18n="timer.overTitle">Screen time is over!</h3>
+      <p class="font-urdu text-lg font-bold text-[#4E9150]" dir="rtl">اسکرین کا وقت ختم! اب گھر کی تفریح کا وقت ہے!</p>
+      <p class="text-xs text-dark-light max-w-md mx-auto" data-i18n="timer.dadiPrompt">
+        Dadi Kachwa says: Time to put the screen away and play with your hands!
+      </p>
+
+      <div class="flex flex-col sm:flex-row gap-3 pt-2">
+        <button onclick="window.completeHomeActivity()" class="btn-primary glossy-click w-full py-3.5 rounded-2xl font-heading font-bold text-sm shadow-md" data-i18n="timer.finishBtn">
+          I Finished Activity! (+5 Stars)
+        </button>
+        <button onclick="window.requestExtraScreenTime()" class="glossy-click w-full sm:w-auto px-4 py-3.5 rounded-2xl bg-white border border-gray-200 text-xs font-bold text-dark" data-i18n="timer.parentUnlock">
+          Parent PIN (+10 mins)
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="mt-auto py-6 border-t border-gray-200/80 text-center text-xs text-dark-light relative z-10">
+    <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p data-i18n="footer.rights">All rights reserved. Dedicated to childhood purity & minimal screen time.</p>
+      <div class="flex items-center gap-4 font-semibold">
+        <a href="#home" onclick="window.switchTab('home')" class="hover:text-dark">Home</a>
+        <a href="#little" onclick="window.switchTab('little')" class="hover:text-dark">Little Learners</a>
+        <a href="#parent" onclick="window.openParentModal()" class="hover:text-dark">Parents Area</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SCRIPT LOADING (ORDER PRESERVED: STORE -> CONTENT -> LOCALES -> SVG -> APP) -->
+  <script src="src/js/store.js"></script>
+  <script src="src/data/locales.js"></script>
+  <script src="src/data/content.js"></script>
+  <script src="src/js/logo-svg.js"></script>
+  <script src="src/js/app.js"></script>
+</body>
+</html>

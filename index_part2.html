@@ -1,0 +1,309 @@
+  <!-- SPLASH SCREEN -->
+  <div id="splash-screen" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-cream transition-opacity duration-700">
+    <button onclick="skipSplash()" class="absolute top-6 right-6 px-4 py-2 text-sm font-semibold rounded-full bg-white/70 hover:bg-white text-dark shadow-sm border border-white/80 transition-all">
+      Skip / چھوڑیں <i class="fa-solid fa-forward ml-1"></i>
+    </button>
+    <div class="relative flex flex-col items-center text-center p-6 max-w-md">
+      <div class="absolute w-64 h-64 bg-pastel-yellow/50 rounded-full blur-3xl animate-pulse pointer-events-none"></div>
+      
+      <div class="relative w-44 h-44 mb-6 flex items-center justify-center">
+        <div class="absolute -top-3 w-28 h-28 bg-pastel-yellow rounded-full animate-sun-spin opacity-40 blur-sm"></div>
+        <img id="splash-logo" src="images/logo/kali-mascot.jpg" alt="Nanhi Kaliyan Logo" class="relative z-10 w-40 h-40 object-contain drop-shadow-md animate-sway">
+      </div>
+      
+      <h1 class="text-4xl md:text-5xl font-heading font-bold text-dark mb-1 tracking-tight">
+        Nanhi Kaliyan
+      </h1>
+      <h2 class="text-2xl md:text-3xl font-urdu text-pastel-green-dark mb-3" dir="rtl">
+        ننھی کلیاں
+      </h2>
+      <p class="text-sm md:text-base text-dark-light font-medium italic mb-2">
+        "Little buds blooming at home"
+      </p>
+      <p class="text-sm md:text-base font-urdu text-dark-light" dir="rtl">
+        "گھر کی مٹی میں کھلتے ننھے پھول"
+      </p>
+
+      <div class="mt-8 flex items-center gap-2 text-xs font-semibold text-pastel-green-dark bg-white/80 px-4 py-2 rounded-full border border-pastel-green/30">
+        <i class="fa-solid fa-seedling animate-bounce"></i>
+        <span>Bilingual Home Learning for Ages 2.5 - 10</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- NAVIGATION HEADER -->
+  <header class="sticky top-0 z-40 glass-nav transition-all">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <!-- Logo & Brand -->
+      <a href="#home" onclick="switchTab('home')" class="flex items-center gap-3 group">
+        <img src="images/logo/kali-mascot.jpg" alt="Kali Mascot Logo" class="w-11 h-11 object-contain rounded-full shadow-sm group-hover:scale-105 transition-transform">
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="font-heading font-bold text-xl text-dark leading-tight">Nanhi Kaliyan</span>
+            <span class="font-urdu text-base text-pastel-green-dark leading-none" dir="rtl">ننھی کلیاں</span>
+          </div>
+          <p class="text-[11px] text-dark-light hidden sm:block">Little Buds • Home Learning</p>
+        </div>
+      </a>
+
+      <!-- Right Controls -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Language Switcher -->
+        <div class="flex items-center bg-white/70 rounded-2xl p-1 border border-white/80 shadow-sm text-xs font-semibold">
+          <button id="lang-btn-both" onclick="setLanguage('both')" class="px-2.5 py-1.5 rounded-xl bg-pastel-green text-white transition-all">Both / دونوں</button>
+          <button id="lang-btn-ur" onclick="setLanguage('ur')" class="px-2.5 py-1.5 rounded-xl hover:bg-white/80 text-dark transition-all font-urdu">اردو</button>
+          <button id="lang-btn-en" onclick="setLanguage('en')" class="px-2.5 py-1.5 rounded-xl hover:bg-white/80 text-dark transition-all">EN</button>
+        </div>
+
+        <!-- Voice / Audio Button -->
+        <button id="voice-toggle-btn" onclick="toggleVoice()" title="Toggle Voice Aloud" class="w-10 h-10 rounded-2xl bg-white/70 hover:bg-white text-dark flex items-center justify-center border border-white/80 shadow-sm transition-all text-sm">
+          <i class="fa-solid fa-volume-high text-pastel-green-dark"></i>
+        </button>
+
+        <!-- Star Garden Shortcut -->
+        <button onclick="switchTab('garden')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-2xl bg-pastel-yellow/30 hover:bg-pastel-yellow/50 border border-pastel-yellow/60 text-dark text-xs sm:text-sm font-semibold transition-all">
+          <i class="fa-solid fa-star text-amber-500 animate-spin-slow"></i>
+          <span id="nav-star-count">8</span>
+          <span class="hidden md:inline font-urdu text-xs" dir="rtl">باغ</span>
+        </button>
+
+        <!-- Parent Zone / PIN -->
+        <button onclick="openParentModal()" class="px-3.5 py-1.5 rounded-2xl bg-white/80 hover:bg-white text-dark border border-pastel-pink/50 text-xs sm:text-sm font-semibold flex items-center gap-1.5 shadow-sm transition-all">
+          <i class="fa-solid fa-lock text-pastel-pink-dark"></i>
+          <span class="hidden sm:inline">Parents</span>
+          <span class="font-urdu text-xs" dir="rtl">والدین</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN WRAPPER -->
+  <main class="flex-1 max-w-6xl mx-auto w-full px-4 py-6">
+
+    <!-- 20-MINUTE TIMER BAR (Persistent on Top) -->
+    <div class="glass-card rounded-3xl p-4 sm:p-5 mb-8 bg-gradient-to-r from-pastel-yellow/20 via-white/40 to-pastel-green/20 border-pastel-yellow/40 shadow-sm relative overflow-hidden">
+      <div class="flex flex-col md:flex-row items-center justify-between gap-4 relative z-10">
+        <div class="flex items-center gap-3.5 w-full md:w-auto">
+          <div class="relative w-12 h-12 flex-shrink-0 flex items-center justify-center bg-white rounded-2xl shadow-sm border border-pastel-yellow/60">
+            <i id="timer-sun-icon" class="fa-solid fa-sun text-2xl text-amber-500 animate-sun-spin"></i>
+            <span class="absolute -bottom-1 -right-1 text-xs">🌱</span>
+          </div>
+          <div>
+            <div class="flex items-center gap-2">
+              <span class="font-heading font-semibold text-dark text-base">Aaj Ka Plan / 20-Min Timer</span>
+              <span class="font-urdu text-sm text-pastel-green-dark" dir="rtl">آج کا پلان</span>
+            </div>
+            <p class="text-xs text-dark-light">Healthy learning time limit. Screen locks for hands-on activity!</p>
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between md:justify-end gap-3 w-full md:w-auto">
+          <div class="bg-white/90 px-4 py-2 rounded-2xl shadow-sm border border-pastel-yellow/50 flex items-center gap-2">
+            <i class="fa-regular fa-clock text-amber-600"></i>
+            <span id="timer-display" class="font-heading font-bold text-2xl tracking-wider text-dark">20:00</span>
+          </div>
+
+          <div class="flex items-center gap-1.5">
+            <button id="timer-play-btn" onclick="toggleTimer()" class="w-10 h-10 rounded-2xl bg-pastel-green hover:bg-pastel-green-dark text-white flex items-center justify-center shadow-md transition-all">
+              <i id="timer-play-icon" class="fa-solid fa-play"></i>
+            </button>
+            <button onclick="resetTimer()" title="Reset Timer" class="w-10 h-10 rounded-2xl bg-white/80 hover:bg-white text-dark-light flex items-center justify-center border border-white shadow-sm transition-all">
+              <i class="fa-solid fa-rotate-left"></i>
+            </button>
+            <button onclick="adjustTimer(5)" title="+5 mins (Parent)" class="px-2.5 h-10 rounded-2xl bg-white/80 hover:bg-white text-xs font-semibold text-dark border border-white shadow-sm">
+              +5m
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-full bg-white/60 h-2.5 rounded-full mt-3.5 overflow-hidden border border-white">
+        <div id="timer-progress" class="bg-gradient-to-r from-pastel-green via-pastel-yellow to-pastel-orange h-full rounded-full transition-all duration-1000" style="width: 100%"></div>
+      </div>
+    </div>
+
+    <!-- TAB: HOME VIEW -->
+    <div id="tab-home" class="space-y-10">
+
+      <!-- HERO SECTION -->
+      <section class="glass-card rounded-4xl p-6 sm:p-10 relative overflow-hidden bg-gradient-to-b from-white/70 via-pastel-pink/10 to-pastel-green/10">
+        <div class="absolute -top-10 -right-10 w-44 h-44 bg-pastel-yellow/30 rounded-full blur-2xl pointer-events-none"></div>
+        <div class="absolute -bottom-10 -left-10 w-44 h-44 bg-pastel-green/30 rounded-full blur-2xl pointer-events-none"></div>
+
+        <div class="grid grid-cols-1 md:grid-cols-12 gap-8 items-center relative z-10">
+          <div class="md:col-span-7 space-y-4 text-center md:text-left">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-pastel-green/20 text-pastel-green-dark border border-pastel-green/30 text-xs font-bold uppercase tracking-wider">
+              <i class="fa-solid fa-heart text-pastel-pink"></i> Home Learning with Parents
+            </div>
+
+            <h1 class="text-3xl sm:text-5xl font-heading font-extrabold text-dark leading-tight">
+              Little buds blooming <br class="hidden sm:inline">at home
+            </h1>
+            <h2 class="text-2xl sm:text-4xl font-urdu text-pastel-green-dark font-bold leading-normal" dir="rtl">
+              گھر کی مٹی میں کھلتے ننھے پھول
+            </h2>
+
+            <p class="text-dark-light text-sm sm:text-base max-w-lg leading-relaxed">
+              Children learn best with parents through gentle 20-minute screen journeys that spark offline imagination, Islamic values, and creative play.
+            </p>
+
+            <div class="flex flex-wrap items-center justify-center md:justify-start gap-3.5 pt-2">
+              <button onclick="scrollToAgeCards()" class="btn-bounce px-7 py-3.5 rounded-2xl bg-pastel-green hover:bg-pastel-green-dark text-white font-heading font-bold text-lg shadow-md hover:shadow-lg flex items-center gap-2 transition-all">
+                <span>Shuru Karein / شروع کریں</span>
+                <i class="fa-solid fa-arrow-right text-sm"></i>
+              </button>
+              <button onclick="openParentModal()" class="btn-bounce px-6 py-3.5 rounded-2xl bg-white/80 hover:bg-white text-dark font-heading font-semibold text-base border border-pastel-pink/50 shadow-sm flex items-center gap-2 transition-all">
+                <i class="fa-solid fa-hands-holding-child text-pastel-pink-dark"></i>
+                <span>Walidain / والدین</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="md:col-span-5 flex flex-col items-center justify-center">
+            <div class="relative">
+              <div class="w-56 h-56 sm:w-64 sm:h-64 rounded-full bg-gradient-to-tr from-pastel-yellow via-pastel-pink/30 to-pastel-green/40 p-2 shadow-glass animate-float">
+                <img src="images/logo/kali-mascot.jpg" alt="Kali Mascot" class="w-full h-full object-cover rounded-full shadow-inner border-4 border-white">
+              </div>
+              <div class="absolute -bottom-4 bg-white/95 backdrop-blur-md px-4 py-2.5 rounded-2xl shadow-md border border-pastel-green/40 max-w-xs text-center">
+                <p class="text-xs font-bold text-pastel-green-dark font-urdu" dir="rtl">"آئیے مل کر کچھ نیا سیکھیں!"</p>
+                <p class="text-[11px] text-dark-light font-medium">"Come, let's learn together!"</p>
+                <button onclick="speakText('Assalam-o-Alaikum! I am Kali. Let us learn together in our garden!', 'السلام علیکم! میں ہوں کلی۔ آئیے ہمارے باغ میں مل کر سیکھیں!')" class="mt-1 text-xs text-pastel-green-dark hover:underline flex items-center justify-center gap-1 mx-auto">
+                  <i class="fa-solid fa-volume-high"></i> Listen to Kali
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- TWO LARGE AGE SELECTION CARDS -->
+      <section id="age-cards" class="space-y-4">
+        <div class="text-center space-y-1">
+          <h2 class="text-2xl sm:text-3xl font-heading font-bold text-dark">Choose Your Learning Journey</h2>
+          <p class="font-urdu text-pastel-green-dark text-lg" dir="rtl">عمر کے مطابق حصہ منتخب کریں</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div onclick="switchTab('little')" class="glass-card rounded-4xl p-6 sm:p-8 cursor-pointer hover:shadow-glass-lg hover:-translate-y-1.5 transition-all bg-gradient-to-br from-pastel-green/15 via-white/60 to-pastel-yellow/20 border-pastel-green/40 relative group">
+            <div class="flex items-start justify-between mb-4">
+              <span class="px-3.5 py-1 rounded-full bg-pastel-green text-white text-xs font-bold uppercase tracking-wider">Ages 2.5 – 6</span>
+              <span class="text-3xl group-hover:rotate-12 transition-transform">🌸</span>
+            </div>
+
+            <h3 class="text-2xl sm:text-3xl font-heading font-bold text-dark group-hover:text-pastel-green-dark transition-colors">
+              Little Learners
+            </h3>
+            <h4 class="text-xl font-urdu text-pastel-green-dark font-bold mb-3" dir="rtl">
+              چھوٹے سیکھنے والے
+            </h4>
+
+            <p class="text-sm text-dark-light mb-5 leading-relaxed">
+              Gentle home learning with parents. Daily duas, picture manners, fine-motor games, Urdu poems, finger tracing, swipeable stories & weekly screen-free projects.
+            </p>
+
+            <div class="flex flex-wrap gap-1.5 mb-6">
+              <span class="px-2.5 py-1 bg-white/70 rounded-xl text-[11px] font-semibold text-dark border border-white">🌙 Islamic Duas</span>
+              <span class="px-2.5 py-1 bg-white/70 rounded-xl text-[11px] font-semibold text-dark border border-white">💖 Manners</span>
+              <span class="px-2.5 py-1 bg-white/70 rounded-xl text-[11px] font-semibold text-dark border border-white">🎨 Fine Motor</span>
+              <span class="px-2.5 py-1 bg-white/70 rounded-xl text-[11px] font-semibold text-dark border border-white">🎶 Action Poems</span>
+              <span class="px-2.5 py-1 bg-white/70 rounded-xl text-[11px] font-semibold text-dark border border-white">✍️ Finger Tracing</span>
+              <span class="px-2.5 py-1 bg-white/70 rounded-xl text-[11px] font-semibold text-dark border border-white">📖 Storybooks</span>
+            </div>
+
+            <button class="w-full py-3 rounded-2xl bg-pastel-green group-hover:bg-pastel-green-dark text-white font-heading font-bold flex items-center justify-center gap-2 shadow-sm transition-all">
+              <span>Open Little Learners / شروع کریں</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+          </div>
+
+          <div onclick="switchTab('junior')" class="glass-card rounded-4xl p-6 sm:p-8 cursor-pointer hover:shadow-glass-lg hover:-translate-y-1.5 transition-all bg-gradient-to-br from-pastel-blue/15 via-white/60 to-pastel-purple/20 border-pastel-blue/40 relative group">
+            <div class="flex items-start justify-between mb-4">
+              <span class="px-3.5 py-1 rounded-full bg-pastel-blue-dark text-white text-xs font-bold uppercase tracking-wider">Ages 7 – 10</span>
+              <span class="text-3xl group-hover:rotate-12 transition-transform">🚀</span>
+            </div>
+
+            <h3 class="text-2xl sm:text-3xl font-heading font-bold text-dark group-hover:text-pastel-blue-dark transition-colors">
+              Junior Learners
+            </h3>
+            <h4 class="text-xl font-urdu text-pastel-blue-dark font-bold mb-3" dir="rtl">
+              بڑے سیکھنے والے
+            </h4>
+
+            <p class="text-sm text-dark-light mb-5 leading-relaxed">
+              Curious explorers step into mental maths challenges, English & Urdu sentence making, safe home science experiments with Professor Ullu, and timed quizzes.
+            </p>
+
+            <div class="flex flex-wrap gap-1.5 mb-6">
+              <span class="px-2.5 py-1 bg-white/70 rounded-xl text-[11px] font-semibold text-dark border border-white">🔢 Maths Games</span>
+              <span class="px-2.5 py-1 bg-white/70 rounded-xl text-[11px] font-semibold text-dark border border-white">📝 Grammar & Verbs</span>
+              <span class="px-2.5 py-1 bg-white/70 rounded-xl text-[11px] font-semibold text-dark border border-white">🔬 Safe Science</span>
+              <span class="px-2.5 py-1 bg-white/70 rounded-xl text-[11px] font-semibold text-dark border border-white">🧩 Quizzes</span>
+              <span class="px-2.5 py-1 bg-white/70 rounded-xl text-[11px] font-semibold text-dark border border-white">🎨 Creative Writing</span>
+            </div>
+
+            <button class="w-full py-3 rounded-2xl bg-pastel-blue-dark hover:brightness-110 text-white font-heading font-bold flex items-center justify-center gap-2 shadow-sm transition-all">
+              <span>Open Junior Learners / شروع کریں</span>
+              <i class="fa-solid fa-arrow-right text-xs"></i>
+            </button>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCREEN-FREE HOME ACTIVITY OF THE DAY -->
+      <section class="glass-card rounded-4xl p-6 sm:p-8 bg-gradient-to-r from-pastel-orange/15 via-white/60 to-pastel-pink/15 border-pastel-orange/40">
+        <div class="flex flex-col md:flex-row items-center gap-6">
+          <div class="w-20 h-20 rounded-3xl bg-pastel-orange/30 border-2 border-pastel-orange flex items-center justify-center text-4xl shadow-sm flex-shrink-0">
+            🎨
+          </div>
+          <div class="flex-1 text-center md:text-left space-y-2">
+            <div class="flex flex-wrap items-center justify-center md:justify-start gap-2">
+              <span class="px-3 py-0.5 rounded-full bg-pastel-orange text-white text-xs font-bold">Today's Screen-Free Play</span>
+              <span class="text-xs text-dark-light">Estimated: 15 mins • Household Items</span>
+            </div>
+            <h3 class="text-xl sm:text-2xl font-heading font-bold text-dark">
+              Color Mixing with Water & Food Colors
+            </h3>
+            <p class="font-urdu text-pastel-orange-dark text-base" dir="rtl">
+              پانی اور رنگوں سے نیا رنگ بنانا (گھریلو سرگرمی)
+            </p>
+            <p class="text-xs sm:text-sm text-dark-light">
+              Materials: 3 clear cups, water, yellow & blue colors. Watch them make Green together!
+            </p>
+          </div>
+          <button onclick="openHomeActivityDetail()" class="btn-bounce px-5 py-3 rounded-2xl bg-pastel-orange hover:bg-pastel-orange-dark text-white font-heading font-semibold text-sm shadow-md flex items-center gap-2">
+            <span>View Steps / تفصیل</span>
+            <i class="fa-solid fa-clipboard-list"></i>
+          </button>
+        </div>
+      </section>
+
+      <!-- REWARD GARDEN PREVIEW (Mera Baagh) -->
+      <section class="glass-card rounded-4xl p-6 sm:p-8 bg-gradient-to-r from-pastel-green/20 via-white/50 to-pastel-yellow/20 border-pastel-green/40">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+          <div class="flex items-center gap-4">
+            <div class="w-16 h-16 rounded-full bg-pastel-yellow/40 flex items-center justify-center text-3xl border-2 border-pastel-yellow shadow-inner">
+              🌻
+            </div>
+            <div>
+              <div class="flex items-center gap-2">
+                <h3 class="text-xl sm:text-2xl font-heading font-bold text-dark">Mera Baagh</h3>
+                <span class="font-urdu text-lg text-pastel-green-dark" dir="rtl">میرا باغ</span>
+              </div>
+              <p class="text-xs sm:text-sm text-dark-light">
+                Every star you earn helps your little bud grow into a beautiful blooming flower!
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center gap-3">
+            <div class="bg-white/80 px-4 py-2 rounded-2xl border border-pastel-yellow/60 text-center">
+              <span class="block text-xs text-dark-light">Current Stage</span>
+              <span class="font-heading font-bold text-pastel-green-dark text-sm">Sprout 🌱</span>
+            </div>
+            <button onclick="switchTab('garden')" class="btn-bounce px-5 py-3 rounded-2xl bg-pastel-green hover:bg-pastel-green-dark text-white font-heading font-semibold text-sm shadow-md">
+              Visit Garden / باغ دیکھیں
+            </button>
+          </div>
+        </div>
+      </section>
+
+    </div>
